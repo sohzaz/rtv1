@@ -1,0 +1,9 @@
+#exemple file, will not run
+#light sources count/object count
+3/10
+#camera params
+#x y z focal rot_x rot_y rot_z
+25 25 0 125 0 0 0
+#objects params
+#source x y z rot_x rot_y rot_z type
+0 30 30 0 0 0 0 sphere
