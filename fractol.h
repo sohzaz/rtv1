@@ -6,7 +6,7 @@
 /*   By: dbreton <dbreton@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/20 15:11:58 by dbreton           #+#    #+#             */
-/*   Updated: 2016/05/23 13:51:29 by dbreton          ###   ########.fr       */
+/*   Updated: 2016/05/23 14:01:45 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,5 @@ int						ptr_motion_hook(int x, int y, t_mlx *s);
 int	        			expose_hook(t_mlx *s);
 void                    get_numbers(t_mlx *s, int x, int y);
 void					win_reset(t_mlx *s);
+t_object				sphere(char **tmp);
 #endif

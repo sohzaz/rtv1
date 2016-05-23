@@ -6,7 +6,7 @@
 /*   By: dbreton <dbreton@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 12:45:34 by dbreton           #+#    #+#             */
-/*   Updated: 2016/05/23 13:41:57 by dbreton          ###   ########.fr       */
+/*   Updated: 2016/05/23 14:23:07 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,19 @@ static void		body_parse(t_mlx *s, int fd, int *l)
 {
 	char		*line;
 	char		**tmp;
+	int			tot_len;
 
-	(void)s;
-
-	while (get_next_line(fd, &line) > 0)
+	tot_len = s->obj_len + s->src_len;
+	while (*l < tot_len && get_next_line(fd, &line) >= 0 )
 		if (line[0] != '#')
 		{
 			tmp = ft_strsplit(line,  ' ');
 			++*l;
+			t_object sp = sphere(tmp);
+			printf("A\n");
+			sp.inter(NULL, NULL);
 		}
-
+	printf("%d\n", *l);
 }
 
 static void    camera_parse(t_mlx *s, int fd, int *l)
