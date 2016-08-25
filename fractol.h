@@ -49,7 +49,7 @@ typedef struct			s_object{
 	int                 rot_z;
 	char                obj_type[256];
 	int                 radius;
-	int				(*inter)(struct s_object *, t_vector *);
+	int				(*inter)(struct s_object *, t_vector *, t_camera *);
 }                       t_object;
 typedef struct			s_mlxdata{
 	void				*mlx;

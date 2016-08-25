@@ -39,7 +39,7 @@ void                render_pic(t_mlx *s)
         while (i < WIN_MAX_X)
         {
             t_vector v = create_vector(s, i, j);
-            put_in_image(s, i, j, 0x503467);
+            put_in_image(s, i, j, /*s->objects[0].inter(NULL, &v)*/ (int)((v.x + v.y) * 100000));
             printf("%d||%d||%f||%f||%f\n",i,j, v.x, v.y, v.z);
             ++i;
         }

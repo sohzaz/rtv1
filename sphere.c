@@ -11,11 +11,13 @@
 /* ************************************************************************** */
 #include "fractol.h"
 
-static int			inter(t_object *objs, t_vector *v) {
+static int			inter(t_object *objs, t_vector *v, t_camera *cam) {
 	(void)objs;
-	(void)v;
-	printf("sphere\n");
-	return (1);
+	printf("%f\n", v->x);
+	if (v->x >= 2.0 && v->x <= 9.0)
+		return (0x503467);
+	else
+		return (0);
 }
 
 t_object			sphere(char **tmp) {
