@@ -32,7 +32,7 @@ static int          get_inters(t_mlx *s, t_vector *v) {
 
     t = (int)INFINITY;
     i = 0;
-    while (i < (s->obj_len - s->src_len)) {
+    while (i < (s->obj_len)) {
         s->objects[i].inter(NULL, v, s->cam);
         i++;
     }

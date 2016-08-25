@@ -15,11 +15,7 @@ static int			inter(t_object *objs, t_vector *v, t_camera cam) {
 	//Pvector = (cam.x + t.v->x, cam.y + t.v->y, cam.z + t.v->z)
 	(void)objs;
 	(void)cam;
-	//printf("%f||%f||%f\n", v->x, v->y, v->z);
-	if (v->x >= 2.0 && v->x <= 9.0 && v->y >= 2.0 && v->y <=9.0)
-		return (0x503467);
-	else
-		return (0);
+	//printf("%f||%f||%f\n", v->x, v->y, v->z)
 }
 
 t_object			sphere(char **tmp) {
