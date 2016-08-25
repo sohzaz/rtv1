@@ -45,7 +45,7 @@ void		win_init(t_mlx s)
 {
     if ((s.mlx = mlx_init()) != NULL)
     {
-        s.win = mlx_new_window(s.mlx, WIN_MAX_X, WIN_MAX_Y, "42 Fractol");
+        s.win = mlx_new_window(s.mlx, WIN_MAX_X, WIN_MAX_Y, "42 RTv1");
         s.img = mlx_new_image(s.mlx, WIN_MAX_X, WIN_MAX_Y);
         if (s.win != NULL && s.img != NULL)
         {

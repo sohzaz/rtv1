@@ -36,9 +36,9 @@ typedef struct			s_camera{
 	int                 rot_z;
 }                       t_camera;
 typedef struct			s_vector{
-	int					x;
-	int					y;
-	int					z;
+	double				x;
+	double				y;
+	double				z;
 }						t_vector;
 typedef struct			s_object{
 	int                 x;
