@@ -26,12 +26,13 @@ void		get_usage(void)
 int			main(int ac, char **av)
 {
 	t_mlx	        s;
-        int             fd;
+	int             fd;
 
 	if (ac == 2)
 	{
-            fd = open(av[1], O_RDONLY);
-	    parse(&s, fd);	
+		fd = open(av[1], O_RDONLY);
+		parse(&s, fd);
+        win_init(s);
 	}
 	get_usage();
 	return (0);

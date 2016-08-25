@@ -26,6 +26,19 @@ static t_vector     create_vector(t_mlx *s, int i, int j) {
 
     return (v);
 }
+static int          get_inters(t_mlx *s, t_vector *v) {
+    int             i;
+    int             t;
+
+    t = (int)INFINITY;
+    i = 0;
+    while (i < (s->obj_len - s->src_len)) {
+        s->objects[i].inter(NULL, v, s->cam);
+        i++;
+    }
+
+    return (0);
+}
 
 void                render_pic(t_mlx *s)
 {
@@ -39,8 +52,8 @@ void                render_pic(t_mlx *s)
         while (i < WIN_MAX_X)
         {
             t_vector v = create_vector(s, i, j);
-            put_in_image(s, i, j, s->objects[0].inter(NULL, &v, s->cam));
-            printf("%d||%d||%f||%f||%f\n",i,j, v.x, v.y, v.z);
+            int tmp = get_inters(s, &v);
+            put_in_image(s, i, j, tmp);
             ++i;
         }
         ++j;
