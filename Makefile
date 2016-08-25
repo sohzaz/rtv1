@@ -12,7 +12,7 @@
 
 NAME = RTv1 
 OS = $(shell uname)
-CFLAGS = -Wall -Wextra -Werror -O2 
+CFLAGS = -Wall -Wextra -Werror -O2
 SRC = main.c draw_tools.c win_draw.c win_init.c win_handlers.c parse.c sphere.c
 ifeq ($(OS), Darwin)
     MLX = 
@@ -29,8 +29,8 @@ OBJ = $(SRC:.c=.o)
 $(NAME) :
 	# make -C $(MLX)  
 	make -C libft
-	gcc $(CFLAGS)  $(I_MLX) -I libft/includes -c $(SRC)
-	gcc $(CFLAGS)  $(MLX) -L libft  $(OBJ) -o $(NAME) $(MFLAGS)
+	gcc $(CFLAGS) $(I_MLX) -I libft/includes -c $(SRC)
+	gcc $(CFLAGS)  $(MLX) -L libft  $(OBJ) -o $(NAME) $(MFLAGS) -Wl
 
 all : $(NAME)
 
