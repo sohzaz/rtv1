@@ -44,6 +44,7 @@ typedef struct			s_object{
 	int                 x;
 	int                 y;
 	int                 z;
+	char 				type;
 	int                 rot_x;
 	int                 rot_y;
 	int                 rot_z;
@@ -80,4 +81,5 @@ int	        			expose_hook(t_mlx *s);
 void                    get_numbers(t_mlx *s, int x, int y);
 void					win_reset(t_mlx *s);
 t_object				sphere(char **tmp);
+t_object				plane(char **tmp);
 #endif

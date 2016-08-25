@@ -11,6 +11,16 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
+static t_object	get_obj_type(char **tmp) {
+	t_object nil;
+
+	nil.type = -127;
+	if (ft_strcmp(tmp[7], "sphere") == 0)
+		return (sphere(tmp));
+	else if (ft_strcmp(tmp[7], "plane") == 0)
+		return (plane(tmp));
+	return (nil);
+}
 static void		body_parse(t_mlx *s, int fd, int *l)
 {
 	char		*line;
@@ -30,7 +40,7 @@ static void		body_parse(t_mlx *s, int fd, int *l)
 			write(2, "C",1);
 			if (tmp[0][0] == '0' && o < s->obj_len)
 			{
-				s->objects[o] = sphere(tmp);
+				s->objects[o] = get_obj_type(tmp);
 				++o;
 				printf("%d\n", o);
 			}
