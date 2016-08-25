@@ -54,20 +54,6 @@ static void    camera_parse(t_mlx *s, int fd, int *l)
 			s->cam.rot_x = ft_atoi(tmp[4]);
 			s->cam.rot_y = ft_atoi(tmp[5]);
 			s->cam.rot_z = ft_atoi(tmp[6]);
-            write(2, tmp[0], 256);
-            write(2, "/n", 1);
-            write(2, tmp[1], 256);
-            write(2, "/n", 1);
-            write(2, tmp[2], 256);
-            write(2, "/n", 1);
-            write(2, tmp[3], 256);
-            write(2, "/n", 1);
-            write(2, tmp[4], 256);
-            write(2, "/n", 1);
-            write(2, tmp[5], 256);
-            write(2, "/n", 1);
-            write(2, tmp[6], 256);
-            write(2, "/n", 1);
             ++*l;
 			free(line);
 		}
