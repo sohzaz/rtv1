@@ -11,11 +11,12 @@
 /* ************************************************************************** */
 #include "fractol.h"
 
-static int			inter(t_object *objs, t_vector *v, t_camera cam) {
+static int			sphere_inter(t_object *objs, t_vector *v, t_camera cam) {
 	//Pvector = (cam.x + t.v->x, cam.y + t.v->y, cam.z + t.v->z)
 	(void)objs;
 	(void)cam;
 	(void)v;
+	printf("sphere\n");
 	//printf("%f||%f||%f\n", v->x, v->y, v->z)
 	return (0);
 }
@@ -23,7 +24,7 @@ static int			inter(t_object *objs, t_vector *v, t_camera cam) {
 t_object			sphere(char **tmp) {
 	t_object		sp;
 
-	sp.inter = &inter;
+	sp.inter = &sphere_inter;
 	(void)tmp;
 	return (sp);	
 }

@@ -11,21 +11,22 @@
 /* ************************************************************************** */
 #include "fractol.h"
 
-static int			inter(t_object *objs, t_vector *v, t_camera cam) {
+static int			plane_inter(t_object *objs, t_vector *v, t_camera cam) {
     //Pvector = (cam.x + t.v->x, cam.y + t.v->y, cam.z + t.v->z)
     (void)objs;
     (void)cam;
     (void)v;
+    printf("plane\n");
 
     return (0);
 }
 
 t_object			plane(char **tmp) {
-    t_object		sp;
+    t_object		pl;
 
-    sp.inter = &inter;
+    pl.inter = &plane_inter;
     (void)tmp;
-    return (sp);
+    return (pl);
 }
 
 

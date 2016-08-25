@@ -17,13 +17,9 @@ static t_vector     create_vector(t_mlx *s, int i, int j) {
     //a = s->cam.xyz;
     //b = {WIN_MAX_X/2, WIN_MAX_Y/2};
     //c = {i/2, j/2}
-
-
     v.x = (atan((sqrt(abs((WIN_MAX_X/2 - i)^2 )))/ (double)s->cam.focal) * (180/M_PI)) + (double)s->cam.rot_x;
     v.y = (atan((sqrt(abs((WIN_MAX_Y/2 - j)^2)))/ (double)s->cam.focal) * (180/M_PI)) + (double)s->cam.rot_y;
     v.z = s->cam.rot_z;
-
-
     return (v);
 }
 static int          get_inters(t_mlx *s, t_vector *v) {
@@ -32,11 +28,12 @@ static int          get_inters(t_mlx *s, t_vector *v) {
 
     t = (int)INFINITY;
     i = 0;
+    s->objects[1].inter(NULL, v, s->cam);
     while (i < (s->obj_len)) {
         s->objects[i].inter(NULL, v, s->cam);
+        printf("%d\n", i);
         i++;
     }
-
     return (0);
 }
 
