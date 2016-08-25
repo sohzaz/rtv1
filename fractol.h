@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+//TODO rename file
 #ifndef FRACTOL_H
 # define FRACTOL_H
 # include <mlx.h>
