@@ -11,10 +11,11 @@
 /* ************************************************************************** */
 #include "fractol.h"
 
-static int			inter(t_object *objs, t_vector *v, t_camera *cam) {
+static int			inter(t_object *objs, t_vector *v, t_camera cam) {
 	(void)objs;
+	(void)cam;
 	printf("%f\n", v->x);
-	if (v->x >= 2.0 && v->x <= 9.0)
+	if (v->x >= 2.0 && v->x <= 9.0 && v->y >= 2.0 && v->y <=9.0)
 		return (0x503467);
 	else
 		return (0);

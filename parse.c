@@ -31,11 +31,9 @@ static void		body_parse(t_mlx *s, int fd, int *l)
 			if (tmp[0][0] == '0' && o < s->obj_len)
 			{
 				s->objects[o] = sphere(tmp);
-                s->objects[o].inter(NULL, NULL);
 				++o;
 				printf("%d\n", o);
 			}
-            s->objects[o - 1].inter(NULL, NULL);
 		}
 	printf("%d\n", *l);
 }

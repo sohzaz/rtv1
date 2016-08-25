@@ -19,8 +19,8 @@ static t_vector     create_vector(t_mlx *s, int i, int j) {
     //c = {i/2, j/2}
 
 
-    v.x = (atan((sqrt(abs((WIN_MAX_X/2 - i)^2 + (WIN_MAX_Y/2 - j)^2)))/ (double)s->cam.focal) * (180/M_PI)) + (double)s->cam.rot_x;
-    v.y = (atan((sqrt(abs((WIN_MAX_X/2 - i)^2 + (WIN_MAX_Y/2 - j)^2)))/ (double)s->cam.focal) * (180/M_PI)) + (double)s->cam.rot_y;
+    v.x = (atan((sqrt(abs((WIN_MAX_X/2 - i)^2 )))/ (double)s->cam.focal) * (180/M_PI)) + (double)s->cam.rot_x;
+    v.y = (atan((sqrt(abs((WIN_MAX_Y/2 - j)^2)))/ (double)s->cam.focal) * (180/M_PI)) + (double)s->cam.rot_y;
     v.z = s->cam.rot_z;
 
 
@@ -39,7 +39,7 @@ void                render_pic(t_mlx *s)
         while (i < WIN_MAX_X)
         {
             t_vector v = create_vector(s, i, j);
-            put_in_image(s, i, j, /*s->objects[0].inter(NULL, &v)*/ (int)((v.x + v.y) * 100000));
+            put_in_image(s, i, j, s->objects[0].inter(NULL, &v, s->cam));
             printf("%d||%d||%f||%f||%f\n",i,j, v.x, v.y, v.z);
             ++i;
         }
