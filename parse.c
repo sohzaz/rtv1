@@ -20,7 +20,7 @@ static void		body_parse(t_mlx *s, int fd, int *l)
 
 	tot_len = s->obj_len + s->src_len;
 	o = 0;
-	while (*l < tot_len && get_next_line(fd, &line) >= 0 )
+	while (*l < tot_len && get_next_line(fd, &line) > 0 )
 		if (line[0] != '#')
 		{
             write(2, line, 256);
@@ -31,12 +31,11 @@ static void		body_parse(t_mlx *s, int fd, int *l)
 			if (tmp[0][0] == '0' && o < s->obj_len)
 			{
 				s->objects[o] = sphere(tmp);
+                s->objects[o].inter(NULL, NULL);
 				++o;
 				printf("%d\n", o);
-				//s->objects[0].inter(NULL, NULL);
 			}
-			printf("A\n");
-			s->objects[0].inter(NULL, NULL);
+            s->objects[o - 1].inter(NULL, NULL);
 		}
 	printf("%d\n", *l);
 }

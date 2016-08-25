@@ -19,7 +19,7 @@ int				ft_atoi(char const *str)
 	j = 0;
 	res = 0;
 	neg = 1;
-	while ((str[j] >= 9) && (str[j] <= 13 || str[j] == ' '))
+	while (str[j] && (str[j] >= 9) && (str[j] <= 13 || str[j] == ' '))
 		j++;
 	if (str[j] == '-')
 	{
@@ -28,7 +28,7 @@ int				ft_atoi(char const *str)
 	}
 	else if (str[j] == '+')
 		j++;
-	while (str[j] >= '0' && str[j] <= '9')
+	while (str[j] && str[j] >= '0' && str[j] <= '9')
 	{
 		res = res * 10 + (str[j] - 48);
 		j++;
