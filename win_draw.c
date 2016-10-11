@@ -22,25 +22,39 @@ static t_vector     create_vector(t_mlx *s, int i, int j) {
     v.z = s->cam.rot_z;
     return (v);
 }
-static int          get_inters(t_mlx *s, t_vector *v) {
+int          get_inters(t_mlx *s, t_vector *v) {
     int             i;
-    int             t;
+    double          d;
+    double          *res;
 
-    t = (int)INFINITY;
+    d = INFINITY;
     i = 0;
-    s->objects[1].inter(NULL, v, s->cam);
+    (void)v;
     while (i < (s->obj_len)) {
-        s->objects[i].inter(NULL, v, s->cam);
-        printf("%d\n", i);
+        res = s->objects[i].inter(s->objects, v, s->cam, s->objects[i]);
+        if (res[0] >= 0)
+        {
+            if (res[0] == 0) {
+                d = (d > res[1]) ? res[1] : d;
+                //printf("%f/%f\n", res[0], res[1]);
+            }
+            else
+            {
+               // printf("%f/%f/%f\n", res[0], res[1], res[2]);
+                d = (d > res[1]) ? res[1] : d;
+                d = (d > res[2]) ? res[2] : d;
+            }
+        }
         i++;
     }
-    return (0);
+    return ((int)fabs(d)*10000);
 }
 
 void                render_pic(t_mlx *s)
 {
     int             i;
     int             j;
+    int             tmp;
 
     j = 0;
     while (j < WIN_MAX_Y)
@@ -49,7 +63,8 @@ void                render_pic(t_mlx *s)
         while (i < WIN_MAX_X)
         {
             t_vector v = create_vector(s, i, j);
-            int tmp = get_inters(s, &v);
+            tmp = get_inters(s, &v);
+            printf("%d\n", tmp);
             put_in_image(s, i, j, tmp);
             ++i;
         }

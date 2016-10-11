@@ -3,8 +3,8 @@
 1/2
 #camera params
 #x y z focal rot_x rot_y rot_z
-25 25 0 250 0 1 0
+0 0 0 25 10 10 0
 #objects params
-#source x y z rot_x rot_y rot_z type
-0 30 30 0 0 0 0 sphere
-0 30 30 0 0 0 0 plane
+#id source x y z rot_x rot_y rot_z radius type
+1 0 450 45 5 0 0 0 10 sphere
+2 0 -300 0 0 0 0 0 10 sphere

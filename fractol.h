@@ -41,6 +41,7 @@ typedef struct			s_vector{
 	double				z;
 }						t_vector;
 typedef struct			s_object{
+    int                 id;
 	int                 x;
 	int                 y;
 	int                 z;
@@ -48,9 +49,8 @@ typedef struct			s_object{
 	int                 rot_x;
 	int                 rot_y;
 	int                 rot_z;
-	char                obj_type[256];
 	int                 radius;
-	int					(*inter)(struct s_object *, t_vector *, t_camera );
+	double				*(*inter)(struct s_object *, t_vector *, t_camera, struct s_object);
 }                       t_object;
 typedef struct			s_mlxdata{
 	void				*mlx;
@@ -80,6 +80,7 @@ int						ptr_motion_hook(int x, int y, t_mlx *s);
 int	        			expose_hook(t_mlx *s);
 void                    get_numbers(t_mlx *s, int x, int y);
 void					win_reset(t_mlx *s);
+int                     get_inters(t_mlx *s, t_vector *v);
 t_object				sphere(char **tmp);
 t_object				plane(char **tmp);
 #endif
