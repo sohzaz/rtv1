@@ -12,6 +12,21 @@
 
 #include "fractol.h"
 //TODO implement raytracing algo
+static int      is_closest(double *d, double *res) {
+    int         i;
+    double      d_init;
+
+    i = 1;
+    d_init = *d;
+    while (i <= (int)res[0]) {
+        *d = (res[i] > 0 && *d > res[i]) ? res[i] : *d;
+        ++i;
+    }
+    printf("%f\n", *d);
+    return (d_init != *d);
+
+}
+
 static t_vector     create_vector(t_mlx *s, int i, int j) {
     t_vector        v;
     //a = s->cam.xyz;
@@ -26,28 +41,19 @@ int          get_inters(t_mlx *s, t_vector *v) {
     int             i;
     double          d;
     double          *res;
+    t_object        *closest;
 
-    d = INFINITY;
+    d = 500;
     i = 0;
+    closest = NULL;
     (void)v;
     while (i < (s->obj_len)) {
         res = s->objects[i].inter(s->objects, v, s->cam, s->objects[i]);
-        if (res[0] >= 0)
-        {
-            if (res[0] == 0) {
-                d = (d > res[1]) ? res[1] : d;
-                //printf("%f/%f\n", res[0], res[1]);
-            }
-            else
-            {
-               // printf("%f/%f/%f\n", res[0], res[1], res[2]);
-                d = (d > res[1]) ? res[1] : d;
-                d = (d > res[2]) ? res[2] : d;
-            }
-        }
+        if (is_closest(&d, res) == 1)
+            closest = &s->objects[i];
         i++;
     }
-    return ((int)fabs(d)*10000);
+    return (closest != NULL);
 }
 
 void                render_pic(t_mlx *s)
@@ -64,7 +70,7 @@ void                render_pic(t_mlx *s)
         {
             t_vector v = create_vector(s, i, j);
             tmp = get_inters(s, &v);
-            printf("%d\n", tmp);
+            //printf("%d\n", tmp);
             put_in_image(s, i, j, tmp);
             ++i;
         }
