@@ -18,14 +18,16 @@ static double           *calc_result(double a, double b, double d) {
     if (d == 0)
     {
         res[0] = 1.0f;
+        res[1] = (-1 * b) / (2 * a);
     }
     else if (d > 0)
     {
         res[0] = 2.0f;
         res[1] = ((-1 * b) - sqrt(d)) / (2 * a);
-        res[2] = ((-1 * b) - sqrt(d)) / (2 * a);
+        res[2] = ((-1 * b) + sqrt(d)) / (2 * a);
 
     }
+    printf("out:%f||%f||%f\n", res[0], res[1], res[2]);
     return(res);
 }
 
@@ -36,10 +38,12 @@ static double			*sphere_inter(t_object *objs, t_vector *v, t_camera cam, t_objec
     double c;
     double d;
 
-    a = pow(cam.x + v->x, 2) + pow(cam.y + v->y, 2) + pow(cam.z + v->z, 2);
-    b = 2 * ((cam.x + v->x) * (cam.x - self.x) + (cam.y + v->y) * (cam.y - self.y) + (cam.z + v->z) * (cam.z - self.z));
-    c = ((cam.x - self.x)^2 + (cam.y - self.y)^2 + (cam.z - self.z)^2) - self.radius^2;
-    d = b * b - 4* (a * c);
+    a = pow(v->x, 2) + pow(v->y, 2) + pow(v->z, 2);
+    b = 2 * (v->x * (self.x + cam.x)+ v->y * (self.y + cam.y) + v->z * (self.z + cam.z));
+    c = (pow(cam.x + self.x, 2) + pow(cam.y + self.y, 2) + pow(cam.z + self.z, 2)) - pow(self.radius, 2);
+    d = b * b - 4 * (a * c);
+
+    printf("in:%f||%f||%f\n", a, b, c);
 
 	(void)objs;
     return (calc_result(a, b, d));

@@ -31,9 +31,13 @@ typedef struct			s_camera{
 	int                 y;
 	int                 z;
 	int                 focal;
-	int                 rot_x;
-	int                 rot_y;
-	int                 rot_z;
+	float               rot_x;
+	float               rot_y;
+	float               rot_z;
+    int                 view_x;
+    int                 view_y;
+    double              vh;
+    double              vw;
 }                       t_camera;
 typedef struct			s_vector{
 	double				x;
@@ -46,9 +50,10 @@ typedef struct			s_object{
 	int                 y;
 	int                 z;
 	char 				type;
-	int                 rot_x;
-	int                 rot_y;
-	int                 rot_z;
+	float               rot_x;
+	float               rot_y;
+	float               rot_z;
+
 	int                 radius;
 	double				*(*inter)(struct s_object *, t_vector *, t_camera, struct s_object);
 }                       t_object;
