@@ -6,5 +6,5 @@
 0 0 0 10 0 0 0
 #objects params
 #id source x y z rot_x rot_y rot_z radius type
-1 0 90 0 0 0 0 0 90 sphere
+1 0 10 -9 0 0 0 0 11 sphere
 #2 0 -100000 0 0 0 0 0 10 sphere

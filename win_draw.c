@@ -21,7 +21,7 @@ static int      is_closest(double *d, double *res) {
   //  printf("%f\n", d_init);
     while (i <= (int)res[0]) {
        //printf("%f||%f\n", res[i], *d);
-        *d = (res[i] >= 0 && *d > res[i]) ? res[i] : *d;
+        *d = (res[i] > 0 && *d > res[i]) ? res[i] : *d;
         ++i;
     }
 
@@ -49,8 +49,10 @@ static t_vector     create_vector(t_mlx *s, int i, int j) {
     v.z = s->cam.rot_z;
    // v.y = s->cam.view_y - 0.35 * s->cam.vh * j;
     //v.x = s->cam.view_x + 0.5 * s->cam.vw * i ;
-    v.x = 2 * ((float)(i + 0.5 + (s->cam.rot_x * M_PI/180)) / WIN_MAX_X) * angle * (WIN_MAX_X / WIN_MAX_Y);
-    v.y = (1 - 2 * ((float)(j + 0.5 + (s->cam.rot_y * M_PI/180  )) / WIN_MAX_Y)) * angle;
+    //v.x = (2 * ((float)(i + 0.5 /*+ (s->cam.rot_x * M_PI/180)*/)/ WIN_MAX_X) - 1) * angle * (WIN_MAX_X / WIN_MAX_Y);
+    //v.y = (1 - 2 * ((float)(j + 0.5 /*+ (s->cam.rot_y * M_PI/180)*/) / WIN_MAX_Y)) * angle;
+    v.x = sqrt(pow(s->cam.focal, 2) + pow(i - WIN_MAX_X, 2));
+    v.y = sqrt(pow(s->cam.focal, 2) + pow(j - WIN_MAX_Y, 2));
     printf("pre-norm: %f||%f\n", v.x, v.y);
     normalize_vector(&v);
     printf("vec: %f||%f||%f\n", v.x, v.y, v.z);
