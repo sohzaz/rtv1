@@ -26,24 +26,29 @@
 # define PTR_MOTION_MASK (1L << 6)
 # define MOTION_NOTIFY 6
 
-typedef struct			s_camera{
-	int					x;
-	int                 y;
-	int                 z;
-	int                 focal;
-	float               rot_x;
-	float               rot_y;
-	float               rot_z;
-    int                 view_x;
-    int                 view_y;
-    double              vh;
-    double              vw;
-}                       t_camera;
+
 typedef struct			s_vector{
 	double				x;
 	double				y;
 	double				z;
 }						t_vector;
+typedef struct			s_camera{
+    int					x;
+    int                 y;
+    int                 z;
+    int                 focal;
+    float               rot_x;
+    float               rot_y;
+    float               rot_z;
+    int                 view_x;
+    int                 view_y;
+    double              vpx;
+    double              vpy;
+    double              vpz;
+    t_vector            v;
+    double              vh;
+    double              vw;
+}                       t_camera;
 typedef struct			s_object{
     int                 id;
 	int                 x;
@@ -88,4 +93,5 @@ void					win_reset(t_mlx *s);
 int                     get_inters(t_mlx *s, t_vector *v);
 t_object				sphere(char **tmp);
 t_object				plane(char **tmp);
+void             normalize_vector(t_vector *v) ;
 #endif

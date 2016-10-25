@@ -64,8 +64,11 @@ static void    camera_parse(t_mlx *s, int fd, int *l)
             s->cam.rot_y = ft_atoi(tmp[5]);
             s->cam.rot_z = ft_atoi(tmp[6]);
             //TODO refactor
-            s->cam.vh = tan(0.35) * WIN_MAX_Y;
-            s->cam.vw = tan(0.5) * WIN_MAX_X;
+            s->cam.vw = tan(30);
+            s->cam.vh = (WIN_MAX_X / WIN_MAX_Y) * s->cam.vw;
+            s->cam.vpx = (s->cam.x + cos(s->cam.rot_x) * s->cam.focal) - s->cam.vw;
+            s->cam.vpy = (s->cam.y + sin(s->cam.rot_y) * s->cam.focal) - s->cam.vh;
+            s->cam.vpz = s->cam.z;
             s->cam.view_x = (int)(s->cam.x +
                     ((s->cam.rot_x * s->cam.focal) - (0.5 * (s->cam.vw/2))));
             s->cam.view_y = (int)(s->cam.y +
@@ -74,7 +77,7 @@ static void    camera_parse(t_mlx *s, int fd, int *l)
             ++*l;
             free(line);
         }
-	printf("cam: %f||%f||%d||%d\n", s->cam.vh, s->cam.vw, s->cam.view_x, s->cam.view_y);
+	printf("cam: %f||%f||%f||%d\n", s->cam.vpx, s->cam.vpy, s->cam.vpz, s->cam.view_y);
     body_parse(s, fd, l);
 }
 

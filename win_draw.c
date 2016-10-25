@@ -29,13 +29,29 @@ static int      is_closest(double *d, double *res) {
 
 }
 
-static void     normalize_vector(t_vector *v) {
+void                normalize_values(double *x, double *y, double*z) {
+    double          length;
+
+    length = sqrt(*x * *x + *y * *y + *z * *z);
+    *x /= length;
+    *y /= length;
+    *z /= length;
+}
+void     normalize_vector(t_vector *v) {
     double      length;
+    printf("Vector in: %f||%f||%f\n", v->x, v->y, v->z);
 
     length = sqrt(pow(v->x, 2) + pow(v->y, 2) + pow(v->z, 2));
     v->x /= length;
     v->y /= length;
     v->z /= length;
+    if (isnan(v->x))
+        v->x = 0;
+    if (isnan(v->y))
+        v->y = 0;
+    if (isnan(v->z))
+        v->z = 0;
+    printf("Vector out: %f||%f||%f\n", v->x, v->y, v->z);
 }
 
 static t_vector     create_vector(t_mlx *s, int i, int j) {
@@ -44,16 +60,24 @@ static t_vector     create_vector(t_mlx *s, int i, int j) {
     //a = s->cam.xyz;
     //b = {WIN_MAX_X/2, WIN_MAX_Y/2};
     //c = {i/2, j/2}
-    (void)i;
-    (void)j;
-    v.z = s->cam.rot_z;
+    //(void)i;
+    //(void)j;
+    v.z = s->cam.z;
+    v.x = (s->cam.vpx + i) - s->cam.x;
+    v.y = (s->cam.vpy + j) - s->cam.y;
+
+    //v.x = s->cam.x + dxt;
+    //v.y = s->cam.y + dyt;
+    //pour centre viewPlane:
+    //v.x = s->cam.x + focal
+
+
+
    // v.y = s->cam.view_y - 0.35 * s->cam.vh * j;
     //v.x = s->cam.view_x + 0.5 * s->cam.vw * i ;
     //v.x = (2 * ((float)(i + 0.5 /*+ (s->cam.rot_x * M_PI/180)*/)/ WIN_MAX_X) - 1) * angle * (WIN_MAX_X / WIN_MAX_Y);
     //v.y = (1 - 2 * ((float)(j + 0.5 /*+ (s->cam.rot_y * M_PI/180)*/) / WIN_MAX_Y)) * angle;
-    v.x = sqrt(pow(s->cam.focal, 2) + pow(i - WIN_MAX_X, 2));
-    v.y = sqrt(pow(s->cam.focal, 2) + pow(j - WIN_MAX_Y, 2));
-    printf("pre-norm: %f||%f\n", v.x, v.y);
+    printf("ij: %d||%d\n", i, j);
     normalize_vector(&v);
     printf("vec: %f||%f||%f\n", v.x, v.y, v.z);
     printf("angle: %f||%d||%d\n", angle, i, j);
@@ -79,7 +103,7 @@ int          get_inters(t_mlx *s, t_vector *v) {
     }
     printf("d:%f\n", d);
 
-    return ((d < 99999999.9f && d >= 0) ? 10000 : 0);
+    return ((d < 99999999.9f) ? 10000 : 0);
 }
 
 void                render_pic(t_mlx *s)

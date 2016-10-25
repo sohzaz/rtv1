@@ -39,8 +39,8 @@ static double			*sphere_inter(t_object *objs, t_vector *v, t_camera cam, t_objec
     double d;
 
     a = pow(v->x, 2) + pow(v->y, 2) + pow(v->z, 2);
-    b = 2 * (v->x * (self.x + cam.x)+ v->y * (self.y + cam.y) + v->z * (self.z + cam.z));
-    c = (pow(cam.x + self.x, 2) + pow(cam.y + self.y, 2) + pow(cam.z + self.z, 2)) - pow(self.radius, 2);
+    b = 2 * (v->x * (cam.x - self.x)+ v->y * (cam.y - self.y) + v->z * (cam.z - self.z));
+    c = (pow(cam.x - self.x, 2) + pow(cam.y - self.y, 2) + pow(cam.z - self.z, 2)) - pow(self.radius, 2);
     d = b * b - 4 * (a * c);
 
     printf("in:%f||%f||%f\n", a, b, c);
