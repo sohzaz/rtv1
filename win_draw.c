@@ -29,47 +29,24 @@ static int      is_closest(double *d, double *res) {
 
 }
 
-void                normalize_values(double *x, double *y, double*z) {
-    double          length;
-
-    length = sqrt(*x * *x + *y * *y + *z * *z);
-    *x /= length;
-    *y /= length;
-    *z /= length;
-}
-
-
 static t_vector     create_vector(t_mlx *s, int i, int j) {
     t_vector        v;
-    float angle = tan(M_PI * 0.5 * 30 / 180.);
-    //a = s->cam.xyz;
-    //b = {WIN_MAX_X/2, WIN_MAX_Y/2};
-    //c = {i/2, j/2}
-    //(void)i;
-    //(void)j;
-    v.z = s->cam.z;
-    v.x = (s->cam.vpx + i) - s->cam.x;
-    v.y = (s->cam.vpy + j) - s->cam.y;
+	t_vector		vpp;
 
-    //v.x = s->cam.x + dxt;
-    //v.y = s->cam.y + dyt;
-    //pour centre viewPlane:
-    //v.x = s->cam.x + focal
+	vpp = add_vector(s->cam.vp, add_vector(
+			mult_vec_double(s->cam.vix, (double)i),
+			mult_vec_double(s->cam.viy, (double)j)
+	));
+	printf("vpp:{%f, %f, %f}\n", vpp.x, vpp.y, vpp.z);
+	v = sub_vec_by_vec(vpp, s->cam.c);
 
-
-
-   // v.y = s->cam.view_y - 0.35 * s->cam.vh * j;
-    //v.x = s->cam.view_x + 0.5 * s->cam.vw * i ;
-    //v.x = (2 * ((float)(i + 0.5 /*+ (s->cam.rot_x * M_PI/180)*/)/ WIN_MAX_X) - 1) * angle * (WIN_MAX_X / WIN_MAX_Y);
-    //v.y = (1 - 2 * ((float)(j + 0.5 /*+ (s->cam.rot_y * M_PI/180)*/) / WIN_MAX_Y)) * angle;
     printf("ij: %d||%d\n", i, j);
+	printf("v:{%f, %f, %f}\n", v.x, v.y, v.z);
     normalize_vector(&v);
     printf("vec: %f||%f||%f\n", v.x, v.y, v.z);
-    printf("angle: %f||%d||%d\n", angle, i, j);
-
     return (v);
 }
-int          get_inters(t_mlx *s, t_vector *v) {
+int         		get_inters(t_mlx *s, t_vector *v) {
     int             i;
     double          d;
     double          *res;
@@ -96,6 +73,7 @@ void                render_pic(t_mlx *s)
     int             i;
     int             j;
     int             tmp;
+	t_vector		v;
 
     j = 0;
     while (j < WIN_MAX_Y)
@@ -103,9 +81,10 @@ void                render_pic(t_mlx *s)
         i = 0;
         while (i < WIN_MAX_X)
         {
-            t_vector v = create_vector(s, i, j);
+			v = create_vector(s, i, j);
+			printf("V:{%f, %f, %f}\n", v.x, v.y, v.z);
             tmp = get_inters(s, &v);
-            //printf("%d\n", tmp);
+
             put_in_image(s, i, j, tmp*100000);
             ++i;
         }

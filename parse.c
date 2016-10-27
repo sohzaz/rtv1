@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
-static t_object	get_obj_type(char **tmp) {
-    t_object nil;
+static t_object	    get_obj_type(char **tmp) {
+    t_object        nil;
 
     nil.type = -127;
     if (ft_strcmp(tmp[9], "sphere") == 0) {
@@ -25,12 +25,12 @@ static t_object	get_obj_type(char **tmp) {
     }
     return (nil);
 }
-static void		body_parse(t_mlx *s, int fd, int *l)
+static void		    body_parse(t_mlx *s, int fd, int *l)
 {
-    char		*line;
-    char		**tmp;
-    int			tot_len;
-    int			o;
+    char		    *line;
+    char		    **tmp;
+    int			    tot_len;
+    int			    o;
 
     tot_len = s->obj_len + s->src_len + *l;
     o = 0;
@@ -47,37 +47,68 @@ static void		body_parse(t_mlx *s, int fd, int *l)
         }
 }
 
-static void    camera_parse(t_mlx *s, int fd, int *l)
+static void         cam_vector_compute(t_mlx *s, t_vector view_dir)
 {
-    char        *line;
-    char        **tmp;
+    t_vector        up;
+	t_vector		right;
+
+    up.x = 0.0f;
+    up.y = 1.0f;
+    up.z = 0.0f;
+	right.x = 1.0f;
+	right.y = 0.0f;
+	right.z = 0.0f;
+	printf("view_dir:{%f, %f, %f}\n", view_dir.x, view_dir.y, view_dir.z);
+    s->cam.vhw = tan(60);
+    s->cam.aspect = (double)WIN_MAX_X / (double)WIN_MAX_Y;
+    s->cam.vhh = s->cam.vhw * s->cam.aspect;
+	s->cam.vu = mult_vec_by_vec(view_dir, up);
+	s->cam.vv = mult_vec_by_vec(s->cam.vu, view_dir);
+	normalize_vector(&s->cam.vu);
+	normalize_vector(&s->cam.vv);
+	printf("vu:{%f, %f, %f}\n", s->cam.vu.x, s->cam.vu.y, s->cam.vu.z);
+	printf("vv:{%f, %f, %f}\n", s->cam.vv.x, s->cam.vv.y, s->cam.vv.z);
+	printf("vhh: %f, vhw: %f, aspect:%f\n", s->cam.vhh, s->cam.vhw, s->cam.aspect);
+    s->cam.vp = sub_vec_by_vec(s->cam.lp, sub_vec_by_vec(
+			mult_vec_double(s->cam.vu, 2.0f * s->cam.vhw),
+			mult_vec_double(s->cam.vv, 2.0f * s->cam.vhh)
+	));
+	s->cam.viy = mult_vec_double(s->cam.vu,
+								 (2.0f * s->cam.vhh) / (double)WIN_MAX_Y);
+	s->cam.vix = mult_vec_double(s->cam.vv,
+								 (2.0f * s->cam.vhw) / (double)WIN_MAX_X);
+	printf("vp:{%f, %f, %f}\n", s->cam.vp.x, s->cam.vp.y, s->cam.vp.z);
+	printf("vix:{%f, %f, %f}\n", s->cam.vix.x, s->cam.vix.y, s->cam.vix.z);
+	printf("viy:{%f, %f, %f}\n", s->cam.viy.x, s->cam.viy.y, s->cam.viy.z);
+
+
+}
+
+static void         camera_parse(t_mlx *s, int fd, int *l)
+{
+    char            *line;
+    char            **tmp;
+    t_vector        view_dir;
 
     while (*l != 2 && get_next_line(fd, &line) > 0)
         if (line[0] != '#')
         {
             tmp = ft_strsplit(line, ' ');
-            s->cam.x = ft_atoi(tmp[0]);
-            s->cam.y = ft_atoi(tmp[1]);
-            s->cam.z = ft_atoi(tmp[2]);
-            s->cam.focal = ft_atoi(tmp[3]);
-            s->cam.rot_x = ft_atoi(tmp[4]);
-            s->cam.rot_y = ft_atoi(tmp[5]);
-            s->cam.rot_z = ft_atoi(tmp[6]);
-            //TODO refactor
-            s->cam.vw = tan(30);
-            s->cam.vh = (WIN_MAX_X / WIN_MAX_Y) * s->cam.vw;
-            s->cam.vpx = (s->cam.x + cos(s->cam.rot_x) * s->cam.focal) - s->cam.vw;
-            s->cam.vpy = (s->cam.y + sin(s->cam.rot_y) * s->cam.focal) - s->cam.vh;
-            s->cam.vpz = s->cam.z;
-            s->cam.view_x = (int)(s->cam.x +
-                    ((s->cam.rot_x * s->cam.focal) - (0.5 * (s->cam.vw/2))));
-            s->cam.view_y = (int)(s->cam.y +
-                    ((s->cam.rot_y * s->cam.focal) + (0.35 * (s->cam.vh/2))));
-
+            s->cam.c.x = ft_atoi(tmp[0]);
+            s->cam.c.y = ft_atoi(tmp[1]);
+            s->cam.c.z = ft_atoi(tmp[2]);
+            s->cam.lp.x = ft_atoi(tmp[4]);
+            s->cam.lp.y = ft_atoi(tmp[5]);
+            s->cam.lp.z = ft_atoi(tmp[6]);
+			printf("lp:{%f, %f, %f}\n", s->cam.c.x, s->cam.c.y, s->cam.c.z);
+            view_dir = sub_vec_by_vec(s->cam.lp, s->cam.c);
+			s->cam.focal = sqrt(pow(view_dir.x - s->cam.x, 2) +
+										pow(view_dir.y - s->cam.y, 2) +
+										pow(view_dir.z - s->cam.z, 2));
+            cam_vector_compute(s, view_dir);
             ++*l;
             free(line);
         }
-	printf("cam: %f||%f||%f||%d\n", s->cam.vpx, s->cam.vpy, s->cam.vpz, s->cam.view_y);
     body_parse(s, fd, l);
 }
 

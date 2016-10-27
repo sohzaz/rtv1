@@ -25,9 +25,13 @@ typedef struct			s_vector{
     double				z;
 }						t_vector;
 void                    normalize_vector(t_vector *v);
-void                    multiply_vector_des(t_vector *v, double n);
-t_vector                multiply_vector(t_vector v, double n);
+void                    mult_vec_double_des(t_vector *v, double n);
+t_vector                mult_vec_double(t_vector v, double n);
 void                    add_vector_des(t_vector *v1, t_vector v2);
 t_vector                add_vector(t_vector v1, t_vector v2);
+t_vector                mult_vec_by_vec(t_vector v1, t_vector v2);
+void                    mult_vec_by_vec_des(t_vector*v1, t_vector v2);
+t_vector                sub_vec_by_vec(t_vector v1, t_vector v2);
+t_vector                div_vec_by_double(t_vector v, double n);
 
 #endif
