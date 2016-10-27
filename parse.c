@@ -59,9 +59,11 @@ static void         cam_vector_compute(t_mlx *s, t_vector view_dir)
 	right.y = 0.0f;
 	right.z = 0.0f;
 	printf("view_dir:{%f, %f, %f}\n", view_dir.x, view_dir.y, view_dir.z);
-    s->cam.vhw = tan(60);
+   // s->cam.vhw = tan(60);
+	s->cam.vhw = 0.50f;
+	s->cam.vhh = 0.35f;
     s->cam.aspect = (double)WIN_MAX_X / (double)WIN_MAX_Y;
-    s->cam.vhh = s->cam.vhw * s->cam.aspect;
+   // s->cam.vhh = s->cam.vhw * s->cam.aspect;
 	s->cam.vu = mult_vec_by_vec(view_dir, up);
 	s->cam.vv = mult_vec_by_vec(s->cam.vu, view_dir);
 	normalize_vector(&s->cam.vu);
