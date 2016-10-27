@@ -21,17 +21,14 @@
 # include <math.h>
 # include <unistd.h>
 # include <stdio.h>
+# include "vector.h"
 # define WIN_MAX_X 640
 # define WIN_MAX_Y 480
 # define PTR_MOTION_MASK (1L << 6)
 # define MOTION_NOTIFY 6
 
 
-typedef struct			s_vector{
-	double				x;
-	double				y;
-	double				z;
-}						t_vector;
+
 typedef struct			s_camera{
     int					x;
     int                 y;
@@ -93,5 +90,5 @@ void					win_reset(t_mlx *s);
 int                     get_inters(t_mlx *s, t_vector *v);
 t_object				sphere(char **tmp);
 t_object				plane(char **tmp);
-void             normalize_vector(t_vector *v) ;
+
 #endif

@@ -37,22 +37,7 @@ void                normalize_values(double *x, double *y, double*z) {
     *y /= length;
     *z /= length;
 }
-void     normalize_vector(t_vector *v) {
-    double      length;
-    printf("Vector in: %f||%f||%f\n", v->x, v->y, v->z);
 
-    length = sqrt(pow(v->x, 2) + pow(v->y, 2) + pow(v->z, 2));
-    v->x /= length;
-    v->y /= length;
-    v->z /= length;
-    if (isnan(v->x))
-        v->x = 0;
-    if (isnan(v->y))
-        v->y = 0;
-    if (isnan(v->z))
-        v->z = 0;
-    printf("Vector out: %f||%f||%f\n", v->x, v->y, v->z);
-}
 
 static t_vector     create_vector(t_mlx *s, int i, int j) {
     t_vector        v;
