@@ -33,15 +33,19 @@ static t_vector     create_vector(t_mlx *s, int i, int j) {
     t_vector        v;
 	t_vector		vpp;
 
-	vpp = add_vector(s->cam.vp, add_vector(
-			mult_vec_double(s->cam.vix, (double)i),
-			mult_vec_double(s->cam.viy, (double)j)
+
+
+	vpp = add_vector(s->cam.vp, sub_vec_by_vec(
+			mult_vec_double(mult_vec_double(s->cam.vv, 100* (s->cam.vhw / (float) WIN_MAX_X)), (double)i),
+			mult_vec_double(mult_vec_double(s->cam.vu, s->cam.vhh / (float) WIN_MAX_Y), (double)j)
 	));
+
 	printf("vpp:{%f, %f, %f}\n", vpp.x, vpp.y, vpp.z);
-	v = sub_vec_by_vec(vpp, s->cam.c);
+	//v = sub_vec_by_vec(vpp, s->cam.c);
+	v = vpp;
 
     printf("ij: %d||%d\n", i, j);
-	printf("v:{%f, %f, %f}\n", v.x, v.y, v.z);
+	//printf("v:{%f, %f, %f}\n", v.x, v.y, v.z);
     normalize_vector(&v);
     printf("vec: %f||%f||%f\n", v.x, v.y, v.z);
     return (v);

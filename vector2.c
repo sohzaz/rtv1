@@ -39,12 +39,7 @@ t_vector                sub_vec_by_vec(t_vector v1, t_vector v2)
 }
 t_vector                div_vec_by_double(t_vector v, double n)
 {
-	t_vector			res;
-
-	res.x = v.x / n;
-	res.y = v.y / n;
-	res.z = v.z / n;
-	return (res);
+	return (mult_vec_double(v, 1.0f / n));
 }
 
 

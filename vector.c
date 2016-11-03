@@ -42,7 +42,7 @@ t_vector                mult_vec_double(t_vector v, double n)
     res.x = v.x * n;
     res.y = v.y * n;
     res.z = v.z * n;
-    printf("in:{%f||%f||%f||%f}\nres:{%f, %f, %f}\n", v.x, v.y, v.z, n, res.x, res.y, res.z);
+  //  printf("in:{%f||%f||%f||%f}\nres:{%f, %f, %f}\n", v.x, v.y, v.z, n, res.x, res.y, res.z);
     return (res);
 }
 void                    add_vector_des(t_vector *v1, t_vector v2)
