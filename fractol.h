@@ -37,6 +37,8 @@ typedef struct			s_camera{
     float               rot_x;
     float               rot_y;
     float               rot_z;
+	double 				ix;
+	double 				iy;
 	t_vector			lp;
     t_vector			vp;
     t_vector            c;

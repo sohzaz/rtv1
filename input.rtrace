@@ -1,10 +1,10 @@
 #exemple file, will not run
 #light sources count/object count
-1/1
+1/2
 #camera params
 #x y z focal rot_x rot_y rot_z
-0 0 0 80 5 0 0
+0 0 0 80 10 8 0
 #objects params
 #id source x y z rot_x rot_y rot_z radius type
-1 0 9500 0 0 0 0 0 5 sphere
-#2 0 -10 0 0 0 0 0 10 sphere
+1 0 145 0 0 0 0 0 1 sphere
+2 0 50 0 12 0 0 0 3 sphere
