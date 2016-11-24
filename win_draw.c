@@ -35,19 +35,22 @@ static t_vector     create_vector(t_mlx *s, int i, int j) {
 
 
 
-	vpp = add_vector(s->cam.vp, sub_vec_by_vec(
-			mult_vec_double(mult_vec_double(s->cam.vv, 100* (s->cam.vhw / (float) WIN_MAX_X)), (double)i),
-			mult_vec_double(mult_vec_double(s->cam.vu, s->cam.vhh / (float) WIN_MAX_Y), (double)j)
+	vpp = add_vector(s->cam.vp, add_vector(
+			mult_vec_double(s->cam.vix, (double)i),
+			mult_vec_double(s->cam.viy, (double)j)
 	));
+	t_vector test1 = mult_vec_double(s->cam.vix, (double)i),
+			test2 = mult_vec_double(s->cam.viy, (double)j);
+	printf("ij: %d||%d\n", i, j);
+	printf("vpp:{%.10f, %.10f, %.10f}\n", vpp.x, vpp.y, vpp.z);
+	printf("test1:{%.10f, %.10f, %.10f}\n", test1.x, test1.y, test1.z);
+	printf("test2:{%.10f, %.10f, %.10f}\n", test2.x, test2.y, test2.z);
+	v = sub_vec_by_vec(vpp, s->cam.c);
+	//v = vpp;
 
-	printf("vpp:{%f, %f, %f}\n", vpp.x, vpp.y, vpp.z);
-	//v = sub_vec_by_vec(vpp, s->cam.c);
-	v = vpp;
 
-    printf("ij: %d||%d\n", i, j);
 	//printf("v:{%f, %f, %f}\n", v.x, v.y, v.z);
     normalize_vector(&v);
-    printf("vec: %f||%f||%f\n", v.x, v.y, v.z);
     return (v);
 }
 int         		get_inters(t_mlx *s, t_vector *v) {
@@ -86,7 +89,7 @@ void                render_pic(t_mlx *s)
         while (i < WIN_MAX_X)
         {
 			v = create_vector(s, i, j);
-			printf("V:{%f, %f, %f}\n", v.x, v.y, v.z);
+			printf("V:{%.10f, %.10f, %.10f}\n", v.x, v.y, v.z);
             tmp = get_inters(s, &v);
 
             put_in_image(s, i, j, tmp*100000);

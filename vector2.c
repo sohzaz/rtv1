@@ -16,9 +16,9 @@ t_vector                mult_vec_by_vec(t_vector v1, t_vector v2)
 {
     t_vector            res;
 
-    res.x = (v1.x + v1.y + v1.z) * v2.x;
-    res.y = (v1.x + v1.y + v1.z) * v2.y;
-    res.z = (v1.x + v1.y + v1.z) * v2.z;
+    res.x = v1.y * v2.z - v2.y * v1.z;
+    res.y = v2.x * v1.z - v2.z * v1.x;
+    res.z = v1.x * v2.y - v1.y * v2.x;
     return (res);
 }
 void                    mult_vec_by_vec_des(t_vector*v1, t_vector v2)
