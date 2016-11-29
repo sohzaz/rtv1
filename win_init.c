@@ -50,7 +50,6 @@ void		win_init(t_mlx s)
         if (s.win != NULL && s.img != NULL)
         {
             win_reset(&s);
-            s.color = 1;
             s.f_lock = 1;
             mlx_expose_hook(s.win, &expose_hook, &s);
             mlx_key_hook(s.win, &key_hook, &s);

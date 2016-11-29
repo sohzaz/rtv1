@@ -8,3 +8,6 @@
 #id source x y z rot_x rot_y rot_z radius type
 1 0 145 0 0 0 0 0 1 sphere
 2 0 50 0 12 0 0 0 3 sphere
+#sources params
+#id x y z color intensity
+3 -10 -15 0 100000 1

@@ -52,23 +52,28 @@ typedef struct			s_camera{
 }                       t_camera;
 typedef struct			s_object{
     int                 id;
+	double 				color;
 	int                 x;
 	int                 y;
 	int                 z;
 	char 				type;
+	float 				kd;
+	float 				ks;
+	float 				pr;
+	float 				psh;
+	float 				IOR;
 	float               rot_x;
 	float               rot_y;
 	float               rot_z;
-
 	int                 radius;
 	double				*(*inter)(struct s_object *, t_vector *, t_camera, struct s_object);
+	t_vector			(*normal)(t_vector *, struct s_object *);
 }                       t_object;
 typedef struct			s_mlxdata{
 	void				*mlx;
 	void				*win;
 	void				*img;
 	t_camera        	cam;
-	double				color;
 	long long			zoom;
 	int 				type;
 	long long			x_start;
@@ -94,5 +99,6 @@ void					win_reset(t_mlx *s);
 int                     get_inters(t_mlx *s, t_vector *v);
 t_object				sphere(char **tmp);
 t_object				plane(char **tmp);
+t_object				source(char **tmp);
 
 #endif

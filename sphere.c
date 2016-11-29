@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "fractol.h"
-static double           *calc_result(double a, double b, double d) {
+static double           *calc_result(double a, double b, double d)
+{
     double *res;
 
     res = (double *)malloc(sizeof(double) * 3);
@@ -31,8 +32,21 @@ static double           *calc_result(double a, double b, double d) {
     return(res);
 }
 
-static double			*sphere_inter(t_object *objs, t_vector *v, t_camera cam, t_object self) {
-	//Pvector = (cam.x + t.v->x, cam.y + t.v->y, cam.z + t.v->z)
+static t_vector			sphere_normal(t_vector *intersect, t_object *self)
+{
+	t_vector			res;
+	t_vector			center;
+
+	center.x = self->x;
+	center.y = self->y;
+	center.z = self->z;
+	res = sub_vec_by_vec(*intersect, center);
+	normalize_vector(&res);
+	return (res);
+}
+
+static double			*sphere_inter(t_object *objs, t_vector *v, t_camera cam, t_object self)
+{
     double a;
     double b;
     double c;
@@ -43,15 +57,16 @@ static double			*sphere_inter(t_object *objs, t_vector *v, t_camera cam, t_objec
     c = (pow(cam.c.x - self.x, 2) + pow(cam.c.y - self.y, 2) + pow(cam.c.z - self.z, 2)) - pow(self.radius, 2);
     d = b * b - 4 * (a * c);
 
-    printf("in:%f||%f||%f\n", a, b, c);
+    printf("in:%.10f||%.10f||%.10f\n", a, b, c);
 
 	(void)objs;
     return (calc_result(a, b, d));
 }
 
-t_object			sphere(char **tmp) {
+t_object			sphere(char **tmp)
+{
 	t_object		sp;
-
+	sp.normal = &sphere_normal;
 	sp.inter = &sphere_inter;
     sp.id = ft_atoi(tmp[0]);
     sp.x = ft_atoi(tmp[2]);

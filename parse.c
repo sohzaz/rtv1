@@ -25,6 +25,25 @@ static t_object	    get_obj_type(char **tmp) {
     }
     return (nil);
 }
+void				sources_parse(t_mlx *s, int fd, int *l)
+{
+	char		    *line;
+	char		    **tmp;
+	int			    tot_len;
+	int			    o;
+
+	tot_len = s->src_len + *l;
+	o = 0;
+	while (*l < tot_len && get_next_line(fd, &line) > 0)
+		if (line[0] != '#')
+		{
+			tmp = ft_strsplit(line, ' ');
+			++*l;
+			s->sources[o] = source(tmp);
+			++o;
+		}
+}
+
 static void		    body_parse(t_mlx *s, int fd, int *l)
 {
     char		    *line;
@@ -32,7 +51,7 @@ static void		    body_parse(t_mlx *s, int fd, int *l)
     int			    tot_len;
     int			    o;
 
-    tot_len = s->obj_len + s->src_len + *l;
+    tot_len = s->obj_len + *l;
     o = 0;
     while (*l < tot_len && get_next_line(fd, &line) > 0 )
         if (line[0] != '#')
@@ -45,6 +64,7 @@ static void		    body_parse(t_mlx *s, int fd, int *l)
                 ++o;
             }
         }
+	sources_parse(s, fd, l);
 }
 
 static void         cam_vector_compute(t_mlx *s, t_vector view_dir)

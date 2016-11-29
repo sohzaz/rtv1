@@ -39,7 +39,7 @@ int				ptr_motion_hook(int x, int y, t_mlx *s)
 		{
 		}
 	}
-	expose_hook(s);
+//	expose_hook(s);
 	return (0);
 }
 
