@@ -15,15 +15,10 @@ t_object		source(char **tmp)
 {
 	t_object	src;
 
-
 	src.x = ft_atoi(tmp[1]);
 	src.y = ft_atoi(tmp[2]);
 	src.z = ft_atoi(tmp[3]);
-
-
-
-
-
+	src.color = ft_atoi(tmp[4]);
 	return (src);
 }
 

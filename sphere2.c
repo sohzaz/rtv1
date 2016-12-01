@@ -13,10 +13,10 @@ int 			in_shadow(t_object *obj, t_object *v,
 	light_v.x = v->x - inter->x;
 	light_v.y = v->y - inter->y;
 	light_v.z = v->z - inter->z;
-	light_v.length = sqrt(pow(v->x - inter->x, 2) +
-							 pow(v->y - inter->y, 2) +
-							 pow(v->z - inter->z, 2));
-	normalize_vector(&light_v);
+	light_v.length = sqrt(pow(light_v.x, 2) +
+							 pow(light_v.y, 2) +
+							 pow(light_v.z, 2));
+	//normalize_vector(&light_v);
 	inter_res = obj->inter(*obj, &light_v, *inter);
 	while (i < inter_res[0])
 	{
@@ -24,6 +24,23 @@ int 			in_shadow(t_object *obj, t_object *v,
 			res = 1;
 		++i;
 	}
-	printf("inter_res: [%f, %f, %f]\n", inter_res[0], inter_res[1], inter_res[2]);
+	printf("inter_res: [%f, %f, %f]\nres: %d\n", inter_res[0], inter_res[1], inter_res[2], res);
 	return (res);
+}
+
+double 			get_sphere_diffuse(t_object *src, t_object *self,
+								  t_vector *inter)
+{
+	t_vector	light_v;
+	t_vector	surface_normal;
+	double 		l_dot_normal;
+
+	light_v.x = src->x - inter->x;
+	light_v.y = src->y - inter->y;
+	light_v.z = src->z - inter->z;
+	normalize_vector(&light_v);
+	surface_normal = sphere_normal(inter, self);
+	l_dot_normal = dot(&surface_normal, &light_v);
+	l_dot_normal *= l_dot_normal < 0;
+	return ((self->kd / 100) * self->color * src->color * l_dot_normal);
 }

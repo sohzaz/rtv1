@@ -34,7 +34,7 @@ static double           *calc_result(double a, double b, double d)
     return(res);
 }
 
-static t_vector			sphere_normal(t_vector *intersect, t_object *self)
+t_vector			sphere_normal(t_vector *intersect, t_object *self)
 {
 	t_vector			res;
 	t_vector			center;
@@ -51,30 +51,25 @@ static int 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
 {
 	int 			i;
 	int 			j;
-	(void)self;
 	int 			shadow;
-	t_vector		light_vect;
+	double 			diffuse;
+	/*int 			phong;*/
 
 	i = 0;
-	shadow = 0;
+	diffuse = 0;
 	while (i < s->src_len)
 	{
 		j = 0;
-		light_vect.x = s->sources[i].x - inter.x;
-		light_vect.y = s->sources[i].y - inter.y;
-		light_vect.z = s->sources[i].z - inter.z;
-		light_vect.length = sqrt(pow(s->sources[i].x - inter.x, 2) +
-						  pow(s->sources[i].y - inter.y, 2) +
-						  pow(s->sources[i].z - inter.z, 2));
-		normalize_vector(&light_vect);
 		while (j < s->obj_len)
 		{
 			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
+			diffuse += get_sphere_diffuse(&s->sources[i], self, &inter) * shadow;
+			printf("shadow: %d\ndiffuse:%f\n", shadow, diffuse);
 			++j;
 		}
 		++i;
 	}
-	return (self->color * shadow + 10000);
+	return (diffuse);
 }
 
 static double			*sphere_inter(t_object self, t_vector *v,
@@ -110,6 +105,7 @@ t_object			sphere(char **tmp)
     sp.rot_z = ft_atoi(tmp[7]);
     sp.radius = ft_atoi(tmp[8]);
 	sp.color = ft_atoi(tmp[1]);
+	sp.kd = ft_atoi(tmp[10]);
 	printf("sphere:{id:%d,\nx:%d,\ny:%d,\nz:%d,\nradius:%d,\ncolor:%d\n}", sp.id,
 	sp.x,
 	sp.y,
