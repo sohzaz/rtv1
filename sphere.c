@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "fractol.h"
+#include "sphere.h"
+
 static double           *calc_result(double a, double b, double d)
 {
     double *res;
@@ -45,7 +47,38 @@ static t_vector			sphere_normal(t_vector *intersect, t_object *self)
 	return (res);
 }
 
-static double			*sphere_inter(t_object *objs, t_vector *v, t_camera cam, t_object self)
+static int 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
+{
+	int 			i;
+	int 			j;
+	(void)self;
+	int 			shadow;
+	t_vector		light_vect;
+
+	i = 0;
+	shadow = 0;
+	while (i < s->src_len)
+	{
+		j = 0;
+		light_vect.x = s->sources[i].x - inter.x;
+		light_vect.y = s->sources[i].y - inter.y;
+		light_vect.z = s->sources[i].z - inter.z;
+		light_vect.length = sqrt(pow(s->sources[i].x - inter.x, 2) +
+						  pow(s->sources[i].y - inter.y, 2) +
+						  pow(s->sources[i].z - inter.z, 2));
+		normalize_vector(&light_vect);
+		while (j < s->obj_len)
+		{
+			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
+			++j;
+		}
+		++i;
+	}
+	return (self->color * shadow + 10000);
+}
+
+static double			*sphere_inter(t_object self, t_vector *v,
+									   t_vector org)
 {
     double a;
     double b;
@@ -53,13 +86,12 @@ static double			*sphere_inter(t_object *objs, t_vector *v, t_camera cam, t_objec
     double d;
 
     a = pow(v->x, 2) + pow(v->y, 2) + pow(v->z, 2);
-    b = 2 * (v->x * (cam.c.x - self.x) + v->y * (cam.c.y - self.y) + v->z * (cam.c.z - self.z));
-    c = (pow(cam.c.x - self.x, 2) + pow(cam.c.y - self.y, 2) + pow(cam.c.z - self.z, 2)) - pow(self.radius, 2);
+    b = 2 * (v->x * (org.x - self.x) + v->y * (org.y - self.y) + v->z * (org.z - self.z));
+    c = (pow(org.x - self.x, 2) + pow(org.y - self.y, 2) + pow(org.z - self.z, 2)) - pow(self.radius, 2);
     d = b * b - 4 * (a * c);
 
     printf("in:%.10f||%.10f||%.10f\n", a, b, c);
 
-	(void)objs;
     return (calc_result(a, b, d));
 }
 
@@ -68,6 +100,7 @@ t_object			sphere(char **tmp)
 	t_object		sp;
 	sp.normal = &sphere_normal;
 	sp.inter = &sphere_inter;
+	sp.get_color = &sphere_color;
     sp.id = ft_atoi(tmp[0]);
     sp.x = ft_atoi(tmp[2]);
     sp.y = ft_atoi(tmp[3]);
@@ -76,5 +109,11 @@ t_object			sphere(char **tmp)
     sp.rot_y = ft_atoi(tmp[6]);
     sp.rot_z = ft_atoi(tmp[7]);
     sp.radius = ft_atoi(tmp[8]);
+	sp.color = ft_atoi(tmp[1]);
+	printf("sphere:{id:%d,\nx:%d,\ny:%d,\nz:%d,\nradius:%d,\ncolor:%d\n}", sp.id,
+	sp.x,
+	sp.y,
+	sp.z, sp.radius,
+	sp.color);
 	return (sp);
 }

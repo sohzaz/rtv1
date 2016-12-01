@@ -11,10 +11,9 @@
 /* ************************************************************************** */
 #include "fractol.h"
 
-static double			*plane_inter(t_object *objs, t_vector *v, t_camera cam, t_object self) {
+static double			*plane_inter(t_object self, t_vector *v, t_vector org) {
     //Pvector = (cam.x + t.v->x, cam.y + t.v->y, cam.z + t.v->z)
-    (void)objs;
-    (void)cam;
+    (void)org;
     (void)v;
     (void)self;
 

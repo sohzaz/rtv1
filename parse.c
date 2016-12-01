@@ -15,12 +15,13 @@ static t_object	    get_obj_type(char **tmp) {
     t_object        nil;
 
     nil.type = -127;
+	write(1, "F\n\n\n", 4);
     if (ft_strcmp(tmp[9], "sphere") == 0) {
-        write(2, "sphere\n", 7);
+        write(1, "sphere\n", 7);
         return (sphere(tmp));
     }
     else if (ft_strcmp(tmp[9], "plane") == 0) {
-        write(2, "plane\n", 6);
+        write(1, "plane\n", 6);
         return (plane(tmp));
     }
     return (nil);
@@ -58,7 +59,7 @@ static void		    body_parse(t_mlx *s, int fd, int *l)
         {
             tmp = ft_strsplit(line, ' ');
             ++*l;
-            if (tmp[1][0] == '0' && o < s->obj_len)
+            if (o < s->obj_len)
             {
                 s->objects[o] = get_obj_type(tmp);
                 ++o;

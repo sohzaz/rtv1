@@ -33,8 +33,6 @@ static t_vector     create_vector(t_mlx *s, int i, int j) {
     t_vector        v;
 	t_vector		vpp;
 
-
-
 	vpp = add_vector(s->cam.vp, add_vector(
 			mult_vec_double(s->cam.vix, (double)i),
 			mult_vec_double(s->cam.viy, (double)j)
@@ -53,6 +51,24 @@ static t_vector     create_vector(t_mlx *s, int i, int j) {
     normalize_vector(&v);
     return (v);
 }
+
+int 				get_color(t_object *close, double d, t_mlx *s, t_vector *v)
+{
+	(void)close;
+	(void)s;
+	(void)v;
+	/*int 			i;
+	t_vector		inter_point;
+	t_vector		light_vect;
+
+	inter_point = add_vector(s->cam.c, mult_vec_double(*v, d));
+	i = 0;
+	while (i < s->src_len)
+	{
+
+	}*/
+	return ((d < 99999999.9f) ? 10000 : 0);
+}
 int         		get_inters(t_mlx *s, t_vector *v) {
     int             i;
     double          d;
@@ -62,17 +78,19 @@ int         		get_inters(t_mlx *s, t_vector *v) {
     d = 99999999.9f;
     i = 0;
     closest = NULL;
-    (void)v;
     while (i < (s->obj_len)) {
         //printf("%f\n", d);
-        res = s->objects[i].inter(s->objects, v, s->cam, s->objects[i]);
+		printf("obj:{%d||%d||%d||%d}\n",
+			   s->objects[i].color,s->objects[i].x,s->objects[i].y,s->objects[i].z);
+        res = s->objects[i].inter(s->objects[i], v, s->cam.c);
         if (is_closest(&d, res) == 1)
             closest = &s->objects[i];
         i++;
     }
-    printf("d:%f\n", d);
-
-    return ((d < 99999999.9f) ? 10000 : 0);
+    return ((closest && d < 99999999.9f) ?
+			closest->get_color(s, closest,
+							   add_vector(s->cam.c, mult_vec_double(*v, d))) :
+			0);
 }
 
 void                render_pic(t_mlx *s)
@@ -91,8 +109,7 @@ void                render_pic(t_mlx *s)
 			v = create_vector(s, i, j);
 			printf("V:{%.10f, %.10f, %.10f}\n", v.x, v.y, v.z);
             tmp = get_inters(s, &v);
-
-            put_in_image(s, i, j, tmp*100000);
+            put_in_image(s, i, j, tmp);
             ++i;
         }
         ++j;

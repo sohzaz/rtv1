@@ -23,6 +23,7 @@ typedef struct			s_vector{
     double				x;
     double				y;
     double				z;
+	double				length;
 }						t_vector;
 void                    normalize_vector(t_vector *v);
 void                    mult_vec_double_des(t_vector *v, double n);
