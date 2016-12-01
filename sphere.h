@@ -7,5 +7,7 @@ int 				in_shadow(t_object *obj, t_object *v,
 t_vector			sphere_normal(t_vector *intersect, t_object *self);
 double 				get_sphere_diffuse(t_object *src, t_object *self,
 									 t_vector *inter);
+double 				get_sphere_ambiant(t_object *src, t_object *self,
+							 t_vector *inter);
 
 #endif

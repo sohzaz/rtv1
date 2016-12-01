@@ -70,7 +70,7 @@ typedef struct s_object {
 	int radius;
 	double *(*inter)(struct s_object , t_vector *, t_vector);
 	t_vector (*normal)(t_vector *, struct s_object *);
-	int (*get_color)(struct s_mlxdata *, struct s_object *, t_vector);
+	double (*get_color)(struct s_mlxdata *, struct s_object *, t_vector);
 } t_object;
 typedef struct s_mlxdata {
 	void *mlx;
@@ -90,31 +90,18 @@ typedef struct s_mlxdata {
 } t_mlx;
 
 void win_init(t_mlx s);
-
 void render_pic(t_mlx *s);
-
 void parse(t_mlx *s, int fd);
-
 void put_in_image(t_mlx *s, int x, int y, int color);
-
 int mouse_zoom_handler(int btn, int x, int y, t_mlx *s);
-
 int key_win_handler(int key, t_mlx *s);
-
 int ptr_motion_hook(int x, int y, t_mlx *s);
-
 int expose_hook(t_mlx *s);
-
 void get_numbers(t_mlx *s, int x, int y);
-
 void win_reset(t_mlx *s);
-
-int get_inters(t_mlx *s, t_vector *v);
-
+unsigned int get_inters(t_mlx *s, t_vector *v);
 t_object sphere(char **tmp);
-
 t_object plane(char **tmp);
-
 t_object source(char **tmp);
 
 #endif

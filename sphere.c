@@ -47,29 +47,32 @@ t_vector			sphere_normal(t_vector *intersect, t_object *self)
 	return (res);
 }
 
-static int 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
+static double 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
 {
 	int 			i;
 	int 			j;
 	int 			shadow;
 	double 			diffuse;
+	double 			ambiant;
 	/*int 			phong;*/
 
 	i = 0;
 	diffuse = 0;
+	ambiant = 0;
 	while (i < s->src_len)
 	{
 		j = 0;
 		while (j < s->obj_len)
 		{
 			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
-			diffuse += get_sphere_diffuse(&s->sources[i], self, &inter) * shadow;
-			printf("shadow: %d\ndiffuse:%f\n", shadow, diffuse);
+			diffuse = get_sphere_diffuse(&s->sources[i], self, &inter) * shadow;
+			ambiant += get_sphere_ambiant(&s->sources[i], self, &inter);
+			printf("shadow:%d\ndiffuse:%f\nambiant:%f\n", shadow, diffuse, ambiant);
 			++j;
 		}
 		++i;
 	}
-	return (diffuse);
+	return (diffuse + ambiant);
 }
 
 static double			*sphere_inter(t_object self, t_vector *v,

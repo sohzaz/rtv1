@@ -69,7 +69,7 @@ int 				get_color(t_object *close, double d, t_mlx *s, t_vector *v)
 	}*/
 	return ((d < 99999999.9f) ? 10000 : 0);
 }
-int         		get_inters(t_mlx *s, t_vector *v) {
+unsigned int         		get_inters(t_mlx *s, t_vector *v) {
     int             i;
     double          d;
     double          *res;
@@ -97,7 +97,7 @@ void                render_pic(t_mlx *s)
 {
     int             i;
     int             j;
-    int             tmp;
+    unsigned int    tmp;
 	t_vector		v;
 
     j = 0;
@@ -109,6 +109,7 @@ void                render_pic(t_mlx *s)
 			v = create_vector(s, i, j);
 			printf("V:{%.10f, %.10f, %.10f}\n", v.x, v.y, v.z);
             tmp = get_inters(s, &v);
+			printf("endColor: %d\n", tmp);
             put_in_image(s, i, j, tmp);
             ++i;
         }
