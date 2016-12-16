@@ -107,12 +107,12 @@ t_object			sphere(char **tmp)
     sp.rot_y = ft_atoi(tmp[6]);
     sp.rot_z = ft_atoi(tmp[7]);
     sp.radius = ft_atoi(tmp[8]);
-	sp.color = ft_atoi(tmp[1]);
+	sp.color = create_color(tmp[1]);
 	sp.kd = ft_atoi(tmp[10]);
-	printf("sphere:{id:%d,\nx:%d,\ny:%d,\nz:%d,\nradius:%d,\ncolor:%d\n}", sp.id,
+	/*printf("sphere:{id:%d,\nx:%d,\ny:%d,\nz:%d,\nradius:%d,\ncolor:%d\n}", sp.id,
 	sp.x,
 	sp.y,
 	sp.z, sp.radius,
-	sp.color);
+	sp.color);*/
 	return (sp);
 }

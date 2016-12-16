@@ -80,8 +80,8 @@ unsigned int         		get_inters(t_mlx *s, t_vector *v) {
     closest = NULL;
     while (i < (s->obj_len)) {
         //printf("%f\n", d);
-		printf("obj:{%d||%d||%d||%d}\n",
-			   s->objects[i].color,s->objects[i].x,s->objects[i].y,s->objects[i].z);
+		//printf("obj:{%d||%d||%d||%d}\n",
+		//	   s->objects[i].color,s->objects[i].x,s->objects[i].y,s->objects[i].z);
         res = s->objects[i].inter(s->objects[i], v, s->cam.c);
         if (is_closest(&d, res) == 1)
             closest = &s->objects[i];

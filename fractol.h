@@ -17,6 +17,7 @@
 # include <mlx.h>
 # include <libft.h>
 # include <get_next_line.h>
+# include "color.h"
 # include <string.h>
 # include <stdlib.h>
 # include <math.h>
@@ -54,7 +55,7 @@ typedef struct s_camera {
 } t_camera;
 typedef struct s_object {
 	int id;
-	int color;
+	t_color color;
 	int x;
 	int y;
 	int z;

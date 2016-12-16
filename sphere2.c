@@ -14,7 +14,9 @@ double 	get_sphere_ambiant(t_object *src, t_object *self,
 						  pow(light_v.z, 2));
 
 
-	return(src->color * self->color * (self->kd * 0.1) * 0.1);
+	return(get_color_value(mult_color_double(
+			mult_color(src->color, self->color),
+			(self->kd * 0.1) * 0.1)));
 }
 int 			in_shadow(t_object *obj, t_object *v,
 					 t_vector *inter)
@@ -62,6 +64,8 @@ double 			get_sphere_diffuse(t_object *src, t_object *self,
 	printf("l_dot_normal: %f\n", l_dot_normal);
 	l_dot_normal *= l_dot_normal > 0.0f;
 	printf("l_dot_normal_a: %f\n", l_dot_normal);
-	return (((self->kd / 100) * self->color * src->color * l_dot_normal) /
-			pow(light_v.length, 2));
+	return (get_color_value(mult_color_double(
+			mult_color(src->color, self->color),
+			((self->kd / 100) * l_dot_normal) /
+			pow(light_v.length, 2))));
 }
