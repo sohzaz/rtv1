@@ -1,7 +1,7 @@
 #include "sphere.h"
 
 
-double 	get_sphere_ambiant(t_object *src, t_object *self,
+t_color	get_sphere_ambiant(t_object *src, t_object *self,
 									t_vector *inter)
 {
 	(void)inter;
@@ -14,9 +14,9 @@ double 	get_sphere_ambiant(t_object *src, t_object *self,
 						  pow(light_v.z, 2));
 
 
-	return(get_color_value(mult_color_double(
+	return(mult_color_double(
 			mult_color(src->color, self->color),
-			(self->kd * 0.1) * 0.1)));
+			(self->kd * 0.1) * 0.1));
 }
 int 			in_shadow(t_object *obj, t_object *v,
 					 t_vector *inter)
@@ -46,7 +46,7 @@ int 			in_shadow(t_object *obj, t_object *v,
 	return (res);
 }
 
-double 			get_sphere_diffuse(t_object *src, t_object *self,
+t_color 			get_sphere_diffuse(t_object *src, t_object *self,
 								  t_vector *inter)
 {
 	t_vector	light_v;
@@ -64,8 +64,8 @@ double 			get_sphere_diffuse(t_object *src, t_object *self,
 	printf("l_dot_normal: %f\n", l_dot_normal);
 	l_dot_normal *= l_dot_normal > 0.0f;
 	printf("l_dot_normal_a: %f\n", l_dot_normal);
-	return (get_color_value(mult_color_double(
+	return (mult_color_double(
 			mult_color(src->color, self->color),
 			((self->kd / 100) * l_dot_normal) /
-			pow(light_v.length, 2))));
+			pow(light_v.length, 2)));
 }

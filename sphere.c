@@ -52,27 +52,26 @@ static double 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
 	int 			i;
 	int 			j;
 	int 			shadow;
-	double 			diffuse;
-	double 			ambiant;
+	t_color			diffuse;
+	t_color			ambiant;
 	/*int 			phong;*/
 
 	i = 0;
-	diffuse = 0;
-	ambiant = 0;
 	while (i < s->src_len)
 	{
 		j = 0;
 		while (j < s->obj_len)
 		{
 			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
-			diffuse = get_sphere_diffuse(&s->sources[i], self, &inter) * shadow;
-			ambiant += get_sphere_ambiant(&s->sources[i], self, &inter);
-			printf("shadow:%d\ndiffuse:%f\nambiant:%f\n", shadow, diffuse, ambiant);
+			diffuse = get_sphere_diffuse(&s->sources[i], self, &inter);
+			ambiant = add_color(ambiant,
+								get_sphere_ambiant(&s->sources[i], self, &inter));
+			//printf("shadow:%d\ndiffuse:%f\nambiant:%f\n", shadow, diffuse, ambiant);
 			++j;
 		}
 		++i;
 	}
-	return (diffuse + ambiant);
+	return (get_color_value(add_color(diffuse, ambiant)));
 }
 
 static double			*sphere_inter(t_object self, t_vector *v,
