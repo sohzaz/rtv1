@@ -30,7 +30,6 @@ static double           *calc_result(double a, double b, double d)
         res[2] = ((-1 * b) + sqrt(d)) / (2 * a);
 
     }
-    printf("out:%f||%f||%f\n", res[0], res[1], res[2]);
     return(res);
 }
 
@@ -53,7 +52,7 @@ static double 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
 	int 			j;
 	int 			shadow;
 	t_color			diffuse;
-	//t_color			ambiant;
+	t_color			ambiant;
 	/*int 			phong;*/
 
 	i = 0;
@@ -63,22 +62,21 @@ static double 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
 		j = 0;
 		while (j < s->obj_len)
 		{
-			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
-			diffuse =  (!isnan(diffuse.r)) ?
-					  add_color(diffuse,
-								get_sphere_diffuse(&s->sources[i], self, &inter))
-								: get_sphere_diffuse(&s->sources[i], self, &inter);
-		/*	ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
+			shadow = (s->obj_len == 1)
+					 || !(in_shadow(&s->objects[j], &s->sources[i], &inter));
+			comp_curr_diff(&diffuse, shadow,
+						   get_sphere_diffuse(&s->sources[i], self, &inter));
+			ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
 													 self, &inter) :
 					add_color(ambiant, get_sphere_ambiant(&s->sources[i],
-														  self, &inter));*/
+														  self, &inter));
 			printf("shadow:%d\n\n", shadow);
 			++j;
 		}
 		++i;
 	}
-	//return (get_color_value(add_color(diffuse, ambiant)));
-	return (get_color_value(diffuse));
+	return (get_color_value(add_color(diffuse, ambiant)));
+	//return (get_color_value(diffuse));
 }
 
 static double			*sphere_inter(t_object self, t_vector *v,
@@ -93,9 +91,6 @@ static double			*sphere_inter(t_object self, t_vector *v,
     b = 2 * (v->x * (org.x - self.x) + v->y * (org.y - self.y) + v->z * (org.z - self.z));
     c = (pow(org.x - self.x, 2) + pow(org.y - self.y, 2) + pow(org.z - self.z, 2)) - pow(self.radius, 2);
     d = b * b - 4 * (a * c);
-
-    printf("in:%.10f||%.10f||%.10f\n", a, b, c);
-
     return (calc_result(a, b, d));
 }
 
