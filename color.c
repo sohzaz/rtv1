@@ -50,6 +50,7 @@ t_color			mult_color_double(t_color c1, float nbr)
 	tmp_r = c1.r * nbr;
 	tmp_g =	c1.g * nbr;
 	tmp_b =	c1.b * nbr;
+	printf("mult double\n");
 	check_overflow(&res, tmp_r, tmp_g, tmp_b);
 	return (res);
 
@@ -64,6 +65,7 @@ t_color			mult_color(t_color c1, t_color c2)
 	tmp_r = c1.r * c2.r;
 	tmp_g =	c1.g * c2.g;
 	tmp_b =	c1.b * c2.b;
+	printf("mult\n");
 	check_overflow(&res, tmp_r, tmp_g, tmp_b);
 	return (res);
 }
@@ -77,6 +79,7 @@ t_color			add_color(t_color c1, t_color c2)
 	tmp_r = c1.r + c2.r;
 	tmp_g =	c1.g + c2.g;
 	tmp_b =	c1.b + c2.b;
+	printf("add: c1:{r:%f, g:%f, b:%f}\nc2:{r:%f, g:%f, b:%f}\n", c1.r, c1.g, c1.b, c2.r, c2.g, c2.b);
 	check_overflow(&res, tmp_r, tmp_g, tmp_b);
 	return (res);
 }

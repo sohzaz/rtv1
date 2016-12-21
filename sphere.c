@@ -63,10 +63,13 @@ static double 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
 		while (j < s->obj_len)
 		{
 			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
-			diffuse = get_sphere_diffuse(&s->sources[i], self, &inter);
-			ambiant = add_color(ambiant,
-								get_sphere_ambiant(&s->sources[i], self, &inter));
-			//printf("shadow:%d\ndiffuse:%f\nambiant:%f\n", shadow, diffuse, ambiant);
+			diffuse = mult_color_double(
+					get_sphere_diffuse(&s->sources[i], self, &inter), (double)shadow);
+			ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
+													 self, &inter) :
+					add_color(ambiant, get_sphere_ambiant(&s->sources[i],
+														  self, &inter));
+			printf("shadow:%d\n\n", shadow);
 			++j;
 		}
 		++i;

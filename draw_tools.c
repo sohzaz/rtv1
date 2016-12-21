@@ -25,10 +25,10 @@ void				put_in_image(t_mlx *s, int x, int y, int color)
 	if (x < (WIN_MAX_X) && y < (WIN_MAX_Y)
 			&& x > 0 && y > 0)
 	{
-		start[(x * (bpp / 8)) + (y * size_line)] = new_color & 0xFF;
+		start[(x * (bpp / 8)) + (y * size_line) + 2] = new_color & 0xFF;
 		start[(x * (bpp / 8)) + (y * size_line) + 1] = (new_color
 				& 0xFF00) >> 8;
-		start[(x * (bpp / 8)) + (y * size_line) + 2] = (new_color
+		start[(x * (bpp / 8)) + (y * size_line)] = (new_color
 				& 0xFFFF00) >> 16;
 	}
 }
