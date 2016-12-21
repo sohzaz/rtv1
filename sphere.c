@@ -62,8 +62,7 @@ static double 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
 		j = 0;
 		while (j < s->obj_len)
 		{
-			shadow = (s->obj_len == 1)
-					 || !(in_shadow(&s->objects[j], &s->sources[i], &inter));
+			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
 			comp_curr_diff(&diffuse, shadow,
 						   get_sphere_diffuse(&s->sources[i], self, &inter));
 			ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],

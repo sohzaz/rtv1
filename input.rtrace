@@ -2,8 +2,8 @@
 #light sources count/object count
 2/4
 #camera params
-#x y z focal rot_x rot_y rot_z
-0 0 0 80 10 8 0
+#x y z fov rot_x rot_y rot_z
+0 0 0 60 10 10 0
 #objects params
 #id color x y z rot_x rot_y rot_z radius type kd
 1 25,10,10 445 0 0 0 0 0 100 sphere 100

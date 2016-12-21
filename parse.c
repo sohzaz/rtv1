@@ -80,10 +80,8 @@ static void         cam_vector_compute(t_mlx *s, t_vector view_dir)
 	right.y = 0.0f;
 	right.z = 0.0f;
 	printf("view_dir:{%f, %f, %f}\n", view_dir.x, view_dir.y, view_dir.z);
-    s->cam.vhw = tan(30);
-	//s->cam.vhw = 0.3f;
-	//s->cam.vhh = 0.05f;
-    s->cam.aspect = (double)WIN_MAX_Y / (double)WIN_MAX_X;
+    s->cam.vhw = tan(s->cam.fov / 2);
+    s->cam.aspect = (double)WIN_MAX_X / (double)WIN_MAX_Y;
     s->cam.vhh = s->cam.vhw * s->cam.aspect;
 	s->cam.vu = mult_vec_by_vec(view_dir, up);
 	s->cam.vv = mult_vec_by_vec(s->cam.vu, view_dir);
@@ -91,15 +89,7 @@ static void         cam_vector_compute(t_mlx *s, t_vector view_dir)
 	normalize_vector(&s->cam.vv);
 	printf("vu:{%f, %f, %f}\n", s->cam.vu.x, s->cam.vu.y, s->cam.vu.z);
 	printf("vv:{%f, %f, %f}\n", s->cam.vv.x, s->cam.vv.y, s->cam.vv.z);
-//	s->cam.vu = up;
-//	s->cam.vv = right;
 	printf("vhh: %f, vhw: %f, aspect:%f\n", s->cam.vhh, s->cam.vhw, s->cam.aspect);
-	/*s->cam.vp = add_vector(s->cam.c, sub_vec_by_vec(
-			add_vector(
-			mult_vec_double(view_dir, s->cam.focal),
-			mult_vec_double(up, s->cam.vhw/2.0f)),
-			mult_vec_double(right, s->cam.vhh / 2.0f)));*/
-
     s->cam.vp = sub_vec_by_vec(s->cam.lp, sub_vec_by_vec(
 			mult_vec_double(s->cam.vu, s->cam.vhw),
 			mult_vec_double(s->cam.vv, s->cam.vhh)
@@ -136,6 +126,7 @@ static void         camera_parse(t_mlx *s, int fd, int *l)
             s->cam.lp.x = ft_atoi(tmp[4]);
             s->cam.lp.y = ft_atoi(tmp[5]);
             s->cam.lp.z = ft_atoi(tmp[6]);
+			s->cam.fov = ft_atoi(tmp[3]);
 			printf("cp:{%f, %f, %f}\n", s->cam.c.x, s->cam.c.y, s->cam.c.z);
 			printf("lp:{%f, %f, %f}\n", s->cam.lp.x, s->cam.lp.y, s->cam.lp.z);
             view_dir = sub_vec_by_vec(s->cam.lp, s->cam.c);
