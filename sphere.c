@@ -46,7 +46,7 @@ t_vector			sphere_normal(t_vector *intersect, t_object *self)
 	return (res);
 }
 
-static double 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
+double 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
 {
 	int 			i;
 	int 			j;
@@ -69,7 +69,7 @@ static double 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
 													 self, &inter) :
 					add_color(ambiant, get_sphere_ambiant(&s->sources[i],
 														  self, &inter));*/
-			printf("shadow:%d\n\n", shadow);
+			//printf("shadow:%d\n\n", shadow);
 			++j;
 		}
 		++i;

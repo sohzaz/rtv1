@@ -25,8 +25,8 @@
 # include <stdio.h>
 # include "vector.h"
 
-# define WIN_MAX_X 640
-# define WIN_MAX_Y 480
+# define WIN_MAX_X 1920
+# define WIN_MAX_Y 1080
 # define PTR_MOTION_MASK (1L << 6)
 # define MOTION_NOTIFY 6
 
@@ -57,6 +57,7 @@ typedef struct s_camera {
 typedef struct s_object {
 	int id;
 	t_color color;
+	t_vector	dir;
 	int x;
 	int y;
 	int z;
@@ -106,5 +107,6 @@ unsigned int get_inters(t_mlx *s, t_vector *v);
 t_object sphere(char **tmp);
 t_object plane(char **tmp);
 t_object source(char **tmp);
+void				print_status(int i, int j);
 
 #endif

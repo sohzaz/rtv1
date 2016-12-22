@@ -42,7 +42,7 @@ int 			in_shadow(t_object *obj, t_object *v,
 			res = 1;
 		++i;
 	}
-	printf("inter_res: [%f, %f, %f]\nres: %d\nlen:%f\n", inter_res[0], inter_res[1], inter_res[2], res, light_v.length);
+	//printf("inter_res: [%f, %f, %f]\nres: %d\nlen:%f\n", inter_res[0], inter_res[1], inter_res[2], res, light_v.length);
 	return (res);
 }
 
@@ -62,14 +62,14 @@ t_color 			get_sphere_diffuse(t_object *src, t_object *self,
 	normalize_vector(&light_v);
 	surface_normal = sphere_normal(inter, self);
 	l_dot_normal = dot(&surface_normal, &light_v);
-	printf("l_dot_normal: %f\n", l_dot_normal);
+	//printf("l_dot_normal: %f\n", l_dot_normal);
 	l_dot_normal *= l_dot_normal > 0.0f;
-	printf("l_dot_normal_a: %f\n", l_dot_normal);
+	//printf("l_dot_normal_a: %f\n", l_dot_normal);
 	tmp = mult_color_double(
 			mult_color(src->color, self->color),
 			((self->kd / 100) * l_dot_normal) /*/
 			pow(light_v.length, 2)*/);
-	printf("sphere diffuse color: {%f, %f, %f}\n", tmp.r, tmp.g, tmp.b);
+	//printf("sphere diffuse color: {%f, %f, %f}\n", tmp.r, tmp.g, tmp.b);
 	return (tmp);
 }
 void				comp_curr_diff(t_color* diffuse, int shadow,

@@ -37,12 +37,8 @@ static t_vector     create_vector(t_mlx *s, int i, int j) {
 			mult_vec_double(s->cam.vix, (double)i),
 			mult_vec_double(s->cam.viy, (double)j)
 	));
-	t_vector test1 = mult_vec_double(s->cam.vix, (double)i),
-			test2 = mult_vec_double(s->cam.viy, (double)j);
-	printf("ij: %d||%d\n", i, j);
-	printf("vpp:{%.10f, %.10f, %.10f}\n", vpp.x, vpp.y, vpp.z);
-	printf("test1:{%.10f, %.10f, %.10f}\n", test1.x, test1.y, test1.z);
-	printf("test2:{%.10f, %.10f, %.10f}\n", test2.x, test2.y, test2.z);
+	//printf("ij: %d||%d\n", i, j);
+	//printf("vpp:{%.10f, %.10f, %.10f}\n", vpp.x, vpp.y, vpp.z);
 	v = sub_vec_by_vec(vpp, s->cam.c);
 	//v = vpp;
 
@@ -87,6 +83,7 @@ unsigned int         		get_inters(t_mlx *s, t_vector *v) {
             closest = &s->objects[i];
         i++;
     }
+	//printf("distance:%f\n", d);
     return ((closest && d < 99999999.9f) ?
 			closest->get_color(s, closest,
 							   add_vector(s->cam.c, mult_vec_double(*v, d))) :
@@ -107,11 +104,12 @@ void                render_pic(t_mlx *s)
         while (i < WIN_MAX_X)
         {
 			v = create_vector(s, i, j);
-			printf("V:{%.10f, %.10f, %.10f}\n", v.x, v.y, v.z);
+			//printf("V:{%.10f, %.10f, %.10f}\n", v.x, v.y, v.z);
             tmp = get_inters(s, &v);
-			printf("endColor: %d\n", tmp);
+			//printf("endColor: %d\n", tmp);
             put_in_image(s, i, j, tmp);
             ++i;
+		//	print_status(i, j);
         }
         ++j;
     }

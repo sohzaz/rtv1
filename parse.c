@@ -79,7 +79,7 @@ static void         cam_vector_compute(t_mlx *s, t_vector view_dir)
 	right.x = 1.0f;
 	right.y = 0.0f;
 	right.z = 0.0f;
-	printf("view_dir:{%f, %f, %f}\n", view_dir.x, view_dir.y, view_dir.z);
+	//printf("view_dir:{%f, %f, %f}\n", view_dir.x, view_dir.y, view_dir.z);
     s->cam.vhw = tan(s->cam.fov / 2);
     s->cam.aspect = (double)WIN_MAX_X / (double)WIN_MAX_Y;
     s->cam.vhh = s->cam.vhw * s->cam.aspect;
@@ -87,9 +87,9 @@ static void         cam_vector_compute(t_mlx *s, t_vector view_dir)
 	s->cam.vv = mult_vec_by_vec(s->cam.vu, view_dir);
 	normalize_vector(&s->cam.vu);
 	normalize_vector(&s->cam.vv);
-	printf("vu:{%f, %f, %f}\n", s->cam.vu.x, s->cam.vu.y, s->cam.vu.z);
-	printf("vv:{%f, %f, %f}\n", s->cam.vv.x, s->cam.vv.y, s->cam.vv.z);
-	printf("vhh: %f, vhw: %f, aspect:%f\n", s->cam.vhh, s->cam.vhw, s->cam.aspect);
+	//printf("vu:{%f, %f, %f}\n", s->cam.vu.x, s->cam.vu.y, s->cam.vu.z);
+	//printf("vv:{%f, %f, %f}\n", s->cam.vv.x, s->cam.vv.y, s->cam.vv.z);
+	//printf("vhh: %f, vhw: %f, aspect:%f\n", s->cam.vhh, s->cam.vhw, s->cam.aspect);
     s->cam.vp = sub_vec_by_vec(s->cam.lp, sub_vec_by_vec(
 			mult_vec_double(s->cam.vu, s->cam.vhw),
 			mult_vec_double(s->cam.vv, s->cam.vhh)
@@ -102,10 +102,10 @@ static void         cam_vector_compute(t_mlx *s, t_vector view_dir)
 	s->cam.ix = s->cam.vhw / (float)WIN_MAX_X;
 	s->cam.iy = s->cam.vhh / (float)WIN_MAX_Y;
 
-	printf("vp:{%f, %f, %f}\n", s->cam.vp.x, s->cam.vp.y, s->cam.vp.z);
+	/*printf("vp:{%f, %f, %f}\n", s->cam.vp.x, s->cam.vp.y, s->cam.vp.z);
 	printf("vix:{%f, %f, %f}\n", s->cam.vix.x, s->cam.vix.y, s->cam.vix.z);
 	printf("viy:{%f, %f, %f}\n", s->cam.viy.x, s->cam.viy.y, s->cam.viy.z);
-	printf("increments: {ix: %f, iy: %f}", s->cam.ix, s->cam.iy);
+	printf("increments: {ix: %f, iy: %f}", s->cam.ix, s->cam.iy);*/
 
 
 }
@@ -127,13 +127,13 @@ static void         camera_parse(t_mlx *s, int fd, int *l)
             s->cam.lp.y = ft_atoi(tmp[5]);
             s->cam.lp.z = ft_atoi(tmp[6]);
 			s->cam.fov = ft_atoi(tmp[3]);
-			printf("cp:{%f, %f, %f}\n", s->cam.c.x, s->cam.c.y, s->cam.c.z);
-			printf("lp:{%f, %f, %f}\n", s->cam.lp.x, s->cam.lp.y, s->cam.lp.z);
+			/*printf("cp:{%f, %f, %f}\n", s->cam.c.x, s->cam.c.y, s->cam.c.z);
+			printf("lp:{%f, %f, %f}\n", s->cam.lp.x, s->cam.lp.y, s->cam.lp.z);*/
             view_dir = sub_vec_by_vec(s->cam.lp, s->cam.c);
 			s->cam.focal = sqrt(pow(view_dir.x - s->cam.c.x, 2) +
 								pow(view_dir.y - s->cam.c.y, 2) +
 								pow(view_dir.z - s->cam.c.z, 2));
-			printf("focal:%f\n", s->cam.focal);
+			//printf("focal:%f\n", s->cam.focal);
 			normalize_vector(&view_dir);
             cam_vector_compute(s, view_dir);
             ++*l;
