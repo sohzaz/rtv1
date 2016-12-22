@@ -3,13 +3,13 @@
 2/4
 #camera params
 #x y z fov rot_x rot_y rot_z
-0 0 0 60 10 10 0
+-10 0 0 60 0 10 -1
 #objects params
 #id color x y z rot_x rot_y rot_z radius type kd
-1 25,10,10 445 0 0 0 0 0 100 sphere 100
-2 25,25,25 50 0 12 0 0 0 3 sphere 100
-3 47,47,4 115 0 10 0 0 0 7 sphere 100
-3 36,36,75 100 3 -5 0 0 0 9 sphere 100
+1 25,10,10 450 0 0 0 0 0 100 sphere 100
+2 25,25,25 55 0 12 0 0 0 3 sphere 100
+3 47,47,4 120 0 10 0 0 0 7 sphere 100
+3 36,36,75 105 3 -5 0 0 0 9 sphere 100
 #sources params
 #id x y z color intensity
 3 -50 -5 -250 255,255,255 1

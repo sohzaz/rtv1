@@ -22,7 +22,11 @@ void		win_reset(t_mlx *s)
 
 int			expose_hook(t_mlx *s)
 {
-    render_pic(s);
+    if (s->need_refresh)
+    {
+        render_pic(s);
+		s->need_refresh = 0;
+    }
     mlx_put_image_to_window(s->mlx, s->win, s->img, 0, 0);
     return (0);
 }
@@ -30,6 +34,7 @@ int			expose_hook(t_mlx *s)
 int			mouse_hook(int btn, int x, int y, t_mlx *s)
 {
     mouse_zoom_handler(btn, x, y, s);
+	s->need_refresh = 1;
     expose_hook(s);
     return (0);
 }
@@ -37,6 +42,7 @@ int			mouse_hook(int btn, int x, int y, t_mlx *s)
 int			key_hook(int key, t_mlx *s)
 {
     key_win_handler(key, s);
+	s->need_refresh = 1;
     expose_hook(s);
     return (0);
 }
@@ -49,7 +55,7 @@ void		win_init(t_mlx s)
         s.img = mlx_new_image(s.mlx, WIN_MAX_X, WIN_MAX_Y);
         if (s.win != NULL && s.img != NULL)
         {
-            win_reset(&s);
+            s.need_refresh = 1;
             s.f_lock = 1;
             mlx_expose_hook(s.win, &expose_hook, &s);
             mlx_key_hook(s.win, &key_hook, &s);

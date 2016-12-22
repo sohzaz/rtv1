@@ -89,6 +89,7 @@ typedef struct s_mlxdata {
 	int obj_len;
 	int src_len;
 	int f_lock;
+	int	need_refresh;
 } t_mlx;
 
 void win_init(t_mlx s);
