@@ -15,13 +15,14 @@ static t_object	    get_obj_type(char **tmp) {
 	t_object        nil;
 
 	nil.type = -127;
-//	printf("%s\n", tmp[9]);
-//	printf("%d\n", ft_strcmp(tmp[9], "sphere"));
-	if (ft_strcmp(tmp[9], "sphere") == 0) {
-		return (sphere(tmp));
-	}
-	else if (ft_strcmp(tmp[9], "plane") == 0) {
-		return (plane(tmp));
+	printf("%d\n", tab_len(tmp));
+	if (tab_len(tmp) == 11) {
+		if (ft_strcmp(tmp[9], "sphere") == 0) {
+			return (sphere(tmp));
+		}
+		else if (ft_strcmp(tmp[9], "plane") == 0) {
+			return (plane(tmp));
+		}
 	}
 	write(1, "A", 1);
 	return (nil);

@@ -108,5 +108,6 @@ t_object sphere(char **tmp);
 t_object plane(char **tmp);
 t_object source(char **tmp);
 void				print_status(int i, int j);
+int 		tab_len(char **tab);
 
 #endif
