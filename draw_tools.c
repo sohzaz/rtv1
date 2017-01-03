@@ -32,3 +32,13 @@ void				put_in_image(t_mlx *s, int x, int y, int color)
 				& 0xFFFF00) >> 16;
 	}
 }
+
+void				print_status(int i, int j)
+{
+	char 			*str;
+
+	str = ft_strcat("\r", ft_itoa(j * WIN_MAX_X + i));
+	str = ft_strcat(str, "/");
+	str = ft_strcat(str, ft_itoa(WIN_MAX_X * WIN_MAX_Y));
+
+}

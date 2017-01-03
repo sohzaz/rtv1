@@ -53,15 +53,11 @@ void			key_zoom_handler(int key, t_mlx *s)
 	s->zoom = (s->zoom <= 50) ? 50 : s->zoom;
 	if (key == 69)
 	{
-		s->x_start += (s->x_start - x) / (s->zoom / (s->zoom / 3));
-		s->y_start += (s->y_start - y) / (s->zoom / (s->zoom / 3));
-		s->zoom += s->zoom / 3;
+		s->cam.c.x -= 0.25f;
 	}
 	else if (key == 78)
 	{
-		s->x_start -= (s->x_start - x) / (s->zoom / (s->zoom / 3));
-		s->y_start -= (s->y_start - y) / (s->zoom / (s->zoom / 3));
-		s->zoom -= s->zoom / 3;
+		s->cam.c.x += 0.25f;
 	}
 	s->zoom = (s->zoom <= 1) ? 1 : s->zoom;
 }
@@ -76,13 +72,12 @@ int				key_win_handler(int key, t_mlx *s)
 	else if (key == 75 && s->max_ite > 10)
 		s->max_ite -= 1000;
 	else if (key == 123)
-		s->x_start -= 20;
+		s->cam.c.z -= 0.25f;
 	else if (key == 124)
-		s->x_start += 20;
+		s->cam.c.z += 0.25f;
 	else if (key == 126)
-		s->y_start -= 20;
+		s->cam.c.y -= 0.25f;
 	else if (key == 125)
-		s->y_start += 20;
-	s->zoom = (s->zoom <= 1) ? 1 : s->zoom;
+		s->cam.c.y += 0.25f;
 	return (0);
 }
