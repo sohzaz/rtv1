@@ -15,7 +15,6 @@ static t_object	    get_obj_type(char **tmp) {
 	t_object        nil;
 
 	nil.type = -127;
-	printf("%d\n", tab_len(tmp));
 	if (tab_len(tmp) == 11) {
 		if (ft_strcmp(tmp[9], "sphere") == 0) {
 			return (sphere(tmp));
@@ -24,7 +23,6 @@ static t_object	    get_obj_type(char **tmp) {
 			return (plane(tmp));
 		}
 	}
-	write(1, "A", 1);
 	return (nil);
 }
 void				sources_parse(t_mlx *s, int fd, int *l)
@@ -60,11 +58,8 @@ static void		    body_parse(t_mlx *s, int fd, int *l)
 		{
 			tmp = ft_strsplit(line, ' ');
 			++*l;
-			write(1, "E", 1);
 			s->objects[o] = get_obj_type(tmp);
-			write(1, "D", 1);
 			if (s->objects[o].type == -127) {
-				write(1, "C", 1);
 				exit(2);
 			}
 			free(tmp);
