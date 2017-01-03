@@ -15,13 +15,12 @@ static t_object	    get_obj_type(char **tmp) {
 	t_object        nil;
 
 	nil.type = -127;
-	if (tab_len(tmp) == 11) {
-		if (ft_strcmp(tmp[9], "sphere") == 0) {
+	if (tab_len(tmp) == 11)
+	{
+		if (ft_strcmp(tmp[9], "sphere") == 0)
 			return (sphere(tmp));
-		}
-		else if (ft_strcmp(tmp[9], "plane") == 0) {
+		else if (ft_strcmp(tmp[9], "plane") == 0)
 			return (plane(tmp));
-		}
 	}
 	return (nil);
 }
@@ -60,7 +59,7 @@ static void		    body_parse(t_mlx *s, int fd, int *l)
 			++*l;
 			s->objects[o] = get_obj_type(tmp);
 			if (s->objects[o].type == -127) {
-				exit(2);
+				ft_exit(2, "file content mismatch\n");
 			}
 			free(tmp);
 			++o;
@@ -71,15 +70,10 @@ static void		    body_parse(t_mlx *s, int fd, int *l)
 static void         cam_vector_compute(t_mlx *s, t_vector view_dir)
 {
 	t_vector        up;
-	t_vector		right;
 
 	up.x = 0.0f;
 	up.y = 1.0f;
 	up.z = 0.0f;
-	right.x = 1.0f;
-	right.y = 0.0f;
-	right.z = 0.0f;
-	//printf("view_dir:{%f, %f, %f}\n", view_dir.x, view_dir.y, view_dir.z);
 	s->cam.vhw = tan(s->cam.fov / 2);
 	s->cam.aspect = (double)WIN_MAX_X / (double)WIN_MAX_Y;
 	s->cam.vhh = s->cam.vhw * s->cam.aspect;
@@ -87,27 +81,18 @@ static void         cam_vector_compute(t_mlx *s, t_vector view_dir)
 	s->cam.vv = mult_vec_by_vec(s->cam.vu, view_dir);
 	normalize_vector(&s->cam.vu);
 	normalize_vector(&s->cam.vv);
-	//printf("vu:{%f, %f, %f}\n", s->cam.vu.x, s->cam.vu.y, s->cam.vu.z);
-	//printf("vv:{%f, %f, %f}\n", s->cam.vv.x, s->cam.vv.y, s->cam.vv.z);
-	//printf("vhh: %f, vhw: %f, aspect:%f\n", s->cam.vhh, s->cam.vhw, s->cam.aspect);
 	s->cam.vp = sub_vec_by_vec(s->cam.lp, sub_vec_by_vec(
 			mult_vec_double(s->cam.vu, s->cam.vhw),
 			mult_vec_double(s->cam.vv, s->cam.vhh)
 	));
-	s->cam.viy = mult_vec_double(mult_vec_double(s->cam.vv,
-												 (2.0f * s->cam.vhh)), 1.0f / (double)WIN_MAX_Y);
-	s->cam.vix = mult_vec_double(mult_vec_double(s->cam.vu,
-												 (2.0f * s->cam.vhw)), 1.0f / (double)WIN_MAX_X);
-
+	s->cam.viy = mult_vec_double(
+			mult_vec_double(s->cam.vv,
+							(2.0f * s->cam.vhh)), 1.0f / (double)WIN_MAX_Y);
+	s->cam.vix = mult_vec_double(
+			mult_vec_double(s->cam.vu,
+							(2.0f * s->cam.vhw)), 1.0f / (double)WIN_MAX_X);
 	s->cam.ix = s->cam.vhw / (float)WIN_MAX_X;
 	s->cam.iy = s->cam.vhh / (float)WIN_MAX_Y;
-
-	/*printf("vp:{%f, %f, %f}\n", s->cam.vp.x, s->cam.vp.y, s->cam.vp.z);
-	printf("vix:{%f, %f, %f}\n", s->cam.vix.x, s->cam.vix.y, s->cam.vix.z);
-	printf("viy:{%f, %f, %f}\n", s->cam.viy.x, s->cam.viy.y, s->cam.viy.z);
-	printf("increments: {ix: %f, iy: %f}", s->cam.ix, s->cam.iy);*/
-
-
 }
 
 static void         camera_parse(t_mlx *s, int fd, int *l)
@@ -120,21 +105,18 @@ static void         camera_parse(t_mlx *s, int fd, int *l)
 		if (line[0] != '#')
 		{
 			tmp = ft_strsplit(line, ' ');
-			if (isnan(s->cam.c.x = ft_atoi(tmp[0])) ||
+			if (tab_len(tmp) != 7 || isnan(s->cam.c.x = ft_atoi(tmp[0])) ||
 			isnan(s->cam.c.y = ft_atoi(tmp[1])) ||
 			isnan(s->cam.c.z = ft_atoi(tmp[2])) ||
 			isnan(s->cam.lp.x = ft_atoi(tmp[4])) ||
 			isnan(s->cam.lp.y = ft_atoi(tmp[5])) ||
 			isnan(s->cam.lp.z = ft_atoi(tmp[6])) ||
 			isnan(s->cam.fov = ft_atoi(tmp[3])))
-				exit(1);
-			/*printf("cp:{%f, %f, %f}\n", s->cam.c.x, s->cam.c.y, s->cam.c.z);
-			printf("lp:{%f, %f, %f}\n", s->cam.lp.x, s->cam.lp.y, s->cam.lp.z);*/
+				ft_exit(1, "incorrect camera settings\n");
 			view_dir = sub_vec_by_vec(s->cam.lp, s->cam.c);
 			s->cam.focal = sqrt(pow(view_dir.x - s->cam.c.x, 2) +
 								pow(view_dir.y - s->cam.c.y, 2) +
 								pow(view_dir.z - s->cam.c.z, 2));
-			//printf("focal:%f\n", s->cam.focal);
 			normalize_vector(&view_dir);
 			cam_vector_compute(s, view_dir);
 			++*l;
@@ -156,9 +138,7 @@ void            parse(t_mlx *s, int fd) {
 			s->obj_len = ft_atoi(tmp[1]);
 			s->sources = (t_object *)malloc(sizeof(t_object) * (s->src_len + 1));
 			s->objects = (t_object *)malloc(sizeof(t_object) * (s->obj_len + 1));
-
 			++l;
-			//printf("%s\n", line);
 			free(line);
 		}
 	camera_parse(s, fd, &l);

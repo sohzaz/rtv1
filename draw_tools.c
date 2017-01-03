@@ -33,15 +33,8 @@ void				put_in_image(t_mlx *s, int x, int y, int color)
 	}
 }
 
-void				print_status(int i, int j)
+void				ft_exit(const int code, const char *msg)
 {
-	char 			*str;
-	static char 	*max_pix = NULL;
-
-	max_pix = (max_pix) ? max_pix : ft_itoa(WIN_MAX_X * WIN_MAX_Y);
-	str = ft_strjoin("\r", ft_itoa(j * WIN_MAX_X + i));
-	str = ft_strjoin(str, "/");
-	str = ft_strjoin(str, max_pix);
-	write(1, str, ft_strlen(str));
-
+	write(2, msg, ft_strlen(msg));
+	exit(code);
 }
