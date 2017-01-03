@@ -9,14 +9,21 @@
 /*   Updated: 2014/11/10 14:58:17 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <libft.h>
 
 int			ft_strcmp(char const *s1, char const *s2)
 {
 	int		i;
 
 	i = 0;
-
-	while ((s1[i]) && (s2[i]) &&(s1[i] == s2[i]))
+	if (!s1 || !s2 ||
+			ft_strncmp(s1, "", 1) == 0 || ft_strncmp(s1, "", 1) == 0)
+	{
+		return (-1);
+	}
+	while ((s1[i] != 0) && (s2[i]) && (s1[i] == s2[i]))
+	{
 		i++;
+	}
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
