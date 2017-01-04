@@ -29,8 +29,7 @@ static t_color			get_plane_diffuse(t_object *src, t_object *self,
 	//printf("pl_dot_normal: %f\n", l_dot_normal);
 	tmp = mult_color_double(
 			mult_color(src->color, self->color),
-			((self->kd / 100) * l_dot_normal) /*/
-			pow(light_v.length, 2)*/);
+			((self->kd / 100) * l_dot_normal));
 /*	printf("pl_src_col:{%f, %f, %f}\n", src->color.r, src->color.g, src->color.b);
 	printf("pl_obj_col:{%f, %f, %f}\n", self->color.r, self->color.g, self->color.b);
 	printf("pl_diffuse:{%f, %f, %f}\n", tmp.r, tmp.g, tmp.b);*/
@@ -53,14 +52,16 @@ static double 			plane_color(t_mlx *s, t_object *self, t_vector inter)
 		j = 0;
 		while (j < s->obj_len)
 		{
-			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
-			comp_curr_diff(&diffuse, shadow,
-						   get_plane_diffuse(&s->sources[i], self, &inter));
+			if (s->objects[j].id != self->id)
+			{
+				shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
+				comp_curr_diff(&diffuse, shadow,
+							   get_plane_diffuse(&s->sources[i], self, &inter));
+			}
 			/*	ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
 														 self, &inter) :
 						add_color(ambiant, get_sphere_ambiant(&s->sources[i],
 															  self, &inter));*/
-			//printf("shadow:%d\n\n", shadow);
 			++j;
 		}
 		++i;
