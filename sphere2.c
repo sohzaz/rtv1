@@ -69,7 +69,7 @@ t_color 			get_sphere_diffuse(t_object *src, t_object *self,
 			mult_color(src->color, self->color),
 			((self->kd / 100) * l_dot_normal) /*/
 			pow(light_v.length, 2)*/);
-	//printf("sphere diffuse color: {%f, %f, %f}\n", tmp.r, tmp.g, tmp.b);
+	printf("sphere diffuse color: {%f, %f, %f}\n", inter->x, inter->y, inter->z);
 	return (tmp);
 }
 void				comp_curr_diff(t_color* diffuse, int shadow,

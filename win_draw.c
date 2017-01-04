@@ -76,6 +76,7 @@ void                render_pic(t_mlx *s)
         {
 			v = create_vector(s, i, j);
             tmp = get_inters(s, &v);
+			//printf("i: %d, j: %d, color %d\n", i, j, tmp)
             put_in_image(s, i, j, tmp);
             ++i;
         }

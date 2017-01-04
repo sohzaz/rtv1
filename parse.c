@@ -21,6 +21,8 @@ static t_object	    get_obj_type(char **tmp) {
 			return (sphere(tmp));
 		else if (ft_strcmp(tmp[9], "plane") == 0)
 			return (plane(tmp));
+		else if (ft_strcmp(tmp[9], "cylinder") == 0)
+			return (cylinder(tmp));
 	}
 	return (nil);
 }

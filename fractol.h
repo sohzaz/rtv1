@@ -58,9 +58,9 @@ typedef struct s_object {
 	int id;
 	t_color color;
 	t_vector	dir;
-	int x;
-	int y;
-	int z;
+	float x;
+	float y;
+	float z;
 	char type;
 	float kd;
 	float ks;
@@ -107,6 +107,7 @@ unsigned int get_inters(t_mlx *s, t_vector *v);
 t_object 	sphere(char **tmp);
 t_object 	plane(char **tmp);
 t_object 	source(char **tmp);
+t_object	cylinder(char **tmp);
 void		ft_exit(const int code, const char *msg);
 int 		tab_len(char **tab);
 

@@ -1,0 +1,22 @@
+point O (a, b, c)
+point N (d, e, f)
+
+ex: (3, 2, 4)
+(7, 9 ,6)
+
+on cherche point X (x, y, z) tel que
+
+OX.XN = 0
+OX (x - a, y - b, z - c)
+XN (d - x, e - y, f - z)
+
+(x - a) * (d - x) + (y - b) * (e - y) + (z - c) * (f - z) = 0
+(xd - x2 - ad + ax) + (ye - y2 - be + by) + (zc - z2 - cf + zc) = 0
+(-x2 + (a + d)x - ad) + (-y2 + (b + e)y - be) + (-z2 + (c + f)z - cf) = 0
+
+point:	y:	(-x2 + (a + d)x - ad) = 0
+		z:	(-y2 + (b + e)y - be) = 0
+		x:	(-z2 + (c + f)z - cf) = 0
+		
+
+(-x2 + (3 + 7)x - 21) + (-y2 + (2 + 9)y - 18) + (-z2 + (4 + 6)z - 24) = 0
