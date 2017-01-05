@@ -18,8 +18,8 @@ t_vector			cyl_normal(t_vector *inter, t_object *self)
 	pi.y = self->y + piv.y;
 	pi.z = self->z + piv.z;
 	norm = sub_vec_by_vec(*inter, pi);
-	printf("in:{%f, %f, %f}\nres:{%f, %f, %f}\n", inter->x, inter->y, inter->z, norm.x, norm.y, norm.z);
-	return (sub_vec_by_vec(*inter, pi));
+	normalize_vector(&norm);
+	return (norm);
 }
 
 t_color 			get_cyl_diffuse(t_object *src, t_object *self,
@@ -38,12 +38,13 @@ t_color 			get_cyl_diffuse(t_object *src, t_object *self,
 	normalize_vector(&light_v);
 	surface_normal = cyl_normal(inter, self);
 	l_dot_normal = dot(&surface_normal, &light_v);
-	//printf("l_dot_normal: %f\n", l_dot_normal);
-	l_dot_normal *= l_dot_normal > 0.0f;
+//	printf("l_dot_normal: %f\n", l_dot_normal);
+	l_dot_normal = (l_dot_normal > 0.0f)? l_dot_normal : 0.0f;
 	//printf("l_dot_normal_a: %f\n", l_dot_normal);
 	tmp = mult_color_double(
 			mult_color(src->color, self->color),
 			((self->kd / 100) * l_dot_normal) /*/
 			pow(light_v.length, 2)*/);
+	//printf("cyl diffuse color: {%f, %f, %f}\n", tmp.r, tmp.g, tmp.b);
 	return (tmp);
 }
