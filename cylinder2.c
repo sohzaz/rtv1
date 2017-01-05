@@ -4,15 +4,22 @@
 #include "cylinder.h"
 t_vector			cyl_normal(t_vector *inter, t_object *self)
 {
+	t_vector		io;
+	t_vector		piv;
+	t_vector		pi;
 	t_vector		norm;
 
-	(void)inter;
-
-	norm.x = self->dir.x;
-	norm.y = self->dir.y;
-	norm.z = 0.0f;
-	//norm = self->dir;
-	return (norm);
+	io.x = self->x - inter->x;
+	io.y = self->y - inter->y;
+	io.z = self->z - inter->z;
+	piv = mult_vec_double(self->dir, (dot(&io, &self->dir)
+									  / dot(&self->dir, &self->dir)));
+	pi.x = self->x + piv.x;
+	pi.y = self->y + piv.y;
+	pi.z = self->z + piv.z;
+	norm = sub_vec_by_vec(*inter, pi);
+	printf("in:{%f, %f, %f}\nres:{%f, %f, %f}\n", inter->x, inter->y, inter->z, norm.x, norm.y, norm.z);
+	return (sub_vec_by_vec(*inter, pi));
 }
 
 t_color 			get_cyl_diffuse(t_object *src, t_object *self,
