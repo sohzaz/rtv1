@@ -9,9 +9,9 @@ t_vector			cyl_normal(t_vector *inter, t_object *self)
 	t_vector		pi;
 	t_vector		norm;
 
-	io.x = self->x - inter->x;
-	io.y = self->y - inter->y;
-	io.z = self->z - inter->z;
+	io.x = inter->x - self->x;
+	io.y = inter->y - self->y;
+	io.z = inter->z - self->z;
 	piv = mult_vec_double(self->dir, (dot(&io, &self->dir)
 									  / dot(&self->dir, &self->dir)));
 	pi.x = self->x + piv.x;
