@@ -66,7 +66,7 @@ double 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
 														  self, &inter));*/
 			//printf("shadow:%d\n\n", shadow);
 
-	printf("cyl diffuse color: {%f, %f, %f}\n", diffuse.r, diffuse.g, diffuse.b);
+	//printf("cyl diffuse color: {%f, %f, %f}\n", diffuse.r, diffuse.g, diffuse.b);
 	//	return (get_color_value(add_color(diffuse, ambiant)));
 	return (get_color_value(diffuse));
 }

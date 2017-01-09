@@ -47,7 +47,19 @@ static double 		*cyl_inter(t_object self, t_vector *v,
 }
 double 				cyl_color(t_mlx *s, t_object *self, t_vector inter)
 {
-	int 			i;
+	t_object		total;
+	//int 			shadow;
+	t_color			diffuse;
+	//t_color			ambiant;
+	/*int 			phong;*/
+	(void)self;
+	(void)s;
+
+	diffuse.r = NAN;
+	total = get_total_illumination(s, self, inter);
+	comp_curr_diff(&diffuse, 1,
+				   get_cyl_diffuse(&total, self, &inter));
+/*	int 			i;
 	int 			j;
 	int 			shadow;
 	t_color			diffuse;
@@ -63,17 +75,17 @@ double 				cyl_color(t_mlx *s, t_object *self, t_vector inter)
 		{
 			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
 			comp_curr_diff(&diffuse, shadow,
-						   get_cyl_diffuse(&s->sources[i], self, &inter));
+						   get_cyl_diffuse(&s->sources[i], self, &inter));*/
 			/*	ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
 														 self, &inter) :
 						add_color(ambiant, get_sphere_ambiant(&s->sources[i],
 															  self, &inter));*/
 			//printf("shadow:%d\n\n", shadow);
 			//printf("cyl diffuse color: {%f, %f, %f}\n", diffuse.r, diffuse.g, diffuse.b);
-			++j;
+		/*	++j;
 		}
 		++i;
-	}
+	}*/
 	//printf("cyl final diffuse color: {%f, %f, %f}\n", diffuse.r, diffuse.g, diffuse.b);
 	//	return (get_color_value(add_color(diffuse, ambiant)));
 	return (get_color_value(diffuse));
