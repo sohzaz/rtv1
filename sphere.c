@@ -48,32 +48,25 @@ t_vector			sphere_normal(t_vector *intersect, t_object *self)
 
 double 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
 {
-	int 			i;
-	int 			j;
-	int 			shadow;
+	t_object		total;
+	//int 			shadow;
 	t_color			diffuse;
 	//t_color			ambiant;
 	/*int 			phong;*/
+	(void)self;
+	(void)s;
 
-	i = 0;
 	diffuse.r = NAN;
-	while (i < s->src_len)
-	{
-		j = 0;
-		while (j < s->obj_len)
-		{
-			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
-			comp_curr_diff(&diffuse, shadow,
-						   get_sphere_diffuse(&s->sources[i], self, &inter));
+	total = get_total_illumination(s, self, inter);
+	comp_curr_diff(&diffuse, 1,
+				   get_sphere_diffuse(&total, self, &inter));
 		/*	ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
-													 self, &inter) :
+													 self, &inter):
 					add_color(ambiant, get_sphere_ambiant(&s->sources[i],
 														  self, &inter));*/
 			//printf("shadow:%d\n\n", shadow);
-			++j;
-		}
-		++i;
-	}
+
+	printf("cyl diffuse color: {%f, %f, %f}\n", diffuse.r, diffuse.g, diffuse.b);
 	//	return (get_color_value(add_color(diffuse, ambiant)));
 	return (get_color_value(diffuse));
 }

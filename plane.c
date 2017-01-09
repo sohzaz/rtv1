@@ -38,14 +38,26 @@ static t_color			get_plane_diffuse(t_object *src, t_object *self,
 
 static double 			plane_color(t_mlx *s, t_object *self, t_vector inter)
 {
-	int 			i;
+/*	int 			i;
 	int 			j;
 	int 			shadow;
+	t_color			diffuse;*/
+	//t_color			ambiant;
+	/*int 			phong;*/
+	t_object		total;
+	//int 			shadow;
 	t_color			diffuse;
 	//t_color			ambiant;
 	/*int 			phong;*/
+	(void)self;
+	(void)s;
 
-	i = 0;
+	diffuse.r = NAN;
+	total = get_total_illumination(s, self, inter);
+	comp_curr_diff(&diffuse, 1,
+				   get_plane_diffuse(&total, self, &inter));
+
+/*	i = 0;
 	diffuse.r = NAN;
 	while (i < s->src_len)
 	{
@@ -57,15 +69,15 @@ static double 			plane_color(t_mlx *s, t_object *self, t_vector inter)
 				shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
 				comp_curr_diff(&diffuse, shadow,
 							   get_plane_diffuse(&s->sources[i], self, &inter));
-			}
+			}*/
 			/*	ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
 														 self, &inter) :
 						add_color(ambiant, get_sphere_ambiant(&s->sources[i],
 															  self, &inter));*/
-			++j;
+		/*	++j;
 		}
 		++i;
-	}
+	}*/
 	//	return (get_color_value(add_color(diffuse, ambiant)));
 	return (get_color_value(diffuse));
 }

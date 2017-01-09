@@ -110,5 +110,9 @@ t_object 	source(char **tmp);
 t_object	cylinder(char **tmp);
 void		ft_exit(const int code, const char *msg);
 int 		tab_len(char **tab);
+t_object		get_total_illumination(t_mlx *s, t_object *self,
+									   t_vector inter);
+int 				in_shadow(t_object *obj, t_object *v,
+							 t_vector *inter);
 
 #endif

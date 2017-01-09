@@ -68,13 +68,13 @@ double 				cyl_color(t_mlx *s, t_object *self, t_vector inter)
 														 self, &inter) :
 						add_color(ambiant, get_sphere_ambiant(&s->sources[i],
 															  self, &inter));*/
-			printf("shadow:%d\n\n", shadow);
-			printf("cyl diffuse color: {%f, %f, %f}\n", diffuse.r, diffuse.g, diffuse.b);
+			//printf("shadow:%d\n\n", shadow);
+			//printf("cyl diffuse color: {%f, %f, %f}\n", diffuse.r, diffuse.g, diffuse.b);
 			++j;
 		}
 		++i;
 	}
-	printf("cyl final diffuse color: {%f, %f, %f}\n", diffuse.r, diffuse.g, diffuse.b);
+	//printf("cyl final diffuse color: {%f, %f, %f}\n", diffuse.r, diffuse.g, diffuse.b);
 	//	return (get_color_value(add_color(diffuse, ambiant)));
 	return (get_color_value(diffuse));
 }
