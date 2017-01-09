@@ -65,10 +65,9 @@ t_color 			get_sphere_diffuse(t_object *src, t_object *self,
 	//printf("l_dot_normal: %f\n", l_dot_normal);
 	l_dot_normal *= l_dot_normal > 0.0f;
 	//printf("l_dot_normal_a: %f\n", l_dot_normal);
-	tmp = mult_color_double(
+	tmp = mult_color_double(mult_color_double(
 			mult_color(src->color, self->color),
-			((self->kd / 100) * l_dot_normal) /*/
-			pow(light_v.length, 2)*/);
+			((self->kd) * l_dot_normal)), src->intensity);
 	//printf("sphere diffuse color: {%f, %f, %f}\n", inter->x, inter->y, inter->z);
 	return (tmp);
 }

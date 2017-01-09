@@ -95,7 +95,7 @@ t_object			cylinder(char **tmp)
 	sp.dir.z = ft_atoi(tmp[7]);
 	sp.radius = ft_atoi(tmp[8]);
 	sp.color = create_color(tmp[1]);
-	sp.kd = ft_atoi(tmp[10]);
+	sp.kd = ft_atoi(tmp[10]) / 100.0f;
 	normalize_vector(&sp.dir);
 
 	/*printf("sphere:{id:%d,\nx:%d,\ny:%d,\nz:%d,\nradius:%d,\ncolor:%d\n}", sp.id,

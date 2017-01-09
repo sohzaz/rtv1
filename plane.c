@@ -27,9 +27,9 @@ static t_color			get_plane_diffuse(t_object *src, t_object *self,
 	normalize_vector(&light_v);
 	l_dot_normal = fabs(dot(&self->dir, &light_v));
 	//printf("pl_dot_normal: %f\n", l_dot_normal);
-	tmp = mult_color_double(
+	tmp = mult_color_double(mult_color_double(
 			mult_color(src->color, self->color),
-			((self->kd / 100) * l_dot_normal));
+			((self->kd) * l_dot_normal)), src->intensity);
 /*	printf("pl_src_col:{%f, %f, %f}\n", src->color.r, src->color.g, src->color.b);
 	printf("pl_obj_col:{%f, %f, %f}\n", self->color.r, self->color.g, self->color.b);
 	printf("pl_diffuse:{%f, %f, %f}\n", tmp.r, tmp.g, tmp.b);*/
@@ -110,7 +110,7 @@ t_object			plane(char **tmp) {
     pl.dir.x = ft_atoi(tmp[5]);
     pl.dir.y = ft_atoi(tmp[6]);
     pl.dir.z = ft_atoi(tmp[7]);
-	pl.kd = ft_atoi(tmp[10]);
+	pl.kd = ft_atoi(tmp[10]) / 100.0f;
     normalize_vector(&pl.dir);
 	pl.color = create_color(tmp[1]);
 

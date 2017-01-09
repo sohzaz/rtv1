@@ -108,7 +108,7 @@ t_object			sphere(char **tmp)
     sp.rot_z = ft_atoi(tmp[7]);
     sp.radius = ft_atoi(tmp[8]);
 	sp.color = create_color(tmp[1]);
-	sp.kd = ft_atoi(tmp[10]);
+	sp.kd = ft_atoi(tmp[10]) / 100.0f;
 	/*printf("sphere:{id:%d,\nx:%d,\ny:%d,\nz:%d,\nradius:%d,\ncolor:%d\n}", sp.id,
 	sp.x,
 	sp.y,

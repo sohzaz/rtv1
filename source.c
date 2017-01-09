@@ -19,6 +19,7 @@ t_object		source(char **tmp)
 	src.y = ft_atoi(tmp[2]);
 	src.z = ft_atoi(tmp[3]);
 	src.color = create_color(tmp[4]);
+	src.intensity = ft_atoi(tmp[5]) / 100.0f;
 	return (src);
 }
 

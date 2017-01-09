@@ -71,6 +71,7 @@ typedef struct s_object {
 	float rot_y;
 	float rot_z;
 	int radius;
+	float intensity;
 	double *(*inter)(struct s_object , t_vector *, t_vector);
 	t_vector (*normal)(t_vector *, struct s_object *);
 	double (*get_color)(struct s_mlxdata *, struct s_object *, t_vector);
@@ -110,5 +111,7 @@ t_object 	source(char **tmp);
 t_object	cylinder(char **tmp);
 void		ft_exit(const int code, const char *msg);
 int 		tab_len(char **tab);
+int			in_shadow(t_object *obj, t_object *v,
+							 t_vector *inter);
 
 #endif
