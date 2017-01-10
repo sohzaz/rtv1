@@ -109,9 +109,12 @@ t_object 	sphere(char **tmp);
 t_object 	plane(char **tmp);
 t_object 	source(char **tmp);
 t_object	cylinder(char **tmp);
+t_object	cone(char **tmp);
 void		ft_exit(const int code, const char *msg);
 int 		tab_len(char **tab);
 int			in_shadow(t_object *obj, t_object *v,
 							 t_vector *inter);
+void				comp_curr_diff(t_color* diffuse, int shadow,
+								   t_color new_diff);
 
 #endif

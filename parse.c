@@ -23,6 +23,8 @@ static t_object	    get_obj_type(char **tmp) {
 			return (plane(tmp));
 		else if (ft_strcmp(tmp[9], "cylinder") == 0)
 			return (cylinder(tmp));
+		else if (ft_strcmp(tmp[9], "cone") == 0)
+			return (cone(tmp));
 	}
 	return (nil);
 }
