@@ -26,12 +26,20 @@ static double 		*calc_res(double *params)
 //TODO Implement m calc
 static t_vector		calc_m(t_object self)
 {
-	t_vector		m;
+	t_vector		res;
+	t_matrix		m;
 	double 			dd;
 
+	m = new_matrix(3, 3);
+	m.cont[0][0] = -1.0f * pow(cos(self.radius * M_PI / 180.0), 2);
+	m.cont[1][1] = -1.0f * pow(cos(self.radius * M_PI / 180.0), 2);
+	m.cont[2][2] = -1.0f * pow(cos(self.radius * M_PI / 180.0), 2);
 	dd = dot(&self.dir, &self.dir);
+	add_matrix_double(&m, dd);
+	res.x = 0;
 
-	return(m);
+
+	return(res);
 }
 static double 		*cone_inter(t_object self, t_vector *v,
 								t_vector org)
@@ -46,9 +54,10 @@ static double 		*cone_inter(t_object self, t_vector *v,
 	ao.y = org.y - self.y ;
 	ao.z = org.z - self.z ;
 	ab = dot(&self.dir, &self.dir) - pow(cos(self.radius * M_PI / 180.0), 2);
+	(void)calc_m(self);
 	aob = mult_vec_double(*v, ab);
 	vab = mult_vec_double(ao, ab);
-	params[0] =
+	params[0] = 0.0f;
 	params[1] = 2.0f  * dot(v, &vab);
 	params[2] = dot(&ao, &vab);
 	params[3] = params[1] * params[1] - (4 * params[0] * params[2]);
