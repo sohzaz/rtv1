@@ -29,11 +29,18 @@ t_color	get_cone_ambiant(t_object *src, t_object *self,
 	light_v.length = sqrt(pow(light_v.x, 2) +
 						  pow(light_v.y, 2) +
 						  pow(light_v.z, 2));
+	t_color test;
+	test.r = 1.0f;
+	test.g = 1.0f;
+	test.b = 1.0f;
+	(void)self;
+	(void)src;
 
-
-	return(mult_color_double(
+	(void)light_v;
+	return (test);
+	/*return(mult_color_double(
 			mult_color(src->color, self->color),
-			(self->kd * 0.1) * 0.1));
+			(self->kd * 0.1) * 0.1));*/
 }
 
 t_color 			get_cone_diffuse(t_object *src, t_object *self,

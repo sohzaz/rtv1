@@ -57,5 +57,4 @@ void 			destroy_matrix(t_matrix *m)
 		++i;
 	}
 	free(m->cont);
-	free(m);
 }

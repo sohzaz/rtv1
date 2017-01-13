@@ -55,6 +55,7 @@ unsigned int		get_inters(t_mlx *s, t_vector *v) {
             closest = &s->objects[i];
         i++;
     }
+	//printf("%d\n", closest->id);
     return ((closest && d < 99999999.9f) ?
 			closest->get_color(s, closest,
 							   add_vector(s->cam.c, mult_vec_double(*v, d))) :

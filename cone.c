@@ -41,12 +41,14 @@ static t_matrix		calc_m(t_object self)
 	m.cont[2][1] = self.dir.y * self.dir.z;
 	m.cont[2][2] = pow(self.dir.z, 2) - (pow(
 			cos(self.radius * M_PI / 180.0), 2));
+	//printf("m:\n[\t[%f, %f, %f]\n\t[%f, %f, %f]\n\t[%f, %f, %f]\n]\n",m.cont[0][0],m.cont[0][1],m.cont[0][2],m.cont[1][0],m.cont[1][1],m.cont[1][2],m.cont[2][0],m.cont[2][1],m.cont[2][2]);
 	return(m);
 }
 static double 		*cone_inter(t_object self, t_vector *v,
 								t_vector org)
 {
 	double			params[4];
+//	double 			*res;
 	t_matrix		m;
 	t_vector		ao;
 
@@ -57,8 +59,11 @@ static double 		*cone_inter(t_object self, t_vector *v,
 	params[0] = syme_product(v, &m, v);
 	params[1] = syme_product(v, &m, &ao);
 	params[2] = syme_product(&ao, &m, &ao);
+	destroy_matrix(&m);
 	params[3] = params[1] * params[1] - (4 * params[0] * params[2]);
-//	printf("params:\n[0]%f\n[1]%f\n[2]%f\n[3]%f\nab:%f\nv:{\n\tx:%f,\n\ty:%f,\n\tz:%f\n}\n", params[0], params[1], params[2],params[3], ab, v->x, v->y, v->z);
+	//printf("params:\n[0]%f\n[1]%f\n[2]%f\n[3]%f\nv:{\n\tx:%f,\n\ty:%f,\n\tz:%f\n}\n", params[0], params[1], params[2],params[3], v->x, v->y, v->z);
+	/*res = calc_res(params);
+	printf("res:\n[0]%f\n[1]%f\n[2]%f\n", res[0], res[1], res[2]);*/
 	return (calc_res(params));
 }
 double 				cone_color(t_mlx *s, t_object *self, t_vector inter)
