@@ -45,3 +45,17 @@ void			add_matrix_double(t_matrix *m, double nbr)
 		++i;
 	}
 }
+
+void 			destroy_matrix(t_matrix *m)
+{
+	int 		i;
+
+	i = 0;
+	while (i < m->heigth)
+	{
+		free(m->cont[i]);
+		++i;
+	}
+	free(m->cont);
+	free(m);
+}

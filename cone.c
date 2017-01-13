@@ -24,44 +24,41 @@ static double 		*calc_res(double *params)
 	return(res);
 }
 //TODO Implement m calc
-static t_vector		calc_m(t_object self)
+static t_matrix		calc_m(t_object self)
 {
-	t_vector		res;
 	t_matrix		m;
-	double 			dd;
 
 	m = new_matrix(3, 3);
-	m.cont[0][0] = -1.0f * pow(cos(self.radius * M_PI / 180.0), 2);
-	m.cont[1][1] = -1.0f * pow(cos(self.radius * M_PI / 180.0), 2);
-	m.cont[2][2] = -1.0f * pow(cos(self.radius * M_PI / 180.0), 2);
-	dd = dot(&self.dir, &self.dir);
-	add_matrix_double(&m, dd);
-	res.x = 0;
-
-
-	return(res);
+	m.cont[0][0] = pow(self.dir.x, 2) - (pow(
+			cos(self.radius * M_PI / 180.0), 2));
+	m.cont[0][1] = self.dir.x * self.dir.y;
+	m.cont[0][2] = self.dir.x * self.dir.z;
+	m.cont[1][0] = self.dir.x * self.dir.y;
+	m.cont[1][1] = pow(self.dir.y, 2) - (pow(
+			cos(self.radius * M_PI / 180.0), 2));
+	m.cont[1][2] = self.dir.y * self.dir.z;
+	m.cont[2][0] = self.dir.x * self.dir.z;
+	m.cont[2][1] = self.dir.y * self.dir.z;
+	m.cont[2][2] = pow(self.dir.z, 2) - (pow(
+			cos(self.radius * M_PI / 180.0), 2));
+	return(m);
 }
 static double 		*cone_inter(t_object self, t_vector *v,
 								t_vector org)
 {
 	double			params[4];
-	double 			ab;
-	t_vector		aob;
-	t_vector		vab;
+	t_matrix		m;
 	t_vector		ao;
 
 	ao.x = org.x - self.x ;
 	ao.y = org.y - self.y ;
 	ao.z = org.z - self.z ;
-	ab = dot(&self.dir, &self.dir) - pow(cos(self.radius * M_PI / 180.0), 2);
-	(void)calc_m(self);
-	aob = mult_vec_double(*v, ab);
-	vab = mult_vec_double(ao, ab);
-	params[0] = 0.0f;
-	params[1] = 2.0f  * dot(v, &vab);
-	params[2] = dot(&ao, &vab);
+	m = calc_m(self);
+	params[0] = syme_product(v, &m, v);
+	params[1] = syme_product(v, &m, &ao);
+	params[2] = syme_product(&ao, &m, &ao);
 	params[3] = params[1] * params[1] - (4 * params[0] * params[2]);
-	printf("params:\n[0]%f\n[1]%f\n[2]%f\n[3]%f\nab:%f\nv:{\n\tx:%f,\n\ty:%f,\n\tz:%f\n}\n", params[0], params[1], params[2],params[3], ab, v->x, v->y, v->z);
+//	printf("params:\n[0]%f\n[1]%f\n[2]%f\n[3]%f\nab:%f\nv:{\n\tx:%f,\n\ty:%f,\n\tz:%f\n}\n", params[0], params[1], params[2],params[3], ab, v->x, v->y, v->z);
 	return (calc_res(params));
 }
 double 				cone_color(t_mlx *s, t_object *self, t_vector inter)

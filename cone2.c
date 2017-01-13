@@ -4,6 +4,20 @@
 
 #include "cone.h"
 
+double 	syme_product(t_vector *v1, t_matrix *m, t_vector *v2)
+{
+	double res;
+
+	res = v1->x * (m->cont[0][0] * v2->x +
+			m->cont[0][1] * v2->y + m->cont[0][2] * v2->z) +
+		  v1->y * (m->cont[1][0] * v2->x +
+				  m->cont[1][1] * v2->y + m->cont[1][2] * v2->z) +
+		  v1->z * (m->cont[2][0] * v2->x +
+				   m->cont[2][1] * v2->y + m->cont[2][2] * v2->z);
+	return (res);
+}
+
+
 t_color	get_cone_ambiant(t_object *src, t_object *self,
 							  t_vector *inter)
 {
