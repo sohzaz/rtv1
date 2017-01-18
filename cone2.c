@@ -66,5 +66,8 @@ t_color 			get_cone_diffuse(t_object *src, t_object *self,
 			mult_color(src->color, self->color),
 			((self->kd) * l_dot_normal)), src->intensity);
 	//printf("sphere diffuse color: {%f, %f, %f}\n", inter->x, inter->y, inter->z);
+	tmp.r = 1.0f;
+	tmp.g = 1.0f;
+	tmp.b = 1.0f;
 	return (tmp);
 }

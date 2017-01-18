@@ -12,21 +12,18 @@
 
 #include "vector.h"
 
-void     normalize_vector(t_vector *v) {
-    double      length;
-   // printf("Vector in: %f||%f||%f\n", v->x, v->y, v->z);
-
-    length = sqrt(pow(v->x, 2) + pow(v->y, 2) + pow(v->z, 2));
-    v->x /= length;
-    v->y /= length;
-    v->z /= length;
+void     normalize_vector(t_vector *v)
+{
+    v->length = sqrt(pow(v->x, 2) + pow(v->y, 2) + pow(v->z, 2));
+    v->x /= v->length;
+    v->y /= v->length;
+    v->z /= v->length;
     if (isnan(v->x))
-        v->x = 0;
+        v->x = 0.0f;
     if (isnan(v->y))
-        v->y = 0;
+        v->y = 0.0f;
     if (isnan(v->z))
-        v->z = 0;
-    //printf("Vector out: %f||%f||%f\n", v->x, v->y, v->z);
+        v->z = 0.0f;
 }
 
 void                    multiply_vec_double_des(t_vector *v, double n)
