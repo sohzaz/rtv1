@@ -71,7 +71,7 @@ typedef struct s_object {
 	float rot_x;
 	float rot_y;
 	float rot_z;
-	int radius;
+	double radius;
 	float intensity;
 	double *(*inter)(struct s_object , t_vector *, t_vector);
 	t_vector (*normal)(t_vector *, struct s_object *);
