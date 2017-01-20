@@ -9,6 +9,7 @@
 
 t_color 			get_cyl_diffuse(t_object *src, t_object *self,
 								   t_vector *inter);
+t_vector			cyl_normal(t_vector *inter, t_object *self);
 
 
 

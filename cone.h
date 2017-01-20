@@ -6,6 +6,7 @@
 # define RTV1_CONE_H
 # include "fractol.h"
 # include "sphere.h"
+# include "cylinder.h"
 
 t_vector			cone_normal(t_vector *intersect, t_object *self);
 t_color				get_cone_ambiant(t_object *src, t_object *self,

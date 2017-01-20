@@ -25,73 +25,25 @@ static double 		*calc_res(double *params)
 	printf("res: %f||%f||%f\n", res[0], res[1], res[2]);*/
 	return(res);
 }
-//TODO Implement m calc
-/*static t_matrix		calc_m(t_object self)
+/*t_vector			cone_normal(t_vector *intersect, t_object *self)
 {
-	t_matrix		m;
 
-	m = new_matrix(3, 3);
-	m.cont[0][0] = pow(self.dir.x, 2) - (pow(
-			cos((self.radius * M_PI) / 180.0), 2));
-	m.cont[0][1] = self.dir.x * self.dir.y;
-	m.cont[0][2] = self.dir.x * self.dir.z;
-	m.cont[1][0] = self.dir.x * self.dir.y;
-	m.cont[1][1] = pow(self.dir.y, 2) - (pow(
-			cos((self.radius * M_PI) / 180.0), 2));
-	m.cont[1][2] = self.dir.y * self.dir.z;
-	m.cont[2][0] = self.dir.x * self.dir.z;
-	m.cont[2][1] = self.dir.y * self.dir.z;
-	m.cont[2][2] = pow(self.dir.z, 2) - (pow(
-			cos((self.radius * M_PI )/ 180.0), 2));
-	//printf("m:\n[\t[%f, %f, %f]\n\t[%f, %f, %f]\n\t[%f, %f, %f]\n]\n",m.cont[0][0],m.cont[0][1],m.cont[0][2],m.cont[1][0],m.cont[1][1],m.cont[1][2],m.cont[2][0],m.cont[2][1],m.cont[2][2]);
-	return(m);
 }*/
 static double 		*cone_inter(t_object self, t_vector *v,
 								t_vector org)
 {
 	double			params[4];
-//	double 			*res;
-	//t_matrix		m;
-//	t_vector		vva;
 	t_vector		ao;
-//	t_vector		aob;
 
 	ao.x = org.x - self.x;
 	ao.y = org.y - self.y;
 	ao.z = org.z - self.z;
-	//ao.x = self.x - org.x;
-	//ao.y = self.y - org.y;
-	//ao.z = self.z - org.z;
-//	vva = add_vector(*v, mult_vec_double(self.dir, dot(v, &self.dir)));
-//	printf("ao:%f||%f||%f\n", ao.x, ao.y, ao.z);
-//	printf("vva:%f||%f||%f\n", vva.x, vva.y, vva.z);
-	//normalize_vector(&ao);
-	//normalize_vector(&vva);
-	//m = calc_m(self);
-//	aob = add_vector(ao, mult_vec_double(self.dir, dot(&ao, &self.dir)));
-//	printf("aob:%f||%f||%f\n", aob.x, aob.y, aob.z);
-	//normalize_vector(&aob);
-
-	/*params[0] = pow(cos(self.radius), 2) * dot(&vva, &vva)
-				- pow(sin(self.radius), 2) * pow(dot(v, &self.dir), 2);
-	params[1] = 2.0 *( pow(cos(self.radius),2) * dot(&vva, &aob)
-				- pow(sin(self.radius), 2) * dot(v, &self.dir)
-				  * dot(&aob, &self.dir));
-	params[2] = pow(cos(self.radius), 2) * dot(&aob, &aob)
-				- pow(sin(self.radius), 2) * pow(dot(&ao, &self.dir), 2);*/
-	/*params[0] = syme_product(v, &m, v);
-	params[1] = syme_product(v, &m, &ao);
-	params[2] = syme_product(&ao, &m, &ao);
-	destroy_matrix(&m);*/
 	params[0] = dot(v, v) - (1.0f + pow(tan(self.radius), 2))
 							  * pow(dot(v, &self.dir), 2);
 	params[1] = 2.0f * (dot(v, &ao) - (1.0f + pow(tan(self.radius), 2))
 									  * dot(v, &self.dir) * dot(&ao, &self.dir));
 	params[2] = dot(&ao, &ao) - (1.0f + pow(tan(self.radius), 2))
 								* pow(dot(&ao, &self.dir), 2);
-	/*params[0] = dot(v, v);
-	params[1] = 2.0 * (org.x * v->x + org.y * v->y - org.z * v->z * tan(self.radius));
-	params[2] = pow(org.x, 2) + pow(org.y, 2) - pow(org.z, 2) * pow(tan(self.radius))*/
 	params[3] = params[1] * params[1] - 4*params[0] * params[2];
 	return (calc_res(params));
 }

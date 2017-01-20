@@ -1,6 +1,6 @@
 #exemple file, will not run
 #light sources count/object count
-2/9
+2/10
 #camera params
 #x y z fov rot_x rot_y rot_z
 -10 0 0 60 3 15 1
@@ -15,7 +15,8 @@
 3 47,47,4 120 12 10 0 0 0 7 sphere 55
 3 147,147,147 650 0 0 10 10 0 7 plane 65
 9 95,155,55 415 0 45 0 10 0 15 cylinder 55
+10 95,155,55 315 10 -25 0 10 0 15 cone 55
 #sources params
 #id x y z color intensity
-3 -50 -5 -250 0,0,0 100
+3 -50 -5 -250 255,255,255 55
 3 -50 0 95 255,255,255 15
