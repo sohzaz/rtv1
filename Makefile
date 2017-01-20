@@ -13,7 +13,7 @@
 NAME = RTv1 
 OS = $(shell uname)
 CFLAGS = -Wall -Wextra -Werror -g -O0
-SRC = main.c draw_tools.c win_draw.c win_init.c win_handlers.c parse.c sphere.c plane.c vector.c vector2.c source.c sphere2.c color.c color2.c util.c cylinder.c cylinder2.c cone.c cone2.c matrix.c
+SRC = main.c draw_tools.c win_draw.c win_init.c win_handlers.c parse.c sphere.c plane.c vector.c vector2.c source.c sphere2.c color.c color2.c util.c cylinder.c cylinder2.c cone.c cone2.c matrix.c obj_type.c
 ifeq ($(OS), Darwin)
     MLX = 
 	I_MLX = 
@@ -30,7 +30,7 @@ $(NAME) :
 	# make -C $(MLX)  
 	make -C libft
 	gcc $(CFLAGS) $(I_MLX) -I libft/includes -c $(SRC)
-	gcc $(CFLAGS)  $(MLX) -L libft  $(OBJ) -o $(NAME) $(MFLAGS) -Wl
+	gcc $(CFLAGS) $(MLX) -L libft  $(OBJ) -o $(NAME) $(MFLAGS) -Wl
 
 all : $(NAME)
 

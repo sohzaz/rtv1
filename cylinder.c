@@ -62,8 +62,8 @@ double 				cyl_color(t_mlx *s, t_object *self, t_vector inter)
 		while (j < s->obj_len)
 		{
 			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
-			comp_curr_diff(&diffuse, shadow,
-						   get_cyl_diffuse(&s->sources[i], self, &inter));
+			if (shadow == 0)
+				break;
 			/*	ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
 														 self, &inter) :
 						add_color(ambiant, get_sphere_ambiant(&s->sources[i],
@@ -72,6 +72,8 @@ double 				cyl_color(t_mlx *s, t_object *self, t_vector inter)
 //			printf("cyl diffuse color: {%f, %f, %f}\n", diffuse.r, diffuse.g, diffuse.b);
 			++j;
 		}
+		comp_curr_diff(&diffuse, shadow,
+					   get_cyl_diffuse(&s->sources[i], self, &inter));
 		++i;
 	}
 //	printf("cyl final diffuse color: {%f, %f, %f}\n", diffuse.r, diffuse.g, diffuse.b);

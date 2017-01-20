@@ -6,7 +6,7 @@
 /*   By: dbreton <dbreton@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/20 15:11:58 by dbreton           #+#    #+#             */
-/*   Updated: 2016/05/23 14:01:45 by dbreton          ###   ########.fr       */
+/*   Updated: 2017/01/20 17:09:10 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # include "vector.h"
 # include "matrix.h"
 
-# define WIN_MAX_X 1920
-# define WIN_MAX_Y 1080
+# define WIN_MAX_X 800
+# define WIN_MAX_Y 800
 # define PTR_MOTION_MASK (1L << 6)
 # define MOTION_NOTIFY 6
 
@@ -117,5 +117,6 @@ int			in_shadow(t_object *obj, t_object *v,
 							 t_vector *inter);
 void				comp_curr_diff(t_color* diffuse, int shadow,
 								   t_color new_diff);
+t_object	    get_obj_type(char **tmp);
 
 #endif

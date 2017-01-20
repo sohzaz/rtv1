@@ -6,9 +6,10 @@
 /*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 13:56:03 by dbreton           #+#    #+#             */
-/*   Updated: 2016/05/23 14:02:22 by dbreton          ###   ########.fr       */
+/*   Updated: 2017/01/20 16:50:56 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "fractol.h"
 #include "sphere.h"
 
@@ -63,8 +64,10 @@ double 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
 		while (j < s->obj_len)
 		{
 			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
-			comp_curr_diff(&diffuse, shadow,
-						   get_sphere_diffuse(&s->sources[i], self, &inter));
+
+
+			if (shadow == 0)
+				break;
 		/*	ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
 													 self, &inter) :
 					add_color(ambiant, get_sphere_ambiant(&s->sources[i],
@@ -72,6 +75,8 @@ double 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
 			//printf("shadow:%d\n\n", shadow);
 			++j;
 		}
+		comp_curr_diff(&diffuse, shadow,
+					   get_sphere_diffuse(&s->sources[i], self, &inter));
 		++i;
 	}
 	//	return (get_color_value(add_color(diffuse, ambiant)));

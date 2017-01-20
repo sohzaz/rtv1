@@ -6,34 +6,18 @@
 /*   By: dbreton <dbreton@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 12:45:34 by dbreton           #+#    #+#             */
-/*   Updated: 2016/05/23 14:35:25 by dbreton          ###   ########.fr       */
+/*   Updated: 2017/01/20 17:07:38 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-static t_object	    get_obj_type(char **tmp) {
-	t_object        nil;
 
-	nil.type = -127;
-	if (tab_len(tmp) == 11)
-	{
-		if (ft_strcmp(tmp[9], "sphere") == 0)
-			return (sphere(tmp));
-		else if (ft_strcmp(tmp[9], "plane") == 0)
-			return (plane(tmp));
-		else if (ft_strcmp(tmp[9], "cylinder") == 0)
-			return (cylinder(tmp));
-		else if (ft_strcmp(tmp[9], "cone") == 0)
-			return (cone(tmp));
-	}
-	return (nil);
-}
 void				sources_parse(t_mlx *s, int fd, int *l)
 {
-	char		    *line;
-	char		    **tmp;
-	int			    tot_len;
-	int			    o;
+	char			*line;
+	char			**tmp;
+	int				tot_len;
+	int				o;
 
 	tot_len = s->src_len + *l;
 	o = 0;
@@ -47,12 +31,12 @@ void				sources_parse(t_mlx *s, int fd, int *l)
 		}
 }
 
-static void		    body_parse(t_mlx *s, int fd, int *l)
+static void			body_parse(t_mlx *s, int fd, int *l)
 {
-	char		    *line;
-	char		    **tmp;
-	int			    tot_len;
-	int			    o;
+	char			*line;
+	char			**tmp;
+	int				tot_len;
+	int				o;
 
 	tot_len = s->obj_len + *l;
 	o = 0;
@@ -71,15 +55,15 @@ static void		    body_parse(t_mlx *s, int fd, int *l)
 	sources_parse(s, fd, l);
 }
 
-static void         cam_vector_compute(t_mlx *s, t_vector view_dir)
+static void			cam_vector_compute(t_mlx *s, t_vector view_dir)
 {
-	t_vector        up;
+	t_vector		up;
 
 	up.x = 0.0f;
 	up.y = 1.0f;
 	up.z = 0.0f;
 	s->cam.vhw = tan(s->cam.fov / 2);
-	s->cam.aspect = (double)WIN_MAX_X / (double)WIN_MAX_Y;
+	s->cam.aspect = (double)WIN_MAX_Y / (double)WIN_MAX_X;
 	s->cam.vhh = s->cam.vhw * s->cam.aspect;
 	s->cam.vu = mult_vec_by_vec(view_dir, up);
 	s->cam.vv = mult_vec_by_vec(s->cam.vu, view_dir);
@@ -99,7 +83,7 @@ static void         cam_vector_compute(t_mlx *s, t_vector view_dir)
 	s->cam.iy = s->cam.vhh / (float)WIN_MAX_Y;
 }
 
-static void         camera_parse(t_mlx *s, int fd, int *l)
+static void			camera_parse(t_mlx *s, int fd, int *l)
 {
 	char            *line;
 	char            **tmp;
@@ -129,10 +113,10 @@ static void         camera_parse(t_mlx *s, int fd, int *l)
 	body_parse(s, fd, l);
 }
 
-void            parse(t_mlx *s, int fd) {
-	int         l;
-	char        *line;
-	char        **tmp;
+void				parse(t_mlx *s, int fd) {
+	int         	l;
+	char        	*line;
+	char        	**tmp;
 	l = 0;
 	while (l != 1 && get_next_line(fd, &line) > 0)
 		if (line[0] != '#')

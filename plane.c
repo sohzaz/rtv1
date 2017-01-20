@@ -52,18 +52,23 @@ static double 			plane_color(t_mlx *s, t_object *self, t_vector inter)
 		j = 0;
 		while (j < s->obj_len)
 		{
-			if (s->objects[j].id != self->id)
-			{
+			/*if (s->objects[j].id != self->id)
+			{*/
 				shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
-				comp_curr_diff(&diffuse, shadow,
-							   get_plane_diffuse(&s->sources[i], self, &inter));
-			}
+
+			if (shadow == 0)
+				break;
+
+		//	}
+
 			/*	ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
 														 self, &inter) :
 						add_color(ambiant, get_sphere_ambiant(&s->sources[i],
 															  self, &inter));*/
 			++j;
 		}
+		comp_curr_diff(&diffuse, shadow,
+					   get_plane_diffuse(&s->sources[i], self, &inter));
 		++i;
 	}
 	//	return (get_color_value(add_color(diffuse, ambiant)));

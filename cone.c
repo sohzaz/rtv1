@@ -1,6 +1,14 @@
-//
-// Created by Drien BRETON on 1/10/17.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cone.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/01/20 16:48:11 by dbreton           #+#    #+#             */
+/*   Updated: 2017/01/20 16:48:15 by dbreton          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "cone.h"
 
@@ -21,14 +29,8 @@ static double 		*calc_res(double *params)
 		res[1] = ((-1 * params[1]) - sqrt(params[3])) / (2 * params[0]);
 		res[2] = ((-1 * params[1]) + sqrt(params[3])) / (2 * params[0]);
 	}
-	/*printf("params: %f||%f||%f||%f\n", params[0], params[1], params[2], params[3]);
-	printf("res: %f||%f||%f\n", res[0], res[1], res[2]);*/
 	return(res);
 }
-/*t_vector			cone_normal(t_vector *intersect, t_object *self)
-{
-
-}*/
 static double 		*cone_inter(t_object self, t_vector *v,
 								t_vector org)
 {
@@ -64,15 +66,16 @@ double 				cone_color(t_mlx *s, t_object *self, t_vector inter)
 		while (j < s->obj_len)
 		{
 			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
-			comp_curr_diff(&diffuse, shadow,
-						   get_cone_diffuse(&s->sources[i], self, &inter));
+			if (shadow == 0)
+				break;
 			/*	ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
 														 self, &inter) :
 						add_color(ambiant, get_sphere_ambiant(&s->sources[i],
 															  self, &inter));*/
-			//printf("shadow:%d\n\n", shadow);
 			++j;
 		}
+		comp_curr_diff(&diffuse, shadow,
+					   get_cone_diffuse(&s->sources[i], self, &inter));
 		++i;
 	}
 	//	return (get_color_value(add_color(diffuse, ambiant)));
@@ -96,11 +99,6 @@ t_object			cone(char **tmp)
 	sp.color = create_color(tmp[1]);
 	sp.kd = ft_atoi(tmp[10]) / 100.0f;
 	normalize_vector(&sp.dir);
-	/*printf("sphere:{id:%d,\nx:%d,\ny:%d,\nz:%d,\nradius:%d,\ncolor:%d\n}", sp.id,
-	sp.x,
-	sp.y,
-	sp.z, sp.radius,
-	sp.color);*/
 	return (sp);
 }
 

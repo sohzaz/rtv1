@@ -39,7 +39,10 @@ int 			in_shadow(t_object *obj, t_object *v,
 	while (i < inter_res[0])
 	{
 		if (inter_res[(int)i] > 0.0f && inter_res[(int)i] < light_v.length)
+		{
 			res = 1;
+			break;
+		}
 		++i;
 	}
 	//printf("inter_res: [%f, %f, %f]\nres: %d\nlen:%f\n", inter_res[0], inter_res[1], inter_res[2], res, light_v.length);
@@ -74,16 +77,7 @@ t_color 			get_sphere_diffuse(t_object *src, t_object *self,
 void				comp_curr_diff(t_color* diffuse, int shadow,
 								   t_color new_diff)
 {
-	if (shadow == 1)
-	{
-		if (!isnan(diffuse->r))
-		{
-			*diffuse = add_color(*diffuse, new_diff);
-		}
-		else
-			*diffuse = new_diff;
-	}
-	else
+	if (shadow == 0)
 	{
 		if (isnan(diffuse->r))
 		{
@@ -91,6 +85,15 @@ void				comp_curr_diff(t_color* diffuse, int shadow,
 			diffuse->g = 0.0f;
 			diffuse->b = 0.0f;
 		}
+	}
+	else
+	{
+		if (!isnan(diffuse->r))
+		{
+			*diffuse = add_color(*diffuse, new_diff);
+		}
+		else
+			*diffuse = new_diff;
 	}
 
 }
