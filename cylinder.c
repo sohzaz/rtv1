@@ -23,6 +23,25 @@ static double 		*calc_res(double *params)
 	}
 	return(res);
 }
+t_vector			cyl_normal(t_vector *inter, t_object *self)
+{
+	t_vector		io;
+	t_vector		piv;
+	t_vector		pi;
+	t_vector		norm;
+
+	io.x = inter->x - self->x;
+	io.y = inter->y - self->y;
+	io.z = inter->z - self->z;
+	piv = mult_vec_double(self->dir, (dot(&io, &self->dir)
+									  / dot(&self->dir, &self->dir)));
+	pi.x = self->x + piv.x;
+	pi.y = self->y + piv.y;
+	pi.z = self->z + piv.z;
+	norm = sub_vec_by_vec(*inter, pi);
+	normalize_vector(&norm);
+	return (norm);
+}
 
 static double 		*cyl_inter(t_object self, t_vector *v,
 								t_vector org)
@@ -45,40 +64,30 @@ static double 		*cyl_inter(t_object self, t_vector *v,
 	params[3] = params[1] * params[1] - (4 * params[0] * params[2]);
 	return (calc_res(params));
 }
-double 				cyl_color(t_mlx *s, t_object *self, t_vector inter)
+t_color 			cyl_diffuse(t_object *src, t_object *self,
+								   t_vector *inter)
 {
-	int 			i;
-	int 			j;
-	int 			shadow;
-	t_color			diffuse;
-	//t_color			ambiant;
-	//int 			phong;
+	t_vector	light_v;
+	t_vector	surface_normal;
+	double 		l_dot_normal;
+	t_color		tmp;
 
-	i = 0;
-	diffuse.r = NAN;
-	while (i < s->src_len)
-	{
-		j = 0;
-		while (j < s->obj_len)
-		{
-			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
-			if (shadow == 0)
-				break;
-			/*	ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
-														 self, &inter) :
-						add_color(ambiant, get_sphere_ambiant(&s->sources[i],
-															  self, &inter));*/
-//			printf("shadow:%d\n\n", shadow);
-//			printf("cyl diffuse color: {%f, %f, %f}\n", diffuse.r, diffuse.g, diffuse.b);
-			++j;
-		}
-		comp_curr_diff(&diffuse, shadow,
-					   get_cyl_diffuse(&s->sources[i], self, &inter));
-		++i;
-	}
-//	printf("cyl final diffuse color: {%f, %f, %f}\n", diffuse.r, diffuse.g, diffuse.b);
-	//	return (get_color_value(add_color(diffuse, ambiant)));
-	return (get_color_value(diffuse));
+	light_v.x = src->x - inter->x;
+	light_v.y = src->y - inter->y;
+	light_v.z = src->z - inter->z;
+	light_v.length = sqrt(light_v.x * light_v.x + light_v.y * light_v.y
+						  + light_v.z * light_v.z);
+	normalize_vector(&light_v);
+	surface_normal = cyl_normal(inter, self);
+	l_dot_normal = dot(&surface_normal, &light_v);
+//	printf("l_dot_normal: %f\n", l_dot_normal);
+	l_dot_normal = (l_dot_normal > 0.0f)? l_dot_normal : 0.0f;
+	//printf("l_dot_normal_a: %f\n", l_dot_normal);
+	tmp = mult_color_double(mult_color_double(
+			mult_color(src->color, self->color),
+			((self->kd) * l_dot_normal)), src->intensity);
+	//printf("cyl diffuse color: {%f, %f, %f}\n", tmp.r, tmp.g, tmp.b);
+	return (tmp);
 }
 
 t_object			cylinder(char **tmp)
@@ -87,7 +96,7 @@ t_object			cylinder(char **tmp)
 
 	//sp.normal = &sphere_normal;
 	sp.inter = &cyl_inter;
-	sp.get_color = &cyl_color;
+	sp.diffuse = &cyl_diffuse;
 	sp.id = ft_atoi(tmp[0]);
 	sp.x = ft_atoi(tmp[2]);
 	sp.y = ft_atoi(tmp[3]);

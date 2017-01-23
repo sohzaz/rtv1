@@ -26,8 +26,8 @@
 # include "vector.h"
 # include "matrix.h"
 
-# define WIN_MAX_X 800
-# define WIN_MAX_Y 800
+# define WIN_MAX_X 1920
+# define WIN_MAX_Y 1080
 # define PTR_MOTION_MASK (1L << 6)
 # define MOTION_NOTIFY 6
 
@@ -76,6 +76,8 @@ typedef struct s_object {
 	double *(*inter)(struct s_object , t_vector *, t_vector);
 	t_vector (*normal)(t_vector *, struct s_object *);
 	double (*get_color)(struct s_mlxdata *, struct s_object *, t_vector);
+	t_color 			(*diffuse)(struct s_object *, struct s_object *,
+										  t_vector *);
 } t_object;
 typedef struct s_mlxdata {
 	void *mlx;
@@ -113,10 +115,7 @@ t_object	cylinder(char **tmp);
 t_object	cone(char **tmp);
 void		ft_exit(const int code, const char *msg);
 int 		tab_len(char **tab);
-int			in_shadow(t_object *obj, t_object *v,
-							 t_vector *inter);
-void				comp_curr_diff(t_color* diffuse, int shadow,
-								   t_color new_diff);
+double 			get_color(t_mlx *s, t_object *self, t_vector inter);
 t_object	    get_obj_type(char **tmp);
 
 #endif

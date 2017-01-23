@@ -49,37 +49,31 @@ static double 		*cone_inter(t_object self, t_vector *v,
 	params[3] = params[1] * params[1] - 4*params[0] * params[2];
 	return (calc_res(params));
 }
-double 				cone_color(t_mlx *s, t_object *self, t_vector inter)
-{
-	int 			i;
-	int 			j;
-	int 			shadow;
-	t_color			diffuse;
-	//t_color			ambiant;
-	/*int 			phong;*/
 
-	i = 0;
-	diffuse.r = NAN;
-	while (i < s->src_len)
-	{
-		j = 0;
-		while (j < s->obj_len)
-		{
-			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
-			if (shadow == 0)
-				break;
-			/*	ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
-														 self, &inter) :
-						add_color(ambiant, get_sphere_ambiant(&s->sources[i],
-															  self, &inter));*/
-			++j;
-		}
-		comp_curr_diff(&diffuse, shadow,
-					   get_cone_diffuse(&s->sources[i], self, &inter));
-		++i;
-	}
-	//	return (get_color_value(add_color(diffuse, ambiant)));
-	return (get_color_value(diffuse));
+t_color 			cone_diffuse(t_object *src, t_object *self,
+									t_vector *inter)
+{
+	t_vector	light_v;
+	t_vector	surface_normal;
+	double 		l_dot_normal;
+	t_color		tmp;
+
+	light_v.x = src->x - inter->x;
+	light_v.y = src->y - inter->y;
+	light_v.z = src->z - inter->z;
+	light_v.length = sqrt(light_v.x * light_v.x + light_v.y * light_v.y
+						  + light_v.z * light_v.z);
+	normalize_vector(&light_v);
+	surface_normal = cyl_normal(inter, self);
+	l_dot_normal = dot(&surface_normal, &light_v);
+	//printf("l_dot_normal: %f\n", l_dot_normal);
+	l_dot_normal *= l_dot_normal > 0.0f;
+	//printf("l_dot_normal_a: %f\n", l_dot_normal);
+	tmp = mult_color_double(mult_color_double(
+			mult_color(src->color, self->color),
+			((self->kd) * l_dot_normal)), src->intensity);
+	//printf("sphere diffuse color: {%f, %f, %f}\n", inter->x, inter->y, inter->z);
+	return (tmp);
 }
 
 t_object			cone(char **tmp)
@@ -87,7 +81,7 @@ t_object			cone(char **tmp)
 	t_object		sp;
 	//sp.normal = &sphere_normal;
 	sp.inter = &cone_inter;
-	sp.get_color = &cone_color;
+	sp.diffuse = &cone_diffuse;
 	sp.id = ft_atoi(tmp[0]);
 	sp.x = ft_atoi(tmp[2]);
 	sp.y = ft_atoi(tmp[3]);
