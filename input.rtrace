@@ -22,3 +22,7 @@
 3 -50 -5 -250 255,255,255 100
 3 -50 0 95 255,255,255 15
 3 75 15 -250 255,255,255 100
+#transform params
+#target_id x y z type
+1 -2 -2 -1 translation
+9 195 35 -10 rotation

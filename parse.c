@@ -27,8 +27,11 @@ void				sources_parse(t_mlx *s, int fd, int *l)
 			tmp = ft_strsplit(line, ' ');
 			++*l;
 			s->sources[o] = source(tmp);
+			s->all[*l - 2] = &s->objects[o];
+			s->all[*l - 1] = NULL;
 			++o;
 		}
+	transform_parse(s, fd, l);
 }
 
 static void			body_parse(t_mlx *s, int fd, int *l)
@@ -40,7 +43,7 @@ static void			body_parse(t_mlx *s, int fd, int *l)
 
 	tot_len = s->obj_len + *l;
 	o = 0;
-	while (*l < tot_len && get_next_line(fd, &line) > 0 )
+	while (*l < tot_len && get_next_line(fd, &line) > 0)
 		if (line[0] != '#')
 		{
 			tmp = ft_strsplit(line, ' ');
@@ -49,9 +52,12 @@ static void			body_parse(t_mlx *s, int fd, int *l)
 			if (s->objects[o].type == -127) {
 				ft_exit(2, "file content mismatch\n");
 			}
+			s->all[*l - 3] = &s->objects[o];
+			s->all[*l - 2] = NULL;
 			free(tmp);
 			++o;
 		}
+	free(line);
 	sources_parse(s, fd, l);
 }
 
@@ -126,6 +132,8 @@ void				parse(t_mlx *s, int fd) {
 			s->obj_len = ft_atoi(tmp[1]);
 			s->sources = (t_object *)malloc(sizeof(t_object) * (s->src_len + 1));
 			s->objects = (t_object *)malloc(sizeof(t_object) * (s->obj_len + 1));
+			s->all = (t_object **)malloc(sizeof(t_object *) * (s->src_len
+															+ s->obj_len + 1));
 			++l;
 			free(line);
 		}

@@ -91,6 +91,7 @@ typedef struct s_mlxdata {
 	int max_ite;
 	t_object *objects;
 	t_object *sources;
+	t_object	**all;
 	int 	obj_len;
 	int 	src_len;
 	int 	f_lock;
@@ -117,5 +118,6 @@ void		ft_exit(const int code, const char *msg);
 int 		tab_len(char **tab);
 double 			get_color(t_mlx *s, t_object *self, t_vector inter);
 t_object	    get_obj_type(char **tmp);
+void				transform_parse(t_mlx *s, int fd, int *l);
 
 #endif
