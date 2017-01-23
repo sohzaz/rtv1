@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sphere.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/01/20 16:51:05 by dbreton           #+#    #+#             */
+/*   Updated: 2017/01/20 16:51:08 by dbreton          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SPHERE_H
 # define SPHERE_H
 # include "fractol.h"
@@ -8,8 +20,7 @@ t_color 				get_sphere_diffuse(t_object *src, t_object *self,
 								 t_vector *inter);
 t_color 				get_sphere_ambiant(t_object *src, t_object *self,
 							 t_vector *inter);
-void				comp_curr_diff(t_color* diffuse, int shadow,
-								   t_color new_diff);
+
 double 				sphere_color(t_mlx *s, t_object *self, t_vector inter);
 
 #endif

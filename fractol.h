@@ -6,7 +6,7 @@
 /*   By: dbreton <dbreton@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/20 15:11:58 by dbreton           #+#    #+#             */
-/*   Updated: 2016/05/23 14:01:45 by dbreton          ###   ########.fr       */
+/*   Updated: 2017/01/20 17:09:10 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@
 # include <unistd.h>
 # include <stdio.h>
 # include "vector.h"
+# include "matrix.h"
 
-# define WIN_MAX_X 640
-# define WIN_MAX_Y 480
+# define WIN_MAX_X 1920
+# define WIN_MAX_Y 1080
 # define PTR_MOTION_MASK (1L << 6)
 # define MOTION_NOTIFY 6
 
@@ -70,10 +71,13 @@ typedef struct s_object {
 	float rot_x;
 	float rot_y;
 	float rot_z;
-	int radius;
+	double radius;
+	float intensity;
 	double *(*inter)(struct s_object , t_vector *, t_vector);
 	t_vector (*normal)(t_vector *, struct s_object *);
 	double (*get_color)(struct s_mlxdata *, struct s_object *, t_vector);
+	t_color 			(*diffuse)(struct s_object *, struct s_object *,
+										  t_vector *);
 } t_object;
 typedef struct s_mlxdata {
 	void *mlx;
@@ -87,6 +91,7 @@ typedef struct s_mlxdata {
 	int max_ite;
 	t_object *objects;
 	t_object *sources;
+	t_object	**all;
 	int 	obj_len;
 	int 	src_len;
 	int 	f_lock;
@@ -108,11 +113,11 @@ t_object 	sphere(char **tmp);
 t_object 	plane(char **tmp);
 t_object 	source(char **tmp);
 t_object	cylinder(char **tmp);
+t_object	cone(char **tmp);
 void		ft_exit(const int code, const char *msg);
 int 		tab_len(char **tab);
-t_object		get_total_illumination(t_mlx *s, t_object *self,
-									   t_vector inter);
-int 				in_shadow(t_object *obj, t_object *v,
-							 t_vector *inter);
+double 			get_color(t_mlx *s, t_object *self, t_vector inter);
+t_object	    get_obj_type(char **tmp);
+void				transform_parse(t_mlx *s, int fd, int *l);
 
 #endif

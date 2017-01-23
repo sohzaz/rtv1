@@ -12,7 +12,7 @@
 #include "fractol.h"
 #include "sphere.h"
 
-static t_color			get_plane_diffuse(t_object *src, t_object *self,
+static t_color			plane_diffuse(t_object *src, t_object *self,
 											t_vector *inter)
 {
 	t_vector	light_v;
@@ -27,59 +27,13 @@ static t_color			get_plane_diffuse(t_object *src, t_object *self,
 	normalize_vector(&light_v);
 	l_dot_normal = fabs(dot(&self->dir, &light_v));
 	//printf("pl_dot_normal: %f\n", l_dot_normal);
-	tmp = mult_color_double(
+	tmp = mult_color_double(mult_color_double(
 			mult_color(src->color, self->color),
-			((self->kd / 100) * l_dot_normal));
+			((self->kd) * l_dot_normal)), src->intensity);
 /*	printf("pl_src_col:{%f, %f, %f}\n", src->color.r, src->color.g, src->color.b);
 	printf("pl_obj_col:{%f, %f, %f}\n", self->color.r, self->color.g, self->color.b);
 	printf("pl_diffuse:{%f, %f, %f}\n", tmp.r, tmp.g, tmp.b);*/
 	return (tmp);
-}
-
-static double 			plane_color(t_mlx *s, t_object *self, t_vector inter)
-{
-/*	int 			i;
-	int 			j;
-	int 			shadow;
-	t_color			diffuse;*/
-	//t_color			ambiant;
-	/*int 			phong;*/
-	t_object		total;
-	//int 			shadow;
-	t_color			diffuse;
-	//t_color			ambiant;
-	/*int 			phong;*/
-	(void)self;
-	(void)s;
-
-	diffuse.r = NAN;
-	total = get_total_illumination(s, self, inter);
-	comp_curr_diff(&diffuse, 1,
-				   get_plane_diffuse(&total, self, &inter));
-
-/*	i = 0;
-	diffuse.r = NAN;
-	while (i < s->src_len)
-	{
-		j = 0;
-		while (j < s->obj_len)
-		{
-			if (s->objects[j].id != self->id)
-			{
-				shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
-				comp_curr_diff(&diffuse, shadow,
-							   get_plane_diffuse(&s->sources[i], self, &inter));
-			}*/
-			/*	ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
-														 self, &inter) :
-						add_color(ambiant, get_sphere_ambiant(&s->sources[i],
-															  self, &inter));*/
-		/*	++j;
-		}
-		++i;
-	}*/
-	//	return (get_color_value(add_color(diffuse, ambiant)));
-	return (get_color_value(diffuse));
 }
 
 static double			*plane_inter(t_object self, t_vector *v, t_vector org) {
@@ -114,7 +68,7 @@ t_object			plane(char **tmp) {
 
 
     pl.inter = &plane_inter;
-	pl.get_color = &plane_color;
+	pl.diffuse = &plane_diffuse;
     pl.id = ft_atoi(tmp[0]);
     pl.x = ft_atoi(tmp[2]);
     pl.y = ft_atoi(tmp[3]);
@@ -122,7 +76,7 @@ t_object			plane(char **tmp) {
     pl.dir.x = ft_atoi(tmp[5]);
     pl.dir.y = ft_atoi(tmp[6]);
     pl.dir.z = ft_atoi(tmp[7]);
-	pl.kd = ft_atoi(tmp[10]);
+	pl.kd = ft_atoi(tmp[10]) / 100.0f;
     normalize_vector(&pl.dir);
 	pl.color = create_color(tmp[1]);
 

@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   source.c                                           :+:      :+:    :+:   */
+/*   obj_type.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/29 10:54:57 by dbreton           #+#    #+#             */
-/*   Updated: 2017/01/20 16:50:40 by dbreton          ###   ########.fr       */
+/*   Created: 2017/01/20 16:57:00 by dbreton           #+#    #+#             */
+/*   Updated: 2017/01/20 16:57:02 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+t_object	    get_obj_type(char **tmp) {
+	t_object        nil;
 
-t_object		source(char **tmp)
-{
-	t_object	src;
-
-	src.x = ft_atoi(tmp[1]);
-	src.y = ft_atoi(tmp[2]);
-	src.z = ft_atoi(tmp[3]);
-	src.color = create_color(tmp[4]);
-	src.intensity = ft_atoi(tmp[5]) / 100.0f;
-	return (src);
+	nil.type = -127;
+	if (tab_len(tmp) == 11)
+	{
+		if (ft_strcmp(tmp[9], "sphere") == 0)
+			return (sphere(tmp));
+		else if (ft_strcmp(tmp[9], "plane") == 0)
+			return (plane(tmp));
+		else if (ft_strcmp(tmp[9], "cylinder") == 0)
+			return (cylinder(tmp));
+		else if (ft_strcmp(tmp[9], "cone") == 0)
+			return (cone(tmp));
+	}
+	return (nil);
 }
-
 

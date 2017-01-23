@@ -24,7 +24,6 @@ static int      is_closest(double *d, double *res) {
     }
 
     return (d_init != *d);
-
 }
 
 static t_vector     create_vector(t_mlx *s, int i, int j) {
@@ -51,12 +50,15 @@ unsigned int		get_inters(t_mlx *s, t_vector *v) {
     closest = NULL;
     while (i < (s->obj_len)) {
         res = s->objects[i].inter(s->objects[i], v, s->cam.c);
+		//printf("%f||%f||%f\n", res[0], res[1], res[2]);
         if (is_closest(&d, res) == 1)
             closest = &s->objects[i];
+		free(res);
         i++;
     }
+	//printf("%d\n", closest->id);
     return ((closest && d < 99999999.9f) ?
-			closest->get_color(s, closest,
+			get_color(s, closest,
 							   add_vector(s->cam.c, mult_vec_double(*v, d))) :
 			0);
 }

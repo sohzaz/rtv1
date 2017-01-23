@@ -6,9 +6,10 @@
 /*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 13:56:03 by dbreton           #+#    #+#             */
-/*   Updated: 2016/05/23 14:02:22 by dbreton          ###   ########.fr       */
+/*   Updated: 2017/01/20 16:50:56 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "fractol.h"
 #include "sphere.h"
 
@@ -46,29 +47,30 @@ t_vector			sphere_normal(t_vector *intersect, t_object *self)
 	return (res);
 }
 
-double 				sphere_color(t_mlx *s, t_object *self, t_vector inter)
+t_color 			sphere_diffuse(t_object *src, t_object *self,
+									  t_vector *inter)
 {
-	t_object		total;
-	//int 			shadow;
-	t_color			diffuse;
-	//t_color			ambiant;
-	/*int 			phong;*/
-	(void)self;
-	(void)s;
+	t_vector	light_v;
+	t_vector	surface_normal;
+	double 		l_dot_normal;
+	t_color		tmp;
 
-	diffuse.r = NAN;
-	total = get_total_illumination(s, self, inter);
-	comp_curr_diff(&diffuse, 1,
-				   get_sphere_diffuse(&total, self, &inter));
-		/*	ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
-													 self, &inter):
-					add_color(ambiant, get_sphere_ambiant(&s->sources[i],
-														  self, &inter));*/
-			//printf("shadow:%d\n\n", shadow);
-
-	//printf("cyl diffuse color: {%f, %f, %f}\n", diffuse.r, diffuse.g, diffuse.b);
-	//	return (get_color_value(add_color(diffuse, ambiant)));
-	return (get_color_value(diffuse));
+	light_v.x = src->x - inter->x;
+	light_v.y = src->y - inter->y;
+	light_v.z = src->z - inter->z;
+	light_v.length = sqrt(light_v.x * light_v.x + light_v.y * light_v.y
+						  + light_v.z * light_v.z);
+	normalize_vector(&light_v);
+	surface_normal = sphere_normal(inter, self);
+	l_dot_normal = dot(&surface_normal, &light_v);
+	//printf("l_dot_normal: %f\n", l_dot_normal);
+	l_dot_normal *= l_dot_normal > 0.0f;
+	//printf("l_dot_normal_a: %f\n", l_dot_normal);
+	tmp = mult_color_double(mult_color_double(
+			mult_color(src->color, self->color),
+			((self->kd) * l_dot_normal)), src->intensity);
+	//printf("sphere diffuse color: {%f, %f, %f}\n", inter->x, inter->y, inter->z);
+	return (tmp);
 }
 
 static double			*sphere_inter(t_object self, t_vector *v,
@@ -91,7 +93,7 @@ t_object			sphere(char **tmp)
 	t_object		sp;
 	sp.normal = &sphere_normal;
 	sp.inter = &sphere_inter;
-	sp.get_color = &sphere_color;
+	sp.diffuse = &sphere_diffuse;
     sp.id = ft_atoi(tmp[0]);
     sp.x = ft_atoi(tmp[2]);
     sp.y = ft_atoi(tmp[3]);
@@ -101,7 +103,7 @@ t_object			sphere(char **tmp)
     sp.rot_z = ft_atoi(tmp[7]);
     sp.radius = ft_atoi(tmp[8]);
 	sp.color = create_color(tmp[1]);
-	sp.kd = ft_atoi(tmp[10]);
+	sp.kd = ft_atoi(tmp[10]) / 100.0f;
 	/*printf("sphere:{id:%d,\nx:%d,\ny:%d,\nz:%d,\nradius:%d,\ncolor:%d\n}", sp.id,
 	sp.x,
 	sp.y,
