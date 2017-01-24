@@ -55,7 +55,6 @@ int 			in_shadow(t_object *obj, t_object *v,
 		++i;
 	}
 	free(inter_res);
-	//printf("inter_res: [%f, %f, %f]\nres: %d\nlen:%f\n", inter_res[0], inter_res[1], inter_res[2], res, light_v.length);
 	return (res);
 }
 
@@ -76,15 +75,8 @@ double 				get_color(t_mlx *s, t_object *self, t_vector inter)
 		while (j < s->obj_len)
 		{
 			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
-
-
 			if (shadow == 0)
 				break;
-			/*	ambiant = (ambiant.r) ? get_sphere_ambiant(&s->sources[i],
-														 self, &inter) :
-						add_color(ambiant, get_sphere_ambiant(&s->sources[i],
-															  self, &inter));*/
-			//printf("shadow:%d\n\n", shadow);
 			++j;
 		}
 		comp_curr_diff(&diffuse, shadow,

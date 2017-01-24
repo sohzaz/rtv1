@@ -76,9 +76,8 @@ static void			cam_vector_compute(t_mlx *s, t_vector view_dir)
 	normalize_vector(&s->cam.vu);
 	normalize_vector(&s->cam.vv);
 	s->cam.vp = sub_vec_by_vec(s->cam.lp, sub_vec_by_vec(
-			mult_vec_double(s->cam.vu, s->cam.vhw),
-			mult_vec_double(s->cam.vv, s->cam.vhh)
-	));
+			mult_vec_double(s->cam.vv, s->cam.vhh),
+			mult_vec_double(s->cam.vu, s->cam.vhw)));
 	s->cam.viy = mult_vec_double(
 			mult_vec_double(s->cam.vv,
 							(2.0f * s->cam.vhh)), 1.0f / (double)WIN_MAX_Y);

@@ -16,16 +16,16 @@ static void			rotate(t_object *obj, char **str)
 	printf("angles: %f||%f||%f\n", angles[0], angles[1], angles[2]);
 	tmp[0] = obj->dir.x;
 	tmp[1] = obj->dir.y;
-	obj->dir.x = tmp[0] * cos(angles[0]) - tmp[1] * sin(angles[0]);
-	obj->dir.y = tmp[0] * sin(angles[0]) + tmp[1] * cos(angles[0]);
+	obj->dir.x = tmp[0] * cos(angles[2]) - tmp[1] * sin(angles[2]);
+	obj->dir.y = tmp[0] * sin(angles[2]) + tmp[1] * cos(angles[2]);
 	tmp[0] = obj->dir.x;
 	tmp[1] = obj->dir.z;
 	obj->dir.x = tmp[0] * cos(angles[1]) - tmp[1] * sin(angles[1]);
 	obj->dir.z = tmp[0] * sin(angles[1]) + tmp[1] * cos(angles[1]);
 	tmp[0] = obj->dir.y;
 	tmp[1] = obj->dir.z;
-	obj->dir.y = tmp[0] * cos(angles[2]) - tmp[1] * sin(angles[2]);
-	obj->dir.z = tmp[0] * sin(angles[2]) + tmp[1] * cos(angles[2]);
+	obj->dir.y = tmp[0] * cos(angles[0]) - tmp[1] * sin(angles[0]);
+	obj->dir.z = tmp[0] * sin(angles[0]) + tmp[1] * cos(angles[0]);
 	//printf("%f||%f||%f\n", obj->dir.x, obj->dir.y, obj->dir.z);
 
 }

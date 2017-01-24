@@ -40,11 +40,11 @@ static double			*plane_inter(t_object self, t_vector *v, t_vector org) {
 	double 				v_dot;
 	//double 				t;
 	double 				*res;
-	t_vector			n;
+	//t_vector			n;
 	t_vector			v0;
 
 	v_dot = dot(v, &self.dir);
-	n.z = -1.0f;
+	//n.z = -1.0f;
 	v0.x = org.x - self.x;
 	v0.y = org.y - self.y;
 	v0.z = org.z - self.z;
@@ -52,9 +52,11 @@ static double			*plane_inter(t_object self, t_vector *v, t_vector org) {
 	if (v_dot > 0.0f)
 	{
 			res[0] = 1.0f;
-		//printf("plane_vecs:{v0:{%f,%f,%f},self.dir{%f,%f,%f}\n", v0.x, v0.y, v0.z, self.dir.x, self.dir.y, self.dir.z);
-			res[1] = -((self.dir.x * v0.x + self.dir.y * v0.y + self.dir.z * v0.z) / (self.dir.x * v->x + self.dir.y * v->y + self.dir.z * v->z));
-	//	printf("plane_inter: %f\n", res[1]);
+	//	printf("plane_vecs:{v0:{%f,%f,%f},self.dir{%f,%f,%f}\n", v0.x, v0.y, v0.z, self.dir.x, self.dir.y, self.dir.z);
+			//res[1] = -((self.dir.x * v0.x + self.dir.y * v0.y + self.dir.z * v0.z) / (self.dir.x * v->x + self.dir.y * v->y + self.dir.z * v->z));
+		res[1] = -1.0f * dot(&v0, &self.dir) / v_dot;
+		res[1] *= (res[1] < 0.0f)? -1.0f : 1.0f;
+		//printf("plane_inter: %f\n", res[1]);
 	}
 	else
 		res[0] = -1.0f;
