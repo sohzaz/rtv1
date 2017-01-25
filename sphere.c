@@ -81,7 +81,7 @@ static double			*sphere_inter(t_object self, t_vector *v,
     double c;
     double d;
 
-    a = pow(v->x, 2) + pow(v->y, 2) + pow(v->z, 2);
+	a = dot(v, v);
     b = 2 * (v->x * (org.x - self.x) + v->y * (org.y - self.y) + v->z * (org.z - self.z));
     c = (pow(org.x - self.x, 2) + pow(org.y - self.y, 2) + pow(org.z - self.z, 2)) - pow(self.radius, 2);
     d = b * b - 4 * (a * c);

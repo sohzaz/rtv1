@@ -32,6 +32,7 @@ int			main(int ac, char **av)
 	{
 		fd = open(av[1], O_RDONLY);
 		parse(&s, fd);
+		printf("%f||%f||%f\n", s.cam.vp.x, s.cam.vp.y, s.cam.vp.z);
         win_init(s);
 	}
 	get_usage();

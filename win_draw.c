@@ -34,7 +34,9 @@ static t_vector     create_vector(t_mlx *s, int i, int j) {
 			mult_vec_double(s->cam.vix, (double)i),
 			mult_vec_double(s->cam.viy, (double)j)
 	));
+	//printf("%f||%f||%f\n", vpp.x, vpp.y, vpp.z);
 	v = sub_vec_by_vec(vpp, s->cam.c);
+	//printf("%f||%f||%f\n", v.x, v.y, v.z);
     normalize_vector(&v);
     return (v);
 }

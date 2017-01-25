@@ -66,7 +66,7 @@ static void			cam_vector_compute(t_mlx *s, t_vector view_dir)
 	t_vector		up;
 
 	up.x = 0.0f;
-	up.y = 1.0f;
+	up.y = -1.0f;
 	up.z = 0.0f;
 	s->cam.vhw = tan((s->cam.fov / 2) * M_PI / 180.0f);
 	s->cam.aspect = (double)WIN_MAX_Y / (double)WIN_MAX_X;
@@ -76,8 +76,12 @@ static void			cam_vector_compute(t_mlx *s, t_vector view_dir)
 	normalize_vector(&s->cam.vu);
 	normalize_vector(&s->cam.vv);
 	s->cam.vp = sub_vec_by_vec(s->cam.lp, sub_vec_by_vec(
-			mult_vec_double(s->cam.vv, s->cam.vhh),
-			mult_vec_double(s->cam.vu, s->cam.vhw)));
+			mult_vec_double(s->cam.vu, s->cam.vhw),
+			mult_vec_double(s->cam.vv, s->cam.vhh)
+			));
+	printf("%f||%f||%f\n", view_dir.x, view_dir.y, view_dir.z);
+	printf("%f||%f||%f\n", s->cam.vu.x, s->cam.vu.y, s->cam.vu.z);
+	printf("%f||%f||%f\n", s->cam.vv.x, s->cam.vv.y, s->cam.vv.z);
 	printf("%f||%f||%f||%f||%f\n", s->cam.vp.x, s->cam.vp.y, s->cam.vp.z,s->cam.vhh,
 	s->cam.vhw);
 	s->cam.viy = mult_vec_double(

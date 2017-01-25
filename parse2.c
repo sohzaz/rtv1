@@ -60,21 +60,19 @@ void				transform_parse(t_mlx *s, int fd, int *l) {
 	int 			tmp_id;
 
 	while (get_next_line(fd, &line) > 0)
-		if (line[0] != '#')
-		{
+	{
+		if (line[0] != '#') {
 			o = 0;
 			tmp = ft_strsplit(line, ' ');
 			++*l;
 			tmp_id = ft_atoi(tmp[0]);
-			while (s->all[o])
-			{
+			while (s->all[o]) {
 				if (s->all[o]->id == tmp_id) {
-
 					apply_transform(s->all[o], tmp);
-
 				}
-
 				++o;
 			}
 		}
+		free(line);
+	}
 }
