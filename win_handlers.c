@@ -45,11 +45,6 @@ int				ptr_motion_hook(int x, int y, t_mlx *s)
 
 void			key_zoom_handler(int key, t_mlx *s)
 {
-	int		x;
-	int		y;
-
-	x = WIN_MAX_X / 2;
-	y = WIN_MAX_Y / 2;
 	s->zoom = (s->zoom <= 50) ? 50 : s->zoom;
 	if (key == 69)
 	{

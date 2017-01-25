@@ -49,7 +49,7 @@ static void			body_parse(t_mlx *s, int fd, int *l)
 			tmp = ft_strsplit(line, ' ');
 			++*l;
 			s->objects[o] = get_obj_type(tmp);
-			if (s->objects[o].type == -127) {
+			if (s->objects[o].type == 127) {
 				ft_exit(2, "file content mismatch\n");
 			}
 			s->all[*l - 3] = &s->objects[o];

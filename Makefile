@@ -30,7 +30,7 @@ $(NAME) :
 	# make -C $(MLX)  
 	make -C libft
 	gcc $(CFLAGS) $(I_MLX) -I libft/includes -c $(SRC)
-	gcc $(CFLAGS) $(MLX) -L libft  $(OBJ) -o $(NAME) $(MFLAGS) -Wl
+	gcc $(CFLAGS) $(MLX) -L libft  $(OBJ) -o $(NAME) $(MFLAGS)
 
 all : $(NAME)
 

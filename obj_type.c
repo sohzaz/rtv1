@@ -14,7 +14,7 @@
 t_object	    get_obj_type(char **tmp) {
 	t_object        nil;
 
-	nil.type = -127;
+	nil.type = 127;
 	if (tab_len(tmp) == 11)
 	{
 		if (ft_strcmp(tmp[9], "sphere") == 0)

@@ -68,6 +68,7 @@ double 				get_color(t_mlx *s, t_object *self, t_vector inter)
 	/*int 			phong;*/
 
 	i = 0;
+	shadow = 0;
 	diffuse.r = NAN;
 	while (i < s->src_len)
 	{
