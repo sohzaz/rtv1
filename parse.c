@@ -22,15 +22,18 @@ void				sources_parse(t_mlx *s, int fd, int *l)
 	tot_len = s->src_len + *l;
 	o = 0;
 	while (*l < tot_len && get_next_line(fd, &line) > 0)
-		if (line[0] != '#')
-		{
+	{
+		if (line[0] != '#') {
 			tmp = ft_strsplit(line, ' ');
 			++*l;
 			s->sources[o] = source(tmp);
 			s->all[*l - 2] = &s->objects[o];
 			s->all[*l - 1] = NULL;
 			++o;
+			clear_tab(tmp);
 		}
+		free(line);
+	}
 	transform_parse(s, fd, l);
 }
 
@@ -44,8 +47,8 @@ static void			body_parse(t_mlx *s, int fd, int *l)
 	tot_len = s->obj_len + *l;
 	o = 0;
 	while (*l < tot_len && get_next_line(fd, &line) > 0)
-		if (line[0] != '#')
-		{
+	{
+		if (line[0] != '#') {
 			tmp = ft_strsplit(line, ' ');
 			++*l;
 			s->objects[o] = get_obj_type(tmp);
@@ -54,10 +57,11 @@ static void			body_parse(t_mlx *s, int fd, int *l)
 			}
 			s->all[*l - 3] = &s->objects[o];
 			s->all[*l - 2] = NULL;
-			free(tmp);
+			clear_tab(tmp);
 			++o;
 		}
-	free(line);
+		free(line);
+	}
 	sources_parse(s, fd, l);
 }
 
@@ -78,12 +82,12 @@ static void			cam_vector_compute(t_mlx *s, t_vector view_dir)
 	s->cam.vp = sub_vec_by_vec(s->cam.lp, sub_vec_by_vec(
 			mult_vec_double(s->cam.vu, s->cam.vhw),
 			mult_vec_double(s->cam.vv, s->cam.vhh)
-			));
+	));
 	printf("%f||%f||%f\n", view_dir.x, view_dir.y, view_dir.z);
 	printf("%f||%f||%f\n", s->cam.vu.x, s->cam.vu.y, s->cam.vu.z);
 	printf("%f||%f||%f\n", s->cam.vv.x, s->cam.vv.y, s->cam.vv.z);
 	printf("%f||%f||%f||%f||%f\n", s->cam.vp.x, s->cam.vp.y, s->cam.vp.z,s->cam.vhh,
-	s->cam.vhw);
+		   s->cam.vhw);
 	s->cam.viy = mult_vec_double(
 			mult_vec_double(s->cam.vv,
 							(2.0f * s->cam.vhh)), 1.0f / (double)WIN_MAX_Y);
@@ -100,17 +104,16 @@ static void			camera_parse(t_mlx *s, int fd, int *l)
 	char            **tmp;
 	t_vector        view_dir;
 
-	while (*l != 2 && get_next_line(fd, &line) > 0)
-		if (line[0] != '#')
-		{
+	while (*l != 2 && get_next_line(fd, &line) > 0) {
+		if (line[0] != '#') {
 			tmp = ft_strsplit(line, ' ');
 			if (tab_len(tmp) != 7 || isnan(s->cam.c.x = ft_atoi(tmp[0])) ||
-			isnan(s->cam.c.y = ft_atoi(tmp[1])) ||
-			isnan(s->cam.c.z = ft_atoi(tmp[2])) ||
-			isnan(s->cam.lp.x = ft_atoi(tmp[4])) ||
-			isnan(s->cam.lp.y = ft_atoi(tmp[5])) ||
-			isnan(s->cam.lp.z = ft_atoi(tmp[6])) ||
-			isnan(s->cam.fov = ft_atoi(tmp[3])))
+				isnan(s->cam.c.y = ft_atoi(tmp[1])) ||
+				isnan(s->cam.c.z = ft_atoi(tmp[2])) ||
+				isnan(s->cam.lp.x = ft_atoi(tmp[4])) ||
+				isnan(s->cam.lp.y = ft_atoi(tmp[5])) ||
+				isnan(s->cam.lp.z = ft_atoi(tmp[6])) ||
+				isnan(s->cam.fov = ft_atoi(tmp[3])))
 				ft_exit(1, "incorrect camera settings\n");
 			view_dir = sub_vec_by_vec(s->cam.lp, s->cam.c);
 			s->cam.focal = sqrt(pow(view_dir.x - s->cam.c.x, 2) +
@@ -119,8 +122,10 @@ static void			camera_parse(t_mlx *s, int fd, int *l)
 			normalize_vector(&view_dir);
 			cam_vector_compute(s, view_dir);
 			++*l;
-			free(line);
+			clear_tab(tmp);
 		}
+		free(line);
+	}
 	body_parse(s, fd, l);
 }
 
@@ -130,17 +135,19 @@ void				parse(t_mlx *s, int fd) {
 	char        	**tmp;
 	l = 0;
 	while (l != 1 && get_next_line(fd, &line) > 0)
-		if (line[0] != '#')
-		{
+	{
+		if (line[0] != '#') {
 			tmp = ft_strsplit(line, '/');
 			s->src_len = ft_atoi(tmp[0]);
 			s->obj_len = ft_atoi(tmp[1]);
-			s->sources = (t_object *)malloc(sizeof(t_object) * (s->src_len + 1));
-			s->objects = (t_object *)malloc(sizeof(t_object) * (s->obj_len + 1));
-			s->all = (t_object **)malloc(sizeof(t_object *) * (s->src_len
-															+ s->obj_len + 1));
+			s->sources = (t_object *) malloc(sizeof(t_object) * (s->src_len + 1));
+			s->objects = (t_object *) malloc(sizeof(t_object) * (s->obj_len + 1));
+			s->all = (t_object **) malloc(sizeof(t_object *) * (s->src_len
+																+ s->obj_len + 1));
 			++l;
-			free(line);
+			clear_tab(tmp);
 		}
+		free(line);
+	}
 	camera_parse(s, fd, &l);
 }

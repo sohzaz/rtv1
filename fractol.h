@@ -25,6 +25,7 @@
 # include <stdio.h>
 # include "vector.h"
 # include "matrix.h"
+# include "util.h"
 
 # define WIN_MAX_X 800
 # define WIN_MAX_Y 800
@@ -115,9 +116,10 @@ t_object 	source(char **tmp);
 t_object	cylinder(char **tmp);
 t_object	cone(char **tmp);
 void		ft_exit(const int code, const char *msg);
-int 		tab_len(char **tab);
+
 double 			get_color(t_mlx *s, t_object *self, t_vector inter);
 t_object	    get_obj_type(char **tmp);
 void				transform_parse(t_mlx *s, int fd, int *l);
+
 
 #endif

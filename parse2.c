@@ -72,7 +72,9 @@ void				transform_parse(t_mlx *s, int fd, int *l) {
 				}
 				++o;
 			}
+			clear_tab(tmp);
 		}
 		free(line);
 	}
+	free(line);
 }

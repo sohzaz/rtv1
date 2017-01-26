@@ -37,7 +37,7 @@ t_color			create_color(char *str)
 	t_color		res;
 
 	tab = ft_strsplit(str, ',');
-	if (tab)
+	if (tab && tab_len(tab) == 3)
 	{
 		res.r = ft_atoi(tab[0]) / 255.0f;
 		res.g = ft_atoi(tab[1]) / 255.0f;
@@ -49,6 +49,7 @@ t_color			create_color(char *str)
 		res.g = 0.0f;
 		res.b = 0.0f;
 	}
+	clear_tab(tab);
 	return (res);
 }
 

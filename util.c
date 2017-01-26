@@ -5,11 +5,25 @@
 
 int 		tab_len(char **tab)
 {
-	int		i = 0;
+	int		i;
 
+	i = 0;
 	while (tab[i])
 		++i;
 	return (i);
+}
+
+void			clear_tab(char **str)
+{
+	size_t		i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		++i;
+	}
+	free(str);
 }
 
 t_object		create_new_src()

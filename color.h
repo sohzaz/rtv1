@@ -1,6 +1,7 @@
 
 #ifndef COLOR_H
 # define COLOR_H
+# include "util.h"
 
 typedef struct 		s_color {
 	float			r;
