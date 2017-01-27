@@ -23,5 +23,3 @@ t_object		source(char **tmp)
 	src.intensity = ft_atoi(tmp[5]) / 100.0f;
 	return (src);
 }
-
-

@@ -1,6 +1,14 @@
-//
-// Created by Drien BRETON on 1/23/17.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   illumination.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/01/27 15:16:26 by dbreton           #+#    #+#             */
+/*   Updated: 2017/01/27 15:16:30 by dbreton          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fractol.h"
 
@@ -27,13 +35,13 @@ void				comp_curr_diff(t_color* diffuse, int shadow,
 	}
 
 }
-int 			in_shadow(t_object *obj, t_object *v,
-						 t_vector *inter)
+int 				in_shadow(t_object *obj, t_object *v,
+							 t_vector *inter)
 {
-	int 		res;
-	double		*inter_res;
-	double 		i;
-	t_vector 	light_v;
+	int 			res;
+	double			*inter_res;
+	double 			i;
+	t_vector 		light_v;
 
 	res = 0;
 	i = 1.0f;

@@ -1,11 +1,20 @@
-//
-// Created by Drien BRETON on 1/3/17.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   util.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/01/27 13:38:58 by dbreton           #+#    #+#             */
+/*   Updated: 2017/01/27 13:39:00 by dbreton          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
-int 		tab_len(char **tab)
+int				tab_len(char **tab)
 {
-	int		i;
+	int			i;
 
 	i = 0;
 	while (tab[i])
@@ -24,17 +33,4 @@ void			clear_tab(char **str)
 		++i;
 	}
 	free(str);
-}
-
-t_object		create_new_src()
-{
-	t_object	res;
-
-	res.x = 0;
-	res.y = 0;
-	res.z = 0;
-	res.color.r  = NAN;
-	res.color.g  = 0;
-	res.color.b  = 0;
-	return (res);
 }

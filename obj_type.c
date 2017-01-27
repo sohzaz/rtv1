@@ -11,8 +11,10 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
-t_object	    get_obj_type(char **tmp) {
-	t_object        nil;
+
+t_object			get_obj_type(char **tmp)
+{
+	t_object		nil;
 
 	nil.type = 127;
 	if (tab_len(tmp) == 11)
@@ -28,4 +30,3 @@ t_object	    get_obj_type(char **tmp) {
 	}
 	return (nil);
 }
-

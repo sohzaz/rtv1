@@ -1,10 +1,18 @@
-//
-// Created by breto on 26/01/2017.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   util.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/01/27 13:34:08 by dbreton           #+#    #+#             */
+/*   Updated: 2017/01/27 13:34:16 by dbreton          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef RTV1_UTIL_H
-#define RTV1_UTIL_H
+# define RTV1_UTIL_H
 
-int				tab_len(char **tab);
-void			clear_tab(char **str);
+int		tab_len(char **tab);
+void	clear_tab(char **str);
 #endif

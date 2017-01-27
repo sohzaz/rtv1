@@ -24,7 +24,6 @@
 # include <unistd.h>
 # include <stdio.h>
 # include "vector.h"
-# include "matrix.h"
 # include "util.h"
 
 # define WIN_MAX_X 800
