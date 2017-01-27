@@ -13,7 +13,7 @@
 NAME = RTv1 
 OS = $(shell uname)
 CFLAGS = -Wall -Wextra -Werror -g -O2
-SRC = main.c draw_tools.c win_draw.c win_init.c win_handlers.c parse.c sphere.c plane.c vector.c vector2.c source.c color.c color2.c util.c cylinder.c cone.c matrix.c obj_type.c illumination.c parse2.c
+SRC = main.c draw_tools.c win_draw.c win_init.c win_handlers.c parse.c sphere.c plane.c vector.c vector2.c source.c color.c color2.c util.c cylinder.c cone.c obj_type.c illumination.c parse2.c
 ifeq ($(OS), Darwin)
     MLX = 
 	I_MLX = 

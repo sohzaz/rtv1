@@ -26,8 +26,8 @@
 # include "vector.h"
 # include "util.h"
 
-# define WIN_MAX_X 800
-# define WIN_MAX_Y 800
+# define WIN_MAX_X 1920
+# define WIN_MAX_Y 1080
 # define PTR_MOTION_MASK (1L << 6)
 # define MOTION_NOTIFY 6
 
