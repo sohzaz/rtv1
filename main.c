@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbreton <dbreton@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/02 10:27:23 by dbreton           #+#    #+#             */
-/*   Updated: 2016/05/16 15:31:48 by                  ###   ########.fr       */
+/*   Created: 2017/01/27 16:24:09 by dbreton           #+#    #+#             */
+/*   Updated: 2017/01/27 16:24:21 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,14 @@ void		get_usage(void)
 
 int			main(int ac, char **av)
 {
-	t_mlx	        s;
-	int             fd;
+	t_mlx	s;
+	int		fd;
 
 	if (ac == 2)
 	{
 		fd = open(av[1], O_RDONLY);
 		parse(&s, fd);
-		printf("%f||%f||%f\n", s.cam.vp.x, s.cam.vp.y, s.cam.vp.z);
-        win_init(s);
+		win_init(s);
 	}
 	get_usage();
 	return (0);

@@ -32,11 +32,6 @@ t_vector				sub_vec_by_vec(t_vector v1, t_vector v2)
 	return (res);
 }
 
-t_vector				div_vec_by_double(t_vector v, double n)
-{
-	return (mult_vec_double(v, 1.0f / n));
-}
-
 double					dot(t_vector *v1, t_vector *v2)
 {
 	return (v1->x * v2->x + v1->y * v2->y + v1->z * v2->z);
