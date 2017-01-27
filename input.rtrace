@@ -3,7 +3,7 @@
 3/11
 #camera params
 #x y z fov rot_x rot_y rot_z
--2505 0 0 60 -2475 3 0
+-2505 0 0 60 -2475 0 0
 #objects params
 #id color x y z rot_x rot_y rot_z radius type kd
 1 175,100,100 450 0 0 0 0 0 100 sphere 100

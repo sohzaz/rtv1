@@ -98,7 +98,6 @@ typedef struct s_mlxdata {
 	int 	f_lock;
 	int		need_refresh;
 } t_mlx;
-
 void 		win_init(t_mlx s);
 void 		render_pic(t_mlx *s);
 void 		parse(t_mlx *s, int fd);
@@ -116,8 +115,8 @@ t_object 	source(char **tmp);
 t_object	cylinder(char **tmp);
 t_object	cone(char **tmp);
 void		ft_exit(const int code, const char *msg);
-
-double 			get_color(t_mlx *s, t_object *self, t_vector inter);
+void 				cam_params(t_mlx *s, char **tmp);
+unsigned int	get_color(t_mlx *s, t_object *self, t_vector inter);
 t_object	    get_obj_type(char **tmp);
 void				transform_parse(t_mlx *s, int fd, int *l);
 

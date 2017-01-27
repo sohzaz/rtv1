@@ -58,7 +58,7 @@ int 			in_shadow(t_object *obj, t_object *v,
 	return (res);
 }
 
-double 				get_color(t_mlx *s, t_object *self, t_vector inter)
+unsigned int		get_color(t_mlx *s, t_object *self, t_vector inter)
 {
 	int 			i;
 	int 			j;

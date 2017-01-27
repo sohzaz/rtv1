@@ -52,8 +52,19 @@ static void			apply_transform(t_object *obj, char **str )
 		printf("after: %f||%f||%f\n", obj->dir.x, obj->dir.y, obj->dir.z);
 	}
 }
+void 				cam_params(t_mlx *s, char **tmp)
+{
+	s->cam.c.x = ft_atoi(tmp[0]);
+	s->cam.c.y = ft_atoi(tmp[1]);
+	s->cam.c.z = ft_atoi(tmp[2]);
+	s->cam.lp.x = ft_atoi(tmp[4]);
+	s->cam.lp.y = ft_atoi(tmp[5]);
+	s->cam.lp.z = ft_atoi(tmp[6]);
+	s->cam.fov = ft_atoi(tmp[3]);
+}
 
-void				transform_parse(t_mlx *s, int fd, int *l) {
+void				transform_parse(t_mlx *s, int fd, int *l)
+{
 	char			*line;
 	char			**tmp;
 	int 			o;
