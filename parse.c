@@ -27,6 +27,8 @@ void				sources_parse(t_mlx *s, int fd, int *l)
 		{
 			tmp = ft_strsplit(line, ' ');
 			++*l;
+			if (tab_len(tmp) != 6)
+				ft_exit(2, "file content mismatch\n");
 			s->sources[o] = source(tmp);
 			s->all[*l - 2] = &s->objects[o];
 			s->all[*l - 1] = NULL;

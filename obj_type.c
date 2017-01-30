@@ -28,5 +28,6 @@ t_object			get_obj_type(char **tmp)
 		else if (ft_strcmp(tmp[9], "cone") == 0)
 			return (cone(tmp));
 	}
+	printf("returned nil");
 	return (nil);
 }

@@ -74,6 +74,8 @@ void				transform_parse(t_mlx *s, int fd, int *l)
 			o = 0;
 			tmp = ft_strsplit(line, ' ');
 			++*l;
+			if (tab_len(tmp) != 5)
+				ft_exit(2, "file content mismatch\n");
 			tmp_id = ft_atoi(tmp[0]);
 			while (s->all[o])
 			{
