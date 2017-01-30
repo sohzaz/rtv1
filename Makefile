@@ -10,9 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = RTv1 
+NAME = RTv1
 OS = $(shell uname)
-CFLAGS = -Wall -Wextra -Werror -g -O0
+CFLAGS = -Wall -Wextra -Werror -g -O2
 SRC = main.c draw_tools.c win_draw.c win_init.c parse.c sphere.c plane.c vector.c vector2.c source.c color.c color2.c util.c cylinder.c cone.c obj_type.c illumination.c parse2.c
 SDL_PATH = "$(shell pwd)/sdl"
 SDL_LIB = "$(SDL_PATH)/lib"
@@ -23,7 +23,7 @@ OBJ = $(SRC:.c=.o)
 .PHONY: sdl clean
 
 $(NAME) : sdl
-	# make -C $(MLX)  
+	# make -C $(MLX)
 	make -C libft
 	gcc $(CFLAGS) -I $(SDL_INCLUDE) -I libft/includes -c $(SRC)
 	gcc $(CFLAGS) -L $(SDL_LIB) -L libft  $(OBJ) -o $(NAME) $(MFLAGS)
@@ -42,7 +42,7 @@ fclean : clean
 re : fclean all
 
 sdl :
-	echo $(SDL_PATH)
+	cd sdl; \
 	$(SDL_PATH)/configure --prefix=$(SDL_PATH)
 	make -C $(SDL_PATH)
 	make -C $(SDL_PATH) install

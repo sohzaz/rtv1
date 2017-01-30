@@ -63,7 +63,7 @@ int					in_shadow(t_object *obj, t_object *v,
 	return (res);
 }
 
-unsigned int		get_color(t_mlx *s, t_object *self, t_vector inter)
+t_color				get_color(t_mlx *s, t_object *self, t_vector inter)
 {
 	int				i;
 	int				j;
@@ -87,5 +87,5 @@ unsigned int		get_color(t_mlx *s, t_object *self, t_vector inter)
 					self->diffuse(&s->sources[i], self, &inter));
 		++i;
 	}
-	return (get_color_value(diffuse));
+	return (diffuse);
 }

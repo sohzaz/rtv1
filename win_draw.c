@@ -40,7 +40,7 @@ static t_vector		create_vector(t_mlx *s, int i, int j)
 	return (v);
 }
 
-unsigned int		get_inters(t_mlx *s, t_vector *v)
+t_color				get_inters(t_mlx *s, t_vector *v)
 {
 	int				i;
 	double			d;
@@ -60,14 +60,15 @@ unsigned int		get_inters(t_mlx *s, t_vector *v)
 	}
 	return ((closest && d < 99999999.9f) ?
 			get_color(s, closest,
-					add_vector(s->cam.c, mult_vec_double(*v, d))) : 0);
+					add_vector(s->cam.c, mult_vec_double(*v, d))) :
+			create_color("0,0,0"));
 }
 
 void				render_pic(t_mlx *s)
 {
 	int				i;
 	int				j;
-	unsigned int	tmp;
+	t_color			tmp;
 	t_vector		v;
 
 	j = 0;
@@ -79,6 +80,7 @@ void				render_pic(t_mlx *s)
 			v = create_vector(s, i, j);
 			tmp = get_inters(s, &v);
 			put_in_image(s, i, j, tmp);
+			printf("\r%d|%d", i, j);
 			++i;
 		}
 		++j;

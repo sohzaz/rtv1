@@ -13,28 +13,44 @@
 #include "fractol.h"
 
 
-int			expose_hook(t_mlx *s)
+int expose_hook(t_mlx *s)
 {
-	if (s->need_refresh)
+	while (1)
 	{
-		render_pic(s);
-		s->need_refresh = 0;
+		//SDL_RenderClear(s->ren);
+		if (s->need_refresh)
+		{
+			SDL_QueryTexture(s->img, &s->format, NULL, &s->wh[0], &s->wh[1]);
+			SDL_LockTexture(s->img, NULL, (void**)&s->pixels, &s->pitch);
+			write(1, "B", 1);
+			render_pic(s);
+			s->need_refresh = 0;
+			SDL_UnlockTexture(s->img);
+		}
+		SDL_RenderCopy(s->ren, s->img, NULL, NULL);
+		SDL_RenderPresent(s->ren);
 	}
-	mlx_put_image_to_window(s->mlx, s->win, s->img, 0, 0);
 	return (0);
 }
 
-void		win_init(t_mlx s)
+void win_init(t_mlx s)
 {
-	if ((s.mlx = mlx_init()) != NULL)
+	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+		ft_exit(3, "sdl init failed");
+	s.win = SDL_CreateWindow("RTv1", SDL_WINDOWPOS_UNDEFINED,
+							 SDL_WINDOWPOS_UNDEFINED,
+							 WIN_MAX_X,
+							 WIN_MAX_Y,
+							 SDL_WINDOW_SHOWN);
+	s.ren = SDL_CreateRenderer(s.win, -1, SDL_RENDERER_ACCELERATED);
+	s.img = SDL_CreateTexture(s.ren, SDL_PIXELFORMAT_RGBA32,
+							  SDL_TEXTUREACCESS_STREAMING, WIN_MAX_X, WIN_MAX_Y);
+	if (s.win && s.img && s.ren)
 	{
-		s.win = mlx_new_window(s.mlx, WIN_MAX_X, WIN_MAX_Y, "42 RTv1");
-		s.img = mlx_new_image(s.mlx, WIN_MAX_X, WIN_MAX_Y);
-		if (s.win && s.img)
-		{
-			s.need_refresh = 1;
-			mlx_expose_hook(s.win, &expose_hook, &s);
-			mlx_loop(s.mlx);
-		}
+		write(1,"A", 1);
+		s.need_refresh = 1;
+		expose_hook(&s);
 	}
+	else
+	{exit(1);}
 }

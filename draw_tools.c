@@ -12,24 +12,17 @@
 
 #include "fractol.h"
 
-void				put_in_image(t_mlx *s, int x, int y, int color)
+void				put_in_image(t_mlx *s, int x, int y, t_color color)
 {
-	char			*start;
-	int				bpp;
-	int				size_line;
-	int				endian;
-	unsigned int	new_color;
+	SDL_PixelFormat pixelFormat;
 
-	start = mlx_get_data_addr(s->img, &bpp, &size_line, &endian);
-	new_color = mlx_get_color_value(s->mlx, color);
-	if (x < (WIN_MAX_X) && y < (WIN_MAX_Y)
-			&& x > 0 && y > 0)
+	pixelFormat.format = s->format;
+	if ((x < s->wh[0] -1) && y < (s->wh[1] - 1))
 	{
-		start[(x * (bpp / 8)) + (y * size_line) + 2] = new_color & 0xFF;
-		start[(x * (bpp / 8)) + (y * size_line) + 1] = (new_color
-				& 0xFF00) >> 8;
-		start[(x * (bpp / 8)) + (y * size_line)] = (new_color
-				& 0xFFFF00) >> 16;
+		Uint32 pixelPosition = y * (s->pitch / sizeof(unsigned int)) + x;
+		s->pixels[pixelPosition] = get_color_value(color);
+		//s->pixels[pixelPosition] = SDL_MapRGBA(&s->pixelFormat, (color.r * 255),
+		//		   (color.g * 255), (color.b * 255), 0);
 	}
 }
 
