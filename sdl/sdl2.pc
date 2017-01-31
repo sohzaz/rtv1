@@ -1,6 +1,6 @@
 # sdl pkg-config source file
 
-prefix=/Users/dbreton/rtv1/sdl
+prefix=/Users/dbreton/ClionProjects/rtv1/sdl
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
