@@ -28,8 +28,6 @@
 
 # define WIN_MAX_X 1920
 # define WIN_MAX_Y 1080
-# define PTR_MOTION_MASK (1L << 6)
-# define MOTION_NOTIFY 6
 
 struct s_mlxdata;
 
@@ -92,18 +90,16 @@ typedef struct		s_mlxdata {
 	int				src_len;
 	int				need_refresh;
 	Uint32*			pixels;
-	int pitch;
-	Uint32 format;
-	int wh[2];
-	SDL_PixelFormat pixelFormat;
+	int				pitch;
+	Uint32			format;
+	int				wh[2];
+	char 			need_reload;
 }					t_mlx;
 void				win_init(t_mlx s);
 void				render_pic(t_mlx *s);
 void				parse(t_mlx *s, int fd);
 void				put_in_image(t_mlx *s, int x, int y, t_color color);
-int					expose_hook(t_mlx *s);
-void				get_numbers(t_mlx *s, int x, int y);
-void				win_reset(t_mlx *s);
+void				expose_hook(t_mlx *s);
 t_color				get_inters(t_mlx *s, t_vector *v);
 t_object			sphere(char **tmp);
 t_object			plane(char **tmp);

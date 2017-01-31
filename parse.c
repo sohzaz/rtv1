@@ -78,19 +78,19 @@ static void			cam_vector_compute(t_mlx *s, t_vector view_dir)
 	s->cam.vhw = tan((s->cam.fov / 2) * M_PI / 180.0f);
 	s->cam.aspect = (double)WIN_MAX_Y / (double)WIN_MAX_X;
 	s->cam.vhh = s->cam.vhw * s->cam.aspect;
+	//s->cam.vhw = 0.3f;
+	//s->cam.vhh = 0.5f;
 	s->cam.vu = mult_vec_by_vec(view_dir, up);
 	s->cam.vv = mult_vec_by_vec(s->cam.vu, view_dir);
 	normalize_vector(&s->cam.vu);
 	normalize_vector(&s->cam.vv);
-	s->cam.vp = sub_vec_by_vec(s->cam.lp, sub_vec_by_vec(
+	s->cam.vp = sub_vec_by_vec(s->cam.lp, add_vector(
 			mult_vec_double(s->cam.vu, s->cam.vhw),
 			mult_vec_double(s->cam.vv, s->cam.vhh)));
 	s->cam.viy = mult_vec_double(
-			mult_vec_double(s->cam.vv,
-							(2.0f * s->cam.vhh)), 1.0f / (double)WIN_MAX_Y);
+		s->cam.vv,	(2.0f * s->cam.vhh) / (double)WIN_MAX_Y);
 	s->cam.vix = mult_vec_double(
-			mult_vec_double(s->cam.vu,
-							(2.0f * s->cam.vhw)), 1.0f / (double)WIN_MAX_X);
+			s->cam.vu,(2.0f * s->cam.vhw) / (double)WIN_MAX_X);
 	s->cam.ix = s->cam.vhw / (float)WIN_MAX_X;
 	s->cam.iy = s->cam.vhh / (float)WIN_MAX_Y;
 }
@@ -114,6 +114,7 @@ static void			camera_parse(t_mlx *s, int fd, int *l)
 								pow(view_dir.y - s->cam.c.y, 2) +
 								pow(view_dir.z - s->cam.c.z, 2));
 			normalize_vector(&view_dir);
+
 			cam_vector_compute(s, view_dir);
 			++*l;
 			clear_tab(tmp);

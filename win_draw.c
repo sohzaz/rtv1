@@ -72,15 +72,15 @@ void				render_pic(t_mlx *s)
 	t_vector		v;
 
 	j = 0;
-	while (j < WIN_MAX_Y)
+	while (j < (WIN_MAX_Y + 1))
 	{
 		i = 0;
-		while (i < WIN_MAX_X)
+		while (i < (WIN_MAX_X + 1))
 		{
 			v = create_vector(s, i, j);
 			tmp = get_inters(s, &v);
 			put_in_image(s, i, j, tmp);
-			printf("\r%d|%d", i, j);
+		//	printf("\r%d|%d", i, j);
 			++i;
 		}
 		++j;

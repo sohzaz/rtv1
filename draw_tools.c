@@ -17,7 +17,7 @@ void				put_in_image(t_mlx *s, int x, int y, t_color color)
 	SDL_PixelFormat pixelFormat;
 
 	pixelFormat.format = s->format;
-	if ((x < s->wh[0] -1) && y < (s->wh[1] - 1))
+	if ((x < s->wh[0]) && y < (s->wh[1]))
 	{
 		Uint32 pixelPosition = y * (s->pitch / sizeof(unsigned int)) + x;
 		s->pixels[pixelPosition] = get_color_value(color);
