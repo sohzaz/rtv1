@@ -65,27 +65,28 @@ int					in_shadow(t_object *obj, t_object *v,
 
 t_color				get_color(t_mlx *s, t_object *self, t_vector inter)
 {
-	int				i;
-	int				j;
+	int				tmp_i[2];
 	int				shadow;
 	t_color			diffuse;
 
-	i = 0;
+	tmp_i[0]= 0;
 	shadow = 0;
 	diffuse.r = NAN;
-	while (i < s->src_len)
+	while (tmp_i[0]< s->src_len)
 	{
-		j = 0;
-		while (j < s->obj_len)
+		tmp_i[1]= 0;
+		while (tmp_i[1]< s->obj_len)
 		{
-			shadow = !(in_shadow(&s->objects[j], &s->sources[i], &inter));
+			shadow = !(in_shadow(&s->objects[tmp_i[1]],
+								 &s->sources[tmp_i[0]], &inter));
 			if (shadow == 0)
 				break ;
-			++j;
+			++tmp_i[1];
 		}
+
 		comp_curr_diff(&diffuse, shadow,
-					self->diffuse(&s->sources[i], self, &inter));
-		++i;
+					self->diffuse(&s->sources[tmp_i[0]], self, &inter));
+		++tmp_i[0];
 	}
 	return (diffuse);
 }

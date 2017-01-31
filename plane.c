@@ -23,13 +23,12 @@ static t_color			plane_diffuse(t_object *src, t_object *self,
 	light_v.x = src->x - inter->x;
 	light_v.y = src->y - inter->y;
 	light_v.z = src->z - inter->z;
-	light_v.length = sqrt(light_v.x * light_v.x + light_v.y * light_v.y
-						+ light_v.z * light_v.z);
 	normalize_vector(&light_v);
 	l_dot_normal = fabs(dot(&self->dir, &light_v));
 	tmp = mult_color_double(mult_color_double(
 			mult_color(src->color, self->color),
-			((self->kd) * l_dot_normal)), src->intensity);
+			(self->kd * l_dot_normal)), src->intensity /
+			(log(light_v.length) / 2.5f));
 	return (tmp);
 }
 

@@ -64,24 +64,23 @@ void				transform_parse(t_mlx *s, int fd, int *l)
 {
 	char			*line;
 	char			**tmp;
-	int				o;
-	int				tmp_id;
+	int				tmp_int[2];
 
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (line[0] != '#')
 		{
-			o = 0;
+			tmp_int[0] = 0;
 			tmp = ft_strsplit(line, ' ');
 			++*l;
 			if (tab_len(tmp) != 5)
 				ft_exit(2, "file content mismatch\n");
-			tmp_id = ft_atoi(tmp[0]);
-			while (s->all[o])
+			tmp_int[1] = ft_atoi(tmp[0]);
+			while (s->all[tmp_int[0]])
 			{
-				if (s->all[o]->id == tmp_id)
-					apply_transform(s->all[o], tmp);
-				++o;
+				if (s->all[tmp_int[0]]->id == tmp_int[1])
+					apply_transform(s->all[tmp_int[0]], tmp);
+				++tmp_int[0];
 			}
 			clear_tab(tmp);
 		}

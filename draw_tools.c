@@ -14,15 +14,11 @@
 
 void				put_in_image(t_mlx *s, int x, int y, t_color color)
 {
-	SDL_PixelFormat pixelFormat;
-
-	pixelFormat.format = s->format;
+	unsigned int	pixel_position;
 	if ((x < s->wh[0]) && y < (s->wh[1]))
 	{
-		Uint32 pixelPosition = y * (s->pitch / sizeof(unsigned int)) + x;
-		s->pixels[pixelPosition] = get_color_value(color);
-		//s->pixels[pixelPosition] = SDL_MapRGBA(&s->pixelFormat, (color.r * 255),
-		//		   (color.g * 255), (color.b * 255), 0);
+		pixel_position = y * (s->pitch / sizeof(unsigned int)) + x;
+		s->pixels[pixel_position] = get_color_value(color);
 	}
 }
 

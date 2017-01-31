@@ -94,6 +94,7 @@ typedef struct		s_mlxdata {
 	Uint32			format;
 	int				wh[2];
 	char 			need_reload;
+	t_color			ambiant;
 }					t_mlx;
 void				win_init(t_mlx s);
 void				render_pic(t_mlx *s);

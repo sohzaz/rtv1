@@ -26,4 +26,5 @@ t_color				mult_color_double(t_color c1, float nbr);
 t_color				mult_color(t_color c1, t_color c2);
 t_color				add_color(t_color c1, t_color c2);
 int					get_color_value(t_color c);
+int					is_below_threshold(t_color c, float thresh);
 #endif

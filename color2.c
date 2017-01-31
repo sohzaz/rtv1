@@ -11,6 +11,13 @@
 /* ************************************************************************** */
 
 #include "color.h"
+int 			is_below_threshold(t_color c, float thresh)
+{
+	if ((c.r < thresh) && (c.g < thresh) && (c.b < thresh))
+		return (1);
+	else
+		return (0);
+}
 
 int				get_color_value(t_color c)
 {
