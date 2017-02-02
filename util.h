@@ -12,7 +12,11 @@
 
 #ifndef RTV1_UTIL_H
 # define RTV1_UTIL_H
+# ifndef FLT_EPSILON
+#  define FLT_EPSILON 1.19209290E-07F
+# endif
 
 int		tab_len(char **tab);
 void	clear_tab(char **str);
+char	almost_equal_relative(float A, float B);
 #endif

@@ -34,3 +34,14 @@ void			clear_tab(char **str)
 	}
 	free(str);
 }
+char			almost_equal_relative(float A, float B)
+{
+	float		diff;
+	float 		largest;
+
+	diff = fabs(A - B);
+	A = fabs(A);
+	B = fabs(B);
+	largest = (B > A) ? B : A;
+	return (diff <= largest * FLT_EPSILON);
+}

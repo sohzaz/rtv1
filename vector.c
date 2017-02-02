@@ -12,9 +12,14 @@
 
 #include "vector.h"
 
-void			normalize_vector(t_vector *v)
+void			comp_vector_length(t_vector *v)
 {
 	v->length = sqrt(pow(v->x, 2) + pow(v->y, 2) + pow(v->z, 2));
+}
+
+void			normalize_vector(t_vector *v)
+{
+	comp_vector_length(v);
 	v->x /= v->length;
 	v->y /= v->length;
 	v->z /= v->length;

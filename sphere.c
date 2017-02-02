@@ -66,7 +66,7 @@ t_color					sphere_diffuse(t_object *src, t_object *self,
 	tmp = mult_color_double(mult_color_double(
 			mult_color(src->color, self->color),
 			(self->kd * l_dot_normal)), src->intensity /
-										(log(light_v.length) / 2.5f));
+										(log(light_v.length)));
 	return (tmp);
 }
 

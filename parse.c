@@ -78,8 +78,6 @@ static void			cam_vector_compute(t_mlx *s, t_vector view_dir)
 	s->cam.vhw = tan((s->cam.fov / 2) * M_PI / 180.0f);
 	s->cam.aspect = (double)WIN_MAX_Y / (double)WIN_MAX_X;
 	s->cam.vhh = s->cam.vhw * s->cam.aspect;
-	//s->cam.vhw = 0.3f;
-	//s->cam.vhh = 0.5f;
 	s->cam.vu = mult_vec_by_vec(view_dir, up);
 	s->cam.vv = mult_vec_by_vec(s->cam.vu, view_dir);
 	normalize_vector(&s->cam.vu);
@@ -136,6 +134,8 @@ void				parse(t_mlx *s, int fd)
 		if (line[0] != '#')
 		{
 			tmp = ft_strsplit(line, '/');
+			if (tab_len(tmp) != 2)
+				ft_exit(3, "incorrect object length params");
 			s->src_len = ft_atoi(tmp[0]);
 			s->obj_len = ft_atoi(tmp[1]);
 			s->sources = (t_object *)malloc(

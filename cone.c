@@ -32,28 +32,7 @@ static double		*calc_res(double *params)
 	return (res);
 }
 
-t_vector			cone_normal(t_vector *inter, t_object *self)
-{
-	t_vector		io;
-	t_vector		piv;
-	t_vector		pi;
-	t_vector		norm;
 
-	io.x = inter->x - self->x;
-	io.y = inter->y - self->y;
-	io.z = inter->z - self->z;
-	piv = mult_vec_double(self->dir, (dot(&io, &self->dir)
-									/ dot(&self->dir, &self->dir)));
-	pi.x = self->x + piv.x;
-	pi.y = self->y + piv.y;
-	pi.z = self->z + piv.z;
-	norm = sub_vec_by_vec(*inter, pi);
-	norm = sub_vec_by_vec(
-			norm, mult_vec_by_vec(piv,
-						mult_vec_double(self->dir, pow(tan(self->radius), 2))));
-	normalize_vector(&norm);
-	return (norm);
-}
 
 static double		*cone_inter(t_object self, t_vector *v,
 					t_vector org)
@@ -94,7 +73,7 @@ t_color				cone_diffuse(t_object *src, t_object *self,
 	tmp = mult_color_double(mult_color_double(
 			mult_color(src->color, self->color),
 			(self->kd * l_dot_normal)), src->intensity /
-										(log(light_v.length) / 2.5f));
+										(log(light_v.length)));
 	return (tmp);
 }
 

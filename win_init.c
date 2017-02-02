@@ -11,19 +11,6 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
-static void	calc_ambiant(t_mlx *s)
-{
-	int 	i;
-
-	i = 0;
-	s->ambiant = create_color("0,0,0");
-	while (i < s->src_len)
-	{
-		s->ambiant = add_color(s->ambiant, s->sources[i].color);
-		printf("%f, %f, %f", s->ambiant.r, s->ambiant.g, s->ambiant.b);
-		++i;
-	}
-}
 
 static void	texture_refresh(t_mlx *s)
 {
@@ -78,12 +65,11 @@ void win_init(t_mlx s)
 	s.ren = SDL_CreateRenderer(s.win, -1, SDL_RENDERER_ACCELERATED);
 	s.img = SDL_CreateTexture(s.ren, SDL_PIXELFORMAT_RGBA32,
 							  SDL_TEXTUREACCESS_STREAMING, WIN_MAX_X + 1, WIN_MAX_Y + 1);
-	calc_ambiant(&s);
 	if (s.win && s.img && s.ren)
 	{
 		s.need_refresh = 1;
 		expose_hook(&s);
 	}
 	else
-	{exit(1);}
+		ft_exit(3, "renderer init failed");
 }

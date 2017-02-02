@@ -27,5 +27,6 @@ t_vector				add_vector(t_vector v1, t_vector v2);
 t_vector				mult_vec_by_vec(t_vector v1, t_vector v2);
 t_vector				sub_vec_by_vec(t_vector v1, t_vector v2);
 double					dot(t_vector *v1, t_vector *v2);
+void					comp_vector_length(t_vector *v);
 
 #endif
