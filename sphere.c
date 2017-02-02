@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "rtv1.h"
 #include "sphere.h"
 
 static double			*calc_result(double a, double b, double d)
@@ -98,9 +98,6 @@ t_object				sphere(char **tmp)
 	sp.x = ft_atoi(tmp[2]);
 	sp.y = ft_atoi(tmp[3]);
 	sp.z = ft_atoi(tmp[4]);
-	sp.rot_x = ft_atoi(tmp[5]);
-	sp.rot_y = ft_atoi(tmp[6]);
-	sp.rot_z = ft_atoi(tmp[7]);
 	sp.radius = ft_atoi(tmp[8]);
 	sp.color = create_color(tmp[1]);
 	sp.kd = ft_atoi(tmp[10]) / 100.0f;

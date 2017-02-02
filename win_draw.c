@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "rtv1.h"
 
 static int			is_closest(double *d, double *res)
 {
@@ -80,7 +80,6 @@ void				render_pic(t_mlx *s)
 			v = create_vector(s, i, j);
 			tmp = get_inters(s, &v);
 			put_in_image(s, i, j, tmp);
-		//	printf("\r%d|%d", i, j);
 			++i;
 		}
 		++j;

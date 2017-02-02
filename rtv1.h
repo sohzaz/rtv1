@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.h                                          :+:      :+:    :+:   */
+/*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbreton <dbreton@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/04/20 15:11:58 by dbreton           #+#    #+#             */
-/*   Updated: 2017/01/20 17:09:10 by dbreton          ###   ########.fr       */
+/*   Created: 2017/02/02 16:57:17 by dbreton           #+#    #+#             */
+/*   Updated: 2017/02/02 16:57:20 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//TODO rename file
-#ifndef FRACTOL_H
-# define FRACTOL_H
+#ifndef RTV1_H
+# define RTV1_H
 
 # include <libft.h>
 # include <get_next_line.h>
@@ -37,9 +36,6 @@ typedef struct		s_camera {
 	int				z;
 	int				fov;
 	double			focal;
-	float			rot_x;
-	float			rot_y;
-	float			rot_z;
 	double			ix;
 	double			iy;
 	t_vector		lp;
@@ -66,15 +62,14 @@ typedef struct		s_object {
 	float			pr;
 	float			psh;
 	float			ior;
-	float			rot_x;
-	float			rot_y;
-	float			rot_z;
 	double			radius;
 	float			intensity;
 	double			*(*inter)(struct s_object, t_vector *, t_vector);
 	t_vector		(*normal)(t_vector *, struct s_object *);
-	double			(*get_color)(struct s_mlxdata *, struct s_object *, t_vector);
-	t_color			(*diffuse)(struct s_object *, struct s_object *, t_vector *);
+	double			(*get_color)(struct s_mlxdata *,
+								struct s_object *, t_vector);
+	t_color			(*diffuse)(struct s_object *,
+								struct s_object *, t_vector *);
 }					t_object;
 
 typedef struct		s_mlxdata {
@@ -89,11 +84,11 @@ typedef struct		s_mlxdata {
 	int				obj_len;
 	int				src_len;
 	int				need_refresh;
-	Uint32*			pixels;
+	Uint32			*pixels;
 	int				pitch;
 	Uint32			format;
 	int				wh[2];
-	char 			need_reload;
+	char			need_reload;
 }					t_mlx;
 void				win_init(t_mlx s);
 void				render_pic(t_mlx *s);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "rtv1.h"
 
 static void			rotate(t_object *obj, char **str)
 {
@@ -73,8 +73,7 @@ void				transform_parse(t_mlx *s, int fd, int *l)
 			tmp_int[0] = 0;
 			tmp = ft_strsplit(line, ' ');
 			++*l;
-			if (tab_len(tmp) != 5)
-				ft_exit(2, "file content mismatch\n");
+			line_validate(&tmp, 5);
 			tmp_int[1] = ft_atoi(tmp[0]);
 			while (s->all[tmp_int[0]])
 			{

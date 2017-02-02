@@ -6,13 +6,13 @@
 /*   By: dbreton <dbreton@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/19 19:15:07 by dbreton           #+#    #+#             */
-/*   Updated: 2015/12/22 18:04:00 by dbreton          ###   ########.fr       */
+/*   Updated: 2017/02/02 16:59:47 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "rtv1.h"
 
-static void	texture_refresh(t_mlx *s)
+static void		texture_refresh(t_mlx *s)
 {
 	if (s->need_refresh)
 	{
@@ -25,7 +25,7 @@ static void	texture_refresh(t_mlx *s)
 	}
 }
 
-static void	render(t_mlx *s)
+static void		render(t_mlx *s)
 {
 	if (s->need_reload)
 	{
@@ -36,9 +36,9 @@ static void	render(t_mlx *s)
 	}
 }
 
-void expose_hook(t_mlx *s)
+void			expose_hook(t_mlx *s)
 {
-	SDL_Event ev;
+	SDL_Event	ev;
 
 	while (1)
 	{
@@ -49,22 +49,22 @@ void expose_hook(t_mlx *s)
 		}
 		texture_refresh(s);
 		render(s);
-
 	}
 }
 
-void win_init(t_mlx s)
+void			win_init(t_mlx s)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		ft_exit(3, "sdl init failed");
 	s.win = SDL_CreateWindow("RTv1", SDL_WINDOWPOS_UNDEFINED,
-							 SDL_WINDOWPOS_UNDEFINED,
-							 WIN_MAX_X,
-							 WIN_MAX_Y,
-							 SDL_WINDOW_SHOWN);
+						SDL_WINDOWPOS_UNDEFINED,
+						WIN_MAX_X,
+						WIN_MAX_Y,
+						SDL_WINDOW_SHOWN);
 	s.ren = SDL_CreateRenderer(s.win, -1, SDL_RENDERER_ACCELERATED);
 	s.img = SDL_CreateTexture(s.ren, SDL_PIXELFORMAT_RGBA32,
-							  SDL_TEXTUREACCESS_STREAMING, WIN_MAX_X + 1, WIN_MAX_Y + 1);
+							SDL_TEXTUREACCESS_STREAMING,
+							WIN_MAX_X + 1, WIN_MAX_Y + 1);
 	if (s.win && s.img && s.ren)
 	{
 		s.need_refresh = 1;

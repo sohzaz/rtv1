@@ -1,19 +1,27 @@
-//
-// Created by Drien BRETON on 2/2/17.
-//
-#include "fractol.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cone2.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/02 17:06:10 by dbreton           #+#    #+#             */
+/*   Updated: 2017/02/02 17:08:29 by dbreton          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "rtv1.h"
 
 static char			validate_direction(t_vector *io,
-										  t_vector *norm,
-										  t_object *self, t_vector *piv)
+										t_vector *norm,
+										t_object *self, t_vector *piv)
 {
-	double 			est_tan;
-	double 			exp_tan;
-
+	double			est_tan;
+	double			exp_tan;
 
 	est_tan = norm->length / io->length;
 	exp_tan = tan(self->radius);
-	if(!almost_equal_relative(est_tan, exp_tan))
+	if (!almost_equal_relative(est_tan, exp_tan))
 	{
 		*piv = mult_vec_double(self->dir,
 							-1.0f * io->length / cos(self->radius));

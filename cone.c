@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/20 16:48:11 by dbreton           #+#    #+#             */
-/*   Updated: 2017/01/20 16:48:15 by dbreton          ###   ########.fr       */
+/*   Created: 2017/02/02 17:08:58 by dbreton           #+#    #+#             */
+/*   Updated: 2017/02/02 17:09:04 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ static double		*calc_res(double *params)
 	}
 	return (res);
 }
-
-
 
 static double		*cone_inter(t_object self, t_vector *v,
 					t_vector org)

@@ -18,5 +18,7 @@
 
 int		tab_len(char **tab);
 void	clear_tab(char **str);
-char	almost_equal_relative(float A, float B);
+char	almost_equal_relative(float a, float b);
+void	line_validate(char ***tmp, int len);
+void	*secure_malloc(unsigned int len);
 #endif

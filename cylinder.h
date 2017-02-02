@@ -12,7 +12,7 @@
 
 #ifndef RTV1_CYLINDER_H
 # define RTV1_CYLINDER_H
-# include "fractol.h"
+# include "rtv1.h"
 # include "sphere.h"
 
 t_color		cyl_diffuse(t_object *src, t_object *self,

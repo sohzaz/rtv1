@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "rtv1.h"
 
 void				put_in_image(t_mlx *s, int x, int y, t_color color)
 {
 	unsigned int	pixel_position;
+
 	if ((x < s->wh[0]) && y < (s->wh[1]))
 	{
 		pixel_position = y * (s->pitch / sizeof(unsigned int)) + x;

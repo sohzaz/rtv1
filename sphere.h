@@ -12,7 +12,7 @@
 
 #ifndef SPHERE_H
 # define SPHERE_H
-# include "fractol.h"
+# include "rtv1.h"
 
 t_vector		sphere_normal(t_vector *intersect, t_object *self);
 t_color			get_sphere_diffuse(t_object *src, t_object *self,

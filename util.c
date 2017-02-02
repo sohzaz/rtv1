@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "rtv1.h"
 
 int				tab_len(char **tab)
 {
@@ -34,14 +34,31 @@ void			clear_tab(char **str)
 	}
 	free(str);
 }
-char			almost_equal_relative(float A, float B)
-{
-	float		diff;
-	float 		largest;
 
-	diff = fabs(A - B);
-	A = fabs(A);
-	B = fabs(B);
-	largest = (B > A) ? B : A;
+char			almost_equal_relative(float a, float b)
+{
+	double		diff;
+	double		largest;
+
+	diff = fabs(a - b);
+	a = fabs(a);
+	b = fabs(b);
+	largest = (b > a) ? b : a;
 	return (diff <= largest * FLT_EPSILON);
+}
+
+void			line_validate(char ***tmp, int len)
+{
+	if (tab_len(*tmp) != len)
+		ft_exit(3, "file content mismatch");
+}
+
+void			*secure_malloc(unsigned int len)
+{
+	void		*res;
+
+	res = malloc(len);
+	if (!res)
+		ft_exit(4, "malloc failed");
+	return (res);
 }

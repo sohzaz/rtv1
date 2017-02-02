@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "rtv1.h"
 
 void				comp_curr_diff(t_color *diffuse, int shadow,
 								t_color new_diff)
@@ -69,21 +69,20 @@ t_color				get_color(t_mlx *s, t_object *self, t_vector inter)
 	int				shadow;
 	t_color			diffuse;
 
-	tmp_i[0]= 0;
+	tmp_i[0] = 0;
 	shadow = 0;
 	diffuse.r = NAN;
-	while (tmp_i[0]< s->src_len)
+	while (tmp_i[0] < s->src_len)
 	{
-		tmp_i[1]= 0;
-		while (tmp_i[1]< s->obj_len)
+		tmp_i[1] = 0;
+		while (tmp_i[1] < s->obj_len)
 		{
 			shadow = !(in_shadow(&s->objects[tmp_i[1]],
-								 &s->sources[tmp_i[0]], &inter));
+								&s->sources[tmp_i[0]], &inter));
 			if (shadow == 0)
 				break ;
 			++tmp_i[1];
 		}
-
 		comp_curr_diff(&diffuse, shadow,
 					self->diffuse(&s->sources[tmp_i[0]], self, &inter));
 		++tmp_i[0];

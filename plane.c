@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
-#include "sphere.h"
+#include "rtv1.h"
 
 static t_color			plane_diffuse(t_object *src, t_object *self,
 											t_vector *inter)
@@ -43,11 +42,10 @@ static double			*plane_inter(t_object self, t_vector *v, t_vector org)
 	v0.y = org.y - self.y;
 	v0.z = org.z - self.z;
 	res = (double *)malloc(sizeof(double) * 3);
-	if (v_dot > 0.0f)
+	if (v_dot != 0.0f)
 	{
 		res[0] = 1.0f;
 		res[1] = -1.0f * dot(&v0, &self.dir) / v_dot;
-		res[1] *= (res[1] < 0.0f) ? -1.0f : 1.0f;
 	}
 	else
 		res[0] = -1.0f;

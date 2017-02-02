@@ -12,7 +12,7 @@
 
 #ifndef RTV1_CONE_H
 # define RTV1_CONE_H
-# include "fractol.h"
+# include "rtv1.h"
 # include "sphere.h"
 # include "cylinder.h"
 
