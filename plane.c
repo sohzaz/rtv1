@@ -31,6 +31,34 @@ static t_color			plane_diffuse(t_object *src, t_object *self,
 	return (tmp);
 }
 
+t_color			plane_specular(t_object *src, t_object *self,
+								   t_vector *inter, t_vector *v)
+{
+	t_vector			vecs[4];
+	double				l_dot_normal;
+	t_color				tmp;
+
+	vecs[1] = self->dir;
+	vecs[0].x = src->x - inter->x;
+	vecs[0].y = src->y - inter->y;
+	vecs[0].z = src->z - inter->z;
+	normalize_vector(&vecs[0]);
+	vecs[3] = sub_vec_by_vec(*v, *inter);
+	l_dot_normal = dot(&vecs[1], &vecs[0]);
+	if (l_dot_normal > 0.0f)
+	{
+		vecs[2] = sub_vec_by_vec(mult_vec_double(
+			vecs[1], 2 * dot(&vecs[1], &vecs[3])), vecs[0]);
+		tmp = mult_color_double(mult_color_double(src->color,
+												  self->ks *
+												  pow(dot(&vecs[2], &vecs[3]), self->psh)),
+								src->intensity / (log(vecs[0].length)));
+	}
+	else
+		tmp = create_color("0,0,0");
+	return (tmp);
+}
+
 static double			*plane_inter(t_object self, t_vector *v, t_vector org)
 {
 	double				v_dot;
@@ -58,6 +86,7 @@ t_object				plane(char **tmp)
 
 	pl.inter = &plane_inter;
 	pl.diffuse = &plane_diffuse;
+	pl.specular = &plane_specular;
 	pl.id = ft_atoi(tmp[0]);
 	pl.x = ft_atoi(tmp[2]);
 	pl.y = ft_atoi(tmp[3]);
@@ -68,5 +97,7 @@ t_object				plane(char **tmp)
 	pl.kd = ft_atoi(tmp[10]) / 100.0f;
 	normalize_vector(&pl.dir);
 	pl.color = create_color(tmp[1]);
+	pl.ks = ft_atoi(tmp[11]) / 100.0f;
+	pl.psh = ft_atoi(tmp[12]);
 	return (pl);
 }

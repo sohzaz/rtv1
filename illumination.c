@@ -63,29 +63,51 @@ int					in_shadow(t_object *obj, t_object *v,
 	return (res);
 }
 
+static void			comp_curr_spec(t_color *spec, int shadow,
+									  t_color new_spec)
+{
+	if (shadow == 0)
+	{
+		if (isnan(spec->r))
+		{
+			spec->r = 0.0f;
+			spec->g = 0.0f;
+			spec->b = 0.0f;
+		}
+	}
+	else
+	{
+		if (!isnan(spec->r))
+			*spec = add_color(*spec, new_spec);
+		else
+			*spec = new_spec;
+	}}
+
 t_color				get_color(t_mlx *s, t_object *self, t_vector inter)
 {
-	int				tmp_i[2];
-	int				shadow;
-	t_color			diffuse;
+	int				ti[3];
+	t_color			colors[2];
 
-	tmp_i[0] = 0;
-	shadow = 0;
-	diffuse.r = NAN;
-	while (tmp_i[0] < s->src_len)
+	ti[0] = 0;
+	ti[2] = 0;
+	colors[0].r = NAN;
+	colors[1].r = NAN;
+	while (ti[0] < s->src_len)
 	{
-		tmp_i[1] = 0;
-		while (tmp_i[1] < s->obj_len)
+		ti[1] = 0;
+		while (ti[1] < s->obj_len)
 		{
-			shadow = !(in_shadow(&s->objects[tmp_i[1]],
-								&s->sources[tmp_i[0]], &inter));
-			if (shadow == 0)
+			ti[2] = !(in_shadow(&s->objects[ti[1]],
+								&s->srcs[ti[0]], &inter));
+			if (ti[2] == 0)
 				break ;
-			++tmp_i[1];
+			++ti[1];
 		}
-		comp_curr_diff(&diffuse, shadow,
-					self->diffuse(&s->sources[tmp_i[0]], self, &inter));
-		++tmp_i[0];
+		comp_curr_diff(&colors[0], ti[2],
+					self->diffuse(&s->srcs[ti[0]], self, &inter));
+		comp_curr_spec(&colors[1], ti[2],
+				self->specular(&s->srcs[ti[0]], self, &inter, &s->cam.c));
+		++ti[0];
 	}
-	return (diffuse);
+	return (add_color(colors[0], colors[1]));
 }

@@ -28,7 +28,7 @@ void				sources_parse(t_mlx *s, int fd, int *l)
 			tmp = ft_strsplit(line, ' ');
 			++*l;
 			line_validate(&tmp, 6);
-			s->sources[o] = source(tmp);
+			s->srcs[o] = source(tmp);
 			s->all[*l - 3] = &s->objects[o];
 			s->all[*l - 2] = NULL;
 			++o;
@@ -132,7 +132,7 @@ void				parse(t_mlx *s, int fd)
 			line_validate(&tmp, 2);
 			s->src_len = ft_atoi(tmp[0]);
 			s->obj_len = ft_atoi(tmp[1]);
-			s->sources = (t_object *)malloc(
+			s->srcs = (t_object *)malloc(
 					sizeof(t_object) * (s->src_len + 1));
 			s->objects = (t_object *)malloc(
 					sizeof(t_object) * (s->obj_len + 1));

@@ -94,6 +94,7 @@ t_object				sphere(char **tmp)
 	sp.normal = &sphere_normal;
 	sp.inter = &sphere_inter;
 	sp.diffuse = &sphere_diffuse;
+	sp.specular = &sphere_specular;
 	sp.id = ft_atoi(tmp[0]);
 	sp.x = ft_atoi(tmp[2]);
 	sp.y = ft_atoi(tmp[3]);
@@ -101,5 +102,7 @@ t_object				sphere(char **tmp)
 	sp.radius = ft_atoi(tmp[8]);
 	sp.color = create_color(tmp[1]);
 	sp.kd = ft_atoi(tmp[10]) / 100.0f;
+	sp.ks = ft_atoi(tmp[11]) / 100.0f;
+	sp.psh = ft_atoi(tmp[12]);
 	return (sp);
 }

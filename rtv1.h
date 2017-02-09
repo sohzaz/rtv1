@@ -59,9 +59,7 @@ typedef struct		s_object {
 	char			type;
 	float			kd;
 	float			ks;
-	float			pr;
 	float			psh;
-	float			ior;
 	double			radius;
 	float			intensity;
 	double			*(*inter)(struct s_object, t_vector *, t_vector);
@@ -70,6 +68,8 @@ typedef struct		s_object {
 								struct s_object *, t_vector);
 	t_color			(*diffuse)(struct s_object *,
 								struct s_object *, t_vector *);
+    t_color         (*specular)(struct s_object *,
+                                struct s_object *, t_vector *, t_vector *);
 }					t_object;
 
 typedef struct		s_mlxdata {
@@ -79,7 +79,7 @@ typedef struct		s_mlxdata {
 	t_camera		cam;
 	int				type;
 	t_object		*objects;
-	t_object		*sources;
+	t_object		*srcs;
 	t_object		**all;
 	int				obj_len;
 	int				src_len;

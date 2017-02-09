@@ -20,4 +20,6 @@ t_vector		cone_normal(t_vector *intersect, t_object *self);
 
 t_color			cone_diffuse(t_object *src, t_object *self,
 									t_vector *inter);
+t_color			cone_specular(t_object *src, t_object *self,
+								 t_vector *inter, t_vector *v);
 #endif
