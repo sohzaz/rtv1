@@ -93,8 +93,7 @@ t_color				cyl_diffuse(t_object *src, t_object *self,
 	l_dot_normal = (l_dot_normal > 0.0f) ? l_dot_normal : 0.0f;
 	tmp = mult_color_double(mult_color_double(
 			mult_color(src->color, self->color),
-			(self->kd * l_dot_normal)), src->intensity /
-										(log(light_v.length)));
+			(self->kd * l_dot_normal)), src->intensity);
 	return (tmp);
 }
 

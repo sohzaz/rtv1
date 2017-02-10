@@ -39,7 +39,7 @@ static t_vector		create_vector(t_mlx *s, int i, int j)
 	normalize_vector(&v);
 	return (v);
 }
-//TODO test
+
 t_color				get_inters(t_mlx *s, t_vector *v)
 {
 	int				i;

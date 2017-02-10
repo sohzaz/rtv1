@@ -31,9 +31,6 @@
 struct s_mlxdata;
 
 typedef struct		s_camera {
-	int				x;
-	int				y;
-	int				z;
 	int				fov;
 	double			focal;
 	double			ix;

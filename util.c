@@ -18,7 +18,10 @@ int				tab_len(char **tab)
 
 	i = 0;
 	while (tab[i])
+	{
+		//printf("%d: %s\n", i, tab[i]);
 		++i;
+	}
 	return (i);
 }
 
