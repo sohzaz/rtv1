@@ -24,11 +24,14 @@
 # include "vector.h"
 # include "util.h"
 # include <SDL2/SDL.h>
+# include <pthread.h>
 
 # define WIN_MAX_X 1920
 # define WIN_MAX_Y 1080
 
 struct s_mlxdata;
+
+
 
 typedef struct		s_camera {
 	int				fov;
@@ -87,6 +90,13 @@ typedef struct		s_mlxdata {
 	int				wh[2];
 	char			need_reload;
 }					t_mlx;
+typedef struct 		s_thread_data {
+	t_mlx			*s;
+	int 			i;
+	int 			j;
+	pthread_mutex_t	mutex;
+	int				*target;
+}					t_thread;
 void				win_init(t_mlx s);
 void				render_pic(t_mlx *s);
 void				parse(t_mlx *s, int fd);

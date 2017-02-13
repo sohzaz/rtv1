@@ -64,24 +64,42 @@ t_color				get_inters(t_mlx *s, t_vector *v)
 			create_color("0,0,0"));
 }
 
+void				*cast_ray(void *data)
+{
+	t_color			tmp;
+	t_vector		v;
+	t_thread		th;
+	pthread_mutex_t	mutex;
+
+	pthread_mutex_lock(&mutex);
+	th = *(t_thread *)data;
+	pthread_mutex_unlock(&mutex);
+	th.i = 0;
+	while (th.i < (WIN_MAX_X + 1))
+	{
+		v = create_vector(th.s, th.i, th.j);
+		tmp = get_inters(th.s, &v);
+		put_in_image(th.s, th.i, th.j, tmp);
+		++th.i;
+	}
+	return (NULL);
+}
+
 void				render_pic(t_mlx *s)
 {
 	int				i;
 	int				j;
-	t_color			tmp;
-	t_vector		v;
+	pthread_t		th[WIN_MAX_Y];
+	t_thread		data;
 
 	j = 0;
+	data.s = s;
+	i = WIN_MAX_Y;
 	while (j < (WIN_MAX_Y + 1))
 	{
-		i = 0;
-		while (i < (WIN_MAX_X + 1))
-		{
-			v = create_vector(s, i, j);
-			tmp = get_inters(s, &v);
-			put_in_image(s, i, j, tmp);
-			++i;
-		}
+		data.j = j;
+		pthread_create(&th[j], NULL, &cast_ray, (void *)&data);
+		pthread_detach(th[j]);
 		++j;
 	}
 }

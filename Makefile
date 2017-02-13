@@ -12,17 +12,17 @@
 
 NAME = RTv1
 OS = $(shell uname)
-CFLAGS = -Wall -Wextra -Werror -g -O2
+CFLAGS = -Wall -Wextra -Werror -g -O0
 SRC = main.c draw_tools.c win_draw.c win_init.c parse.c sphere.c plane.c vector.c vector2.c source.c color.c color2.c util.c cylinder.c cone.c obj_type.c illumination.c parse2.c cone2.c sphere2.c cylinder2.c
 SDL_PATH = $(shell pwd)/sdl
 SDL_LIB = $(SDL_PATH)/lib
 SDL_INCLUDE = $(SDL_PATH)/include
-MFLAGS = -lft -lm -lSDL2
+MFLAGS = -lft -lm -lSDL2 -lpthread -D_REENTRANT
 
 OBJ = $(SRC:.c=.o)
 .PHONY: sdl clean
 
-$(NAME) : sdl
+$(NAME) : 
 	make -C libft
 	gcc $(CFLAGS) -I $(SDL_INCLUDE) -I libft/includes -c $(SRC)
 	gcc $(CFLAGS) -L $(SDL_LIB) -L libft  $(OBJ) -o $(NAME) $(MFLAGS)
@@ -32,7 +32,6 @@ all : $(NAME)
 clean :
 	rm -f $(OBJ)
 	#make -C libft clean
-	#make -C $(MLX) clean
 
 fclean : clean
 	#make -C libft fclean
