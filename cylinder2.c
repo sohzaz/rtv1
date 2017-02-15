@@ -1,11 +1,19 @@
-//
-// Created by Drien BRETON on 2/9/17.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cylinder2.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/15 14:45:38 by dbreton           #+#    #+#             */
+/*   Updated: 2017/02/15 14:46:33 by dbreton          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "rtv1.h"
 
 t_color			cyl_specular(t_object *src, t_object *self,
-								 t_vector *inter, t_vector *v)
+		t_vector *inter, t_vector *v)
 {
 	t_vector			vecs[4];
 	double				l_dot_normal;
@@ -21,8 +29,11 @@ t_color			cyl_specular(t_object *src, t_object *self,
 	l_dot_normal = dot(&vecs[1], &vecs[0]);
 	if (l_dot_normal > 0.0f)
 	{
-		vecs[2] = sub_vec_by_vec(mult_vec_double(vecs[1], 2.0f * dot(&vecs[0], &vecs[1])),vecs[0]);
-		tmp = mult_color_double(src->color, pow(dot(&vecs[2], &vecs[3]), self->psh));
+		vecs[2] = sub_vec_by_vec(
+			mult_vec_double(vecs[1], 2.0f * dot(&vecs[0], &vecs[1])), vecs[0]);
+		tmp = mult_color_double(
+				src->color, pow(dot(&vecs[2], &vecs[3]),
+					self->psh) * src->intensity);
 	}
 	else
 		tmp = create_color("0,0,0");

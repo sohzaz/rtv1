@@ -6,7 +6,7 @@
 /*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 16:57:17 by dbreton           #+#    #+#             */
-/*   Updated: 2017/02/02 16:57:20 by dbreton          ###   ########.fr       */
+/*   Updated: 2017/02/15 14:41:04 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,10 @@ typedef struct		s_object {
 	float			intensity;
 	double			*(*inter)(struct s_object, t_vector *, t_vector);
 	t_vector		(*normal)(t_vector *, struct s_object *);
-	double			(*get_color)(struct s_mlxdata *,
-								struct s_object *, t_vector);
 	t_color			(*diffuse)(struct s_object *,
-								struct s_object *, t_vector *);
-    t_color         (*specular)(struct s_object *,
-                                struct s_object *, t_vector *, t_vector *);
+			struct s_object *, t_vector *);
+	t_color			(*specular)(struct s_object *,
+			struct s_object *, t_vector *, t_vector *);
 }					t_object;
 
 typedef struct		s_mlxdata {

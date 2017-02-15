@@ -6,15 +6,15 @@
 /*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 17:06:10 by dbreton           #+#    #+#             */
-/*   Updated: 2017/02/02 17:08:29 by dbreton          ###   ########.fr       */
+/*   Updated: 2017/02/15 14:48:55 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
 static char			validate_direction(t_vector *io,
-										t_vector *norm,
-										t_object *self, t_vector *piv)
+		t_vector *norm,
+		t_object *self, t_vector *piv)
 {
 	double			est_tan;
 	double			exp_tan;
@@ -24,7 +24,7 @@ static char			validate_direction(t_vector *io,
 	if (!almost_equal_relative(est_tan, exp_tan))
 	{
 		*piv = mult_vec_double(self->dir,
-							-1.0f * io->length / cos(self->radius));
+				-1.0f * io->length / cos(self->radius));
 		piv->x += self->x;
 		piv->y += self->y;
 		piv->z += self->z;
@@ -56,12 +56,13 @@ t_vector			cone_normal(t_vector *inter, t_object *self)
 	normalize_vector(&norm);
 	return (norm);
 }
-t_color			cone_specular(t_object *src, t_object *self,
-								   t_vector *inter, t_vector *v)
+
+t_color				cone_specular(t_object *src, t_object *self,
+		t_vector *inter, t_vector *v)
 {
-	t_vector			vecs[4];
-	double				l_dot_normal;
-	t_color				tmp;
+	t_vector		vecs[4];
+	double			l_dot_normal;
+	t_color			tmp;
 
 	vecs[1] = self->normal(inter, self);
 	vecs[0].x = src->x - inter->x;
@@ -74,10 +75,10 @@ t_color			cone_specular(t_object *src, t_object *self,
 	if (l_dot_normal > 0.0f)
 	{
 		vecs[2] = sub_vec_by_vec(
-			mult_vec_double(vecs[1], 2.0f * dot(&vecs[0], &vecs[1])),vecs[0]);
+			mult_vec_double(vecs[1], 2.0f * dot(&vecs[0], &vecs[1])), vecs[0]);
 		tmp = mult_color_double(
-			src->color, pow(dot(&vecs[2], &vecs[3]),
-							self->psh * src->intensity));
+				src->color, pow(dot(&vecs[2], &vecs[3]),
+					self->psh) * src->intensity);
 	}
 	else
 		tmp = create_color("0,0,0");

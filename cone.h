@@ -6,7 +6,7 @@
 /*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 16:43:26 by dbreton           #+#    #+#             */
-/*   Updated: 2017/01/27 16:43:55 by dbreton          ###   ########.fr       */
+/*   Updated: 2017/02/15 14:49:21 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 # include "cylinder.h"
 
 t_vector		cone_normal(t_vector *intersect, t_object *self);
-
 t_color			cone_diffuse(t_object *src, t_object *self,
-									t_vector *inter);
+		t_vector *inter);
 t_color			cone_specular(t_object *src, t_object *self,
-								 t_vector *inter, t_vector *v);
+		t_vector *inter, t_vector *v);
 #endif

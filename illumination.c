@@ -6,14 +6,14 @@
 /*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 15:16:26 by dbreton           #+#    #+#             */
-/*   Updated: 2017/01/27 15:16:30 by dbreton          ###   ########.fr       */
+/*   Updated: 2017/02/15 14:45:23 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
 void				comp_curr_diff(t_color *diffuse, int shadow,
-								t_color new_diff)
+		t_color new_diff)
 {
 	if (shadow == 0)
 	{
@@ -34,7 +34,7 @@ void				comp_curr_diff(t_color *diffuse, int shadow,
 }
 
 int					in_shadow(t_object *obj, t_object *v,
-							t_vector *inter)
+		t_vector *inter)
 {
 	int				res;
 	double			*inter_res;
@@ -47,7 +47,7 @@ int					in_shadow(t_object *obj, t_object *v,
 	light_v.y = v->y - inter->y;
 	light_v.z = v->z - inter->z;
 	light_v.length = sqrt(pow(light_v.x, 2) + pow(light_v.y, 2) +
-						pow(light_v.z, 2));
+			pow(light_v.z, 2));
 	normalize_vector(&light_v);
 	inter_res = obj->inter(*obj, &light_v, *inter);
 	while (i < inter_res[0])
@@ -64,7 +64,7 @@ int					in_shadow(t_object *obj, t_object *v,
 }
 
 static void			comp_curr_spec(t_color *spec, int shadow,
-									  t_color new_spec)
+		t_color new_spec)
 {
 	if (shadow == 0)
 	{
@@ -81,7 +81,8 @@ static void			comp_curr_spec(t_color *spec, int shadow,
 			*spec = add_color(*spec, new_spec);
 		else
 			*spec = new_spec;
-	}}
+	}
+}
 
 t_color				get_color(t_mlx *s, t_object *self, t_vector inter)
 {
@@ -98,13 +99,13 @@ t_color				get_color(t_mlx *s, t_object *self, t_vector inter)
 		while (ti[1] < s->obj_len)
 		{
 			ti[2] = !(in_shadow(&s->objects[ti[1]],
-								&s->srcs[ti[0]], &inter));
+						&s->srcs[ti[0]], &inter));
 			if (ti[2] == 0)
 				break ;
 			++ti[1];
 		}
 		comp_curr_diff(&colors[0], ti[2],
-					self->diffuse(&s->srcs[ti[0]], self, &inter));
+				self->diffuse(&s->srcs[ti[0]], self, &inter));
 		comp_curr_spec(&colors[1], ti[2],
 				self->specular(&s->srcs[ti[0]], self, &inter, &s->cam.c));
 		++ti[0];

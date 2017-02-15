@@ -6,14 +6,14 @@
 /*   By: dbreton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/25 15:59:13 by dbreton           #+#    #+#             */
-/*   Updated: 2017/01/27 13:48:27 by dbreton          ###   ########.fr       */
+/*   Updated: 2017/02/15 14:44:19 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
 static t_color			plane_diffuse(t_object *src, t_object *self,
-											t_vector *inter)
+		t_vector *inter)
 {
 	t_vector			light_v;
 	double				l_dot_normal;
@@ -25,17 +25,17 @@ static t_color			plane_diffuse(t_object *src, t_object *self,
 	normalize_vector(&light_v);
 	l_dot_normal = fabs(dot(&self->dir, &light_v));
 	tmp = mult_color_double(mult_color_double(
-			mult_color(src->color, self->color),
-			(self->kd * l_dot_normal)), src->intensity);
+				mult_color(src->color, self->color),
+				(self->kd * l_dot_normal)), src->intensity);
 	return (tmp);
 }
 
-t_color			plane_specular(t_object *src, t_object *self,
-								   t_vector *inter, t_vector *v)
+t_color					plane_specular(t_object *src, t_object *self,
+		t_vector *inter, t_vector *v)
 {
-	t_vector vecs[4];
-	double l_dot_normal;
-	t_color tmp;
+	t_vector			vecs[4];
+	double				l_dot_normal;
+	t_color				tmp;
 
 	vecs[1] = self->dir;
 	vecs[0].x = src->x - inter->x;
@@ -49,9 +49,11 @@ t_color			plane_specular(t_object *src, t_object *self,
 	{
 		vecs[2] = sub_vec_by_vec(
 			mult_vec_double(vecs[1], 2.0f * dot(&vecs[0], &vecs[1])), vecs[0]);
-		tmp = mult_color_double(src->color,
-								pow(dot(&vecs[2], &vecs[3]), self->psh));
-	} else
+		tmp = mult_color_double(
+				src->color, pow(dot(&vecs[2], &vecs[3]),
+					self->psh) * src->intensity);
+	}
+	else
 		tmp = create_color("0,0,0");
 	return (tmp);
 }

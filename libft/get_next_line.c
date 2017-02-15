@@ -79,7 +79,6 @@ static char	*get_line(char *buff, char **line, char *temp)
 	if (buff[i] != '\0')
 	{
 		new_str = ft_strnew(ft_strlen(buff) - i + 1);
-	//	buff[i] = '\0';
 		*line = linecpy(buff, i);
 		i++;
 		while (buff[i] != '\0')
