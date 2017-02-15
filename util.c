@@ -38,7 +38,7 @@ void			clear_tab(char **str)
 	free(str);
 }
 
-char			almost_equal_relative(float a, float b)
+char			almost_equal_relative(double a, double b)
 {
 	double		diff;
 	double		largest;

@@ -12,23 +12,24 @@
 
 #include "color.h"
 #include <libft.h>
+#include <math.h>
 #include <stdio.h>
 
 static void		check_overflow(t_color *c,
-		float tmp_r, float tmp_g, float tmp_b)
+		double tmp_r, double tmp_g, double tmp_b)
 {
 	if (tmp_r > 1.0f)
 		c->r = 1.0f;
 	else
-		c->r = tmp_r;
+		c->r = (float)fabs(tmp_r);
 	if (tmp_g > 1.0f)
 		c->g = 1.0f;
 	else
-		c->g = tmp_g;
+		c->g = (float)fabs(tmp_g);
 	if (tmp_b > 1.0f)
 		c->b = 1.0f;
 	else
-		c->b = tmp_b;
+		c->b = (float)fabs(tmp_b);
 }
 
 t_color			create_color(char *str)
@@ -53,12 +54,12 @@ t_color			create_color(char *str)
 	return (res);
 }
 
-t_color			mult_color_double(t_color c1, float nbr)
+t_color			mult_color_double(t_color c1, double nbr)
 {
 	t_color		res;
-	float		tmp_r;
-	float		tmp_g;
-	float		tmp_b;
+	double		tmp_r;
+	double		tmp_g;
+	double		tmp_b;
 
 	tmp_r = c1.r * nbr;
 	tmp_g = c1.g * nbr;
