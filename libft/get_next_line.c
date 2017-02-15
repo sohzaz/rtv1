@@ -46,7 +46,7 @@ static char	*linecpy(char *buff, int index)
 	new_line = NULL;
 	if (buff && *buff)
 	{
-		new_line = (char *)malloc(index);
+		new_line = (char *)malloc(index + 1);
 		if (new_line)
 		{
 			while (j < index)
@@ -59,7 +59,7 @@ static char	*linecpy(char *buff, int index)
 	}
 	else
 	{
-		new_line = (char *)malloc(sizeof(char*));
+		new_line = (char *)malloc(sizeof(char));
 		new_line[0] = 0;
 	}
 	return (new_line);
