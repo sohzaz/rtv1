@@ -24,7 +24,7 @@ t_color			cyl_specular(t_object *src, t_object *self,
 	vecs[0].y = src->y - inter->y;
 	vecs[0].z = src->z - inter->z;
 	normalize_vector(&vecs[0]);
-	vecs[3] = sub_vec_by_vec(*inter, *v);
+	vecs[3] = sub_vec_by_vec(*v, *inter);
 	normalize_vector(&vecs[3]);
 	l_dot_normal = dot(&vecs[1], &vecs[0]);
 	if (l_dot_normal > 0.0f)

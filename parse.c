@@ -54,9 +54,10 @@ static void			body_parse(t_mlx *s, int fd, int *l)
 		{
 			tmp = ft_strsplit(line, ' ');
 			++*l;
+
 			s->objects[o] = get_obj_type(tmp);
 			if (s->objects[o].type == 127)
-				ft_exit(2, "file content mismatch\n");
+				ft_exit(2, "object content mismatch\n");
 			s->all[*l - 3] = &s->objects[o];
 			s->all[*l - 2] = NULL;
 			++o;
@@ -132,11 +133,11 @@ void				parse(t_mlx *s, int fd)
 			line_validate(&tmp, 2);
 			s->src_len = ft_atoi(tmp[0]);
 			s->obj_len = ft_atoi(tmp[1]);
-			s->srcs = (t_object *)malloc(
+			s->srcs = (t_object *)secure_malloc(
 					sizeof(t_object) * (s->src_len + 1));
-			s->objects = (t_object *)malloc(
+			s->objects = (t_object *)secure_malloc(
 					sizeof(t_object) * (s->obj_len + 1));
-			s->all = (t_object **)malloc(
+			s->all = (t_object **)secure_malloc(
 					sizeof(t_object *) * (s->src_len + s->obj_len + 1));
 			++l;
 			clear_tab(tmp);
