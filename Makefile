@@ -22,7 +22,7 @@ MFLAGS = -lft -lm -lSDL2
 OBJ = $(SRC:.c=.o)
 .PHONY: sdl clean
 
-$(NAME) : sdl
+$(NAME) :
 	make -C libft
 	gcc $(CFLAGS) -I $(SDL_INCLUDE) -I libft/includes -c $(SRC)
 	gcc $(CFLAGS) -L $(SDL_LIB) -L libft  $(OBJ) -o $(NAME) $(MFLAGS)

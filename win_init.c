@@ -6,7 +6,7 @@
 /*   By: dbreton <dbreton@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/19 19:15:07 by dbreton           #+#    #+#             */
-/*   Updated: 2017/02/02 16:59:47 by dbreton          ###   ########.fr       */
+/*   Updated: 2017/02/15 14:57:29 by dbreton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ void			expose_hook(t_mlx *s)
 		while (SDL_PollEvent(&ev))
 		{
 			if (ev.type == SDL_QUIT)
+			{
+				SDL_Quit();
 				exit(0);
+			}
 		}
 		texture_refresh(s);
 		render(s);

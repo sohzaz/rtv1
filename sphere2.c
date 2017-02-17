@@ -24,7 +24,7 @@ t_color			sphere_specular(t_object *src, t_object *self,
 	vecs[0].y = src->y - inter->y;
 	vecs[0].z = src->z - inter->z;
 	normalize_vector(&vecs[0]);
-	vecs[3] = sub_vec_by_vec(*inter, *v);
+	vecs[3] = sub_vec_by_vec(*v, *inter);
 	normalize_vector(&vecs[3]);
 	l_dot_normal = dot(&vecs[1], &vecs[0]);
 	if (l_dot_normal > 0.0f)
@@ -32,8 +32,8 @@ t_color			sphere_specular(t_object *src, t_object *self,
 		vecs[2] = sub_vec_by_vec(
 			mult_vec_double(vecs[1], 2.0f * dot(&vecs[0], &vecs[1])), vecs[0]);
 		tmp = mult_color_double(
-			src->color, pow(dot(&vecs[2], &vecs[3]),
-				self->psh) * src->intensity);
+			src->color, pow((dot(&vecs[2], &vecs[3]) > 0) ? dot(&vecs[2],
+					&vecs[3]) : 0, self->psh) * src->intensity);
 	}
 	else
 		tmp = create_color("0,0,0");

@@ -30,7 +30,6 @@ static char	*resize(char *str, size_t len)
 			i++;
 		}
 		new_str[i] = '\0';
-		ft_strclr(str);
 		free(str);
 		return (new_str);
 	}

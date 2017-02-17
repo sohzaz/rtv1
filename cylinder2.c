@@ -32,8 +32,8 @@ t_color			cyl_specular(t_object *src, t_object *self,
 		vecs[2] = sub_vec_by_vec(
 			mult_vec_double(vecs[1], 2.0f * dot(&vecs[0], &vecs[1])), vecs[0]);
 		tmp = mult_color_double(
-				src->color, pow(dot(&vecs[2], &vecs[3]),
-					self->psh) * src->intensity);
+			src->color, pow((dot(&vecs[2], &vecs[3]) > 0) ? dot(&vecs[2],
+				&vecs[3]) : 0, self->psh) * src->intensity);
 	}
 	else
 		tmp = create_color("0,0,0");
