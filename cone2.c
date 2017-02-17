@@ -78,7 +78,7 @@ t_color				cone_specular(t_object *src, t_object *self,
 			mult_vec_double(vecs[1], 2.0f * dot(&vecs[0], &vecs[1])), vecs[0]);
 		tmp = mult_color_double(
 			src->color, pow((dot(&vecs[2], &vecs[3]) > 0.0f) ? dot(&vecs[2],
-				&vecs[3]) : 0, self->psh) * src->intensity);
+				&vecs[3]) : 0, self->psh) * src->intensity * self->ks);
 	}
 	else
 		tmp = create_color("0,0,0");
