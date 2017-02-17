@@ -19,6 +19,7 @@ static void		texture_refresh(t_mlx *s)
 		SDL_QueryTexture(s->img, &s->format, NULL, &s->wh[0], &s->wh[1]);
 		SDL_LockTexture(s->img, NULL, (void**)&s->pixels, &s->pitch);
 		render_pic(s);
+		ft_putstr("Scene rendered\n");
 		s->need_refresh = 0;
 		SDL_UnlockTexture(s->img);
 		s->need_reload = 1;

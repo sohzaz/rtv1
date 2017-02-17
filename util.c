@@ -50,7 +50,7 @@ char			almost_equal_relative(double a, double b)
 void			line_validate(char ***tmp, int len)
 {
 	if (tab_len(*tmp) != len)
-		ft_exit(3, "file content mismatch");
+		ft_exit(3, "file content mismatch\n");
 }
 
 void			*secure_malloc(unsigned int len)

@@ -92,8 +92,11 @@ t_object			cone(char **tmp)
 	sp.radius = (ft_atoi(tmp[8]) * M_PI) / 180;
 	sp.color = create_color(tmp[1]);
 	sp.kd = ft_atoi(tmp[10]) / 100.0f;
+	sp.kd *= (sp.kd >= 0.0f);
 	sp.ks = ft_atoi(tmp[11]) / 100.0f;
+	sp.ks *= (sp.ks >= 0.0f);
 	sp.psh = ft_atoi(tmp[12]);
+	sp.psh *= (sp.psh >= 0.0f);
 	normalize_vector(&sp.dir);
 	return (sp);
 }

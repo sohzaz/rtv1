@@ -23,7 +23,7 @@ void				sources_parse(t_mlx *s, int fd, int *l)
 	o = 0;
 	while (*l < tot_len && get_next_line(fd, &line) > 0)
 	{
-		if (line[0] != '#')
+		if (line[0] != '#' && ft_strlen(line) > 0)
 		{
 			tmp = ft_strsplit(line, ' ');
 			++*l;
@@ -50,11 +50,10 @@ static void			body_parse(t_mlx *s, int fd, int *l)
 	o = 0;
 	while (*l < tot_len && get_next_line(fd, &line) > 0)
 	{
-		if (line[0] != '#')
+		if (line[0] != '#' && ft_strlen(line) > 0)
 		{
 			tmp = ft_strsplit(line, ' ');
 			++*l;
-
 			s->objects[o] = get_obj_type(tmp);
 			if (s->objects[o].type == 127)
 				ft_exit(2, "object content mismatch\n");
@@ -99,7 +98,7 @@ static void			camera_parse(t_mlx *s, int fd, int *l)
 
 	while (*l != 2 && get_next_line(fd, &line) > 0)
 	{
-		if (line[0] != '#')
+		if (line[0] != '#' && ft_strlen(line) > 0)
 		{
 			tmp = ft_strsplit(line, ' ');
 			line_validate(&tmp, 7);

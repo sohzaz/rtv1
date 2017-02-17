@@ -17,10 +17,7 @@
 
 void		get_usage(void)
 {
-	write(2, "Usage: ./fractol [123]\n", 23);
-	write(2, "1\tMandelbrot Set\n", 17);
-	write(2, "2\tJulia Set\n", 12);
-	write(2, "3\tSierpinski carpet\n", 20);
+	ft_putstr_fd("Usage : ./RTv1 <file>\n", 2);
 }
 
 int			main(int ac, char **av)

@@ -94,9 +94,12 @@ t_object				plane(char **tmp)
 	pl.dir.y = ft_atoi(tmp[6]);
 	pl.dir.z = ft_atoi(tmp[7]);
 	pl.kd = ft_atoi(tmp[10]) / 100.0f;
+	pl.kd *= (pl.kd >= 0.0f);
 	normalize_vector(&pl.dir);
 	pl.color = create_color(tmp[1]);
 	pl.ks = ft_atoi(tmp[11]) / 100.0f;
+	pl.ks *= (pl.ks >= 0.0f);
 	pl.psh = ft_atoi(tmp[12]);
+	pl.psh *= (pl.psh >= 0.0f);
 	return (pl);
 }

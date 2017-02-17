@@ -68,7 +68,7 @@ void				transform_parse(t_mlx *s, int fd, int *l)
 
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (line[0] != '#')
+		if (line[0] != '#' && ft_strlen(line) > 0)
 		{
 			tmp_int[0] = 0;
 			tmp = ft_strsplit(line, ' ');
@@ -86,4 +86,5 @@ void				transform_parse(t_mlx *s, int fd, int *l)
 		free(line);
 	}
 	free(line);
+	close(fd);
 }
